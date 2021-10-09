@@ -1,7 +1,12 @@
 import "./App.css";
+import Registration from "./component/Registration";
 
 function App() {
-  return <div className="App">we are in front end</div>;
+  return (
+    <div className="App">
+      <Registration />
+    </div>
+  );
 }
 
 export default App;
