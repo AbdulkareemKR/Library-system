@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
+const cors = require("cors");
 const app = express();
 
 const db = mysql.createPool({
@@ -10,6 +11,8 @@ const db = mysql.createPool({
   database: "react-db",
 });
 
+app.use(cors); //must be written
+app.use(express.json); //must be written
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/api/insert", (req, res) => {
@@ -17,7 +20,9 @@ app.post("/api/insert", (req, res) => {
   const movieReview = req.body.movieReview;
 
   const sqlInsert = "INSERT INTO movie_reviews (name, review) VALUES (?,?)";
-  db.query(sqlInsert, [movieName, movieReview], (err, result) => {});
+  db.query(sqlInsert, [movieName, movieReview], (err, result) => {
+    console.log(result);
+  });
 });
 
 // app.get("/", (req, res) => {
