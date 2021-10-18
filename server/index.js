@@ -11,8 +11,8 @@ const db = mysql.createPool({
   database: "react-db",
 });
 
-app.use(cors); //must be written
-app.use(express.json); //must be written
+app.use(cors()); //must be written
+app.use(express.json()); //must be written
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/api/insert", (req, res) => {
@@ -22,15 +22,14 @@ app.post("/api/insert", (req, res) => {
   const sqlInsert = "INSERT INTO movie_reviews (name, review) VALUES (?,?)";
   db.query(sqlInsert, [movieName, movieReview], (err, result) => {
     console.log(result);
+    console.log("submitted");
   });
 });
 
-// app.get("/", (req, res) => {
-//   const sqlInsert = "INSERT INTO movie_reviews (name, review) VALUES (?, ?);";
-//   db.query(sqlInsert, (err, result) => {
-//     res.send("hellow world");
-//   });
-// });
+app.get("/", (req, res) => {
+  // const sqlInsert = "INSERT INTO movie_reviews (name, review) VALUES (?, ?);";
+  res.send("hellow world");
+});
 
 app.listen(3001, () => {
   console.log("running on port ");

@@ -40,7 +40,7 @@ function Registration() {
             }}
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" onClick={submitReview}>
           Submit
         </Button>
       </Form>
