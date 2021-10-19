@@ -46,6 +46,7 @@ function Registration() {
     Axios.get("http://localhost:3001/api/get").then((response) => {
       setMovieReviewList(response.data);
     });
+    setLoading(false);
   }, []);
 
   return (
@@ -81,7 +82,7 @@ function Registration() {
                 cascade
                 damping={0.02}
                 triggerOnce // to present each element on itself while moving down
-                direction="up" 
+                direction="up"
               >
                 {loading ? (
                   <div>wait...</div>
