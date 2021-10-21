@@ -4,6 +4,8 @@ const mysql = require("mysql");
 const cors = require("cors");
 const app = express();
 
+const PORT = 3001;
+
 const db = mysql.createPool({
   host: "localhost",
   user: "root",
