@@ -52,6 +52,12 @@ app.put("/api/update", (req, res) => {
   });
 });
 
-app.listen(3001, () => {
+//BEFORE DEPLOYING--------------------
+// app.listen(3001, () => {
+//   console.log("running on port ");
+// });
+
+//AFTER DEPLOYING---------------------
+app.listen(process.env.PORT || PORT, () => {
   console.log("running on port ");
 });
