@@ -11,7 +11,7 @@ const PORT = 3001;
 const db = mysql.createPool({
   host: "us-cdbr-east-04.cleardb.com",
   user: "baa3edb8227a69",
-  password: "1dca83a3",
+  password: "MysqlCRUD",
   database: "heroku_14bd760e873f76d",
 });
 
