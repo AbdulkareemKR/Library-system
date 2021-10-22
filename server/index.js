@@ -4,8 +4,6 @@ const mysql = require("mysql");
 const cors = require("cors");
 const app = express();
 
-const PORT = 3001;
-
 //mysql://baa3edb8227a69:1dca83a3@us-cdbr-east-04.cleardb.com/heroku_14bd760e873f76d?reconnect=true
 //TAKE THE INFO FROM THE LINE ABOVE
 const db = mysql.createPool({
@@ -56,12 +54,6 @@ app.put("/api/update", (req, res) => {
   });
 });
 
-//BEFORE DEPLOYING--------------------
-// app.listen(3001, () => {
-//   console.log("running on port ");
-// });
-
-//AFTER DEPLOYING---------------------
-app.listen(process.env.PORT || 5000, () => {
+app.listen(process.env.PORT || 3001, () => {
   console.log("running on port ");
 });
