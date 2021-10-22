@@ -60,8 +60,8 @@ app.put("/api/update", (req, res) => {
 // });
 
 //AFTER DEPLOYING---------------------
-var port_number = server.listen(process.env.PORT || PORT, () => {
+const port_number = app.listen(process.env.PORT || PORT, () => {
   console.log("running on port ");
 });
-
+//you have to seperate them to run on heroku
 app.listen(port_number);
