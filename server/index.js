@@ -60,6 +60,8 @@ app.put("/api/update", (req, res) => {
 // });
 
 //AFTER DEPLOYING---------------------
-app.listen(process.env.PORT || PORT, () => {
+var port_number = server.listen(process.env.PORT || PORT, () => {
   console.log("running on port ");
 });
+
+app.listen(port_number);
