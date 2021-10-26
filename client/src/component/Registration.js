@@ -20,7 +20,7 @@ function Registration() {
   };
 
   const submitReview = () => {
-    Axios.post("/api/insert", {
+    Axios.post("https://crud-back-end-node.herokuapp.com/api/insert", {
       movieName: movieName,
       movieReview: review,
     });
@@ -31,11 +31,13 @@ function Registration() {
   };
 
   const deleteReview = (movie) => {
-    Axios.delete(`/api/delete/${movie}`);
+    Axios.delete(
+      `https://crud-back-end-node.herokuapp.com/api/delete/${movie}`
+    );
   };
 
   const updateReview = (movie) => {
-    Axios.put("/api/update", {
+    Axios.put("https://crud-back-end-node.herokuapp.com/api/update", {
       movieName: movie,
       movieReview: newReview,
     });
@@ -43,9 +45,11 @@ function Registration() {
   };
 
   useEffect(() => {
-    Axios.get("/api/get").then((response) => {
-      setMovieReviewList(response.data);
-    });
+    Axios.get("https://crud-back-end-node.herokuapp.com/api/get").then(
+      (response) => {
+        setMovieReviewList(response.data);
+      }
+    );
     setLoading(false);
   }, []);
 
