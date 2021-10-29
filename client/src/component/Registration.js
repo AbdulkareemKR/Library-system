@@ -46,7 +46,7 @@ function Registration() {
   };
 
   useEffect(() => {
-    setTimeout(setLoading, 800, false);
+    setTimeout(setLoading, 2000, false);
     //setLoading(false);
   }, [movieReviewList]);
 
@@ -84,64 +84,77 @@ function Registration() {
         </Form.Group>
         <Button onClick={submitReview}>Submit</Button>
         <br />
-        {loading ? <Spinner animation="grow" /> : ""}
-        {movieReviewList.map((value) => {
-          return (
+        <div className="wrapper">
+          {loading ? (
+            <Spinner
+              animation="grow"
+              className="spinner1"
+              // style={{ color: "red" }}
+            />
+          ) : (
             <div>
-              <Fade
-                durtion={1200}
-                cascade
-                damping={0.02}
-                triggerOnce // to present each element on itself while moving down
-                direction="up"
-              >
-                <Card className="text-center">
-                  <Card.Header style={{ margin: "auto" }}>Movies</Card.Header>
-                  <Card.Body>
-                    <Card.Title>
-                      {edit ? (
-                        <Form.Control
-                          type="text"
-                          defaultValue={value.name}
-                          onChange={(e) => {
-                            setNewReview(e.target.value);
-                          }}
-                        />
-                      ) : (
-                        <div>{value.name}</div>
-                      )}
-                    </Card.Title>
-                    <Card.Text>{value.review}</Card.Text>
-                    <Button
-                      variant="primary"
-                      onClick={() => {
-                        deleteReview(value.name);
-                      }}
-                    >
-                      Delete
-                    </Button>
-                    <div>{newReview}</div>
-                    <Button
-                      variant="primary"
-                      onClick={() => {
-                        updateReview(value.name);
-                      }}
-                    >
-                      Change
-                    </Button>
-
-                    <Button variant="primary" onClick={editMovie}>
-                      Edit
-                    </Button>
-                  </Card.Body>
+              {movieReviewList.map((value) => {
+                return (
                   <div>
-                    <br />
+                    <Fade
+                      durtion={1200}
+                      cascade
+                      damping={0.02}
+                      triggerOnce // to present each element on itself while moving down
+                      direction="up"
+                    >
+                      <Card className="text-center">
+                        <Card.Header style={{ margin: "auto" }}>
+                          Movies
+                        </Card.Header>
+                        <Card.Body>
+                          <Card.Title>
+                            {edit ? (
+                              <Form.Control
+                                type="text"
+                                defaultValue={value.name}
+                                onChange={(e) => {
+                                  setNewReview(e.target.value);
+                                }}
+                              />
+                            ) : (
+                              <div>{value.name}</div>
+                            )}
+                          </Card.Title>
+                          <Card.Text>{value.review}</Card.Text>
+                          <Button
+                            variant="primary"
+                            onClick={() => {
+                              deleteReview(value.name);
+                            }}
+                          >
+                            Delete
+                          </Button>
+                          <div>{newReview}</div>
+                          <Button
+                            variant="primary"
+                            onClick={() => {
+                              updateReview(value.name);
+                            }}
+                          >
+                            Change
+                          </Button>
+
+                          <Button variant="primary" onClick={editMovie}>
+                            Edit
+                          </Button>
+                        </Card.Body>
+                        <div>
+                          <br />
+                        </div>
+                      </Card>
+                    </Fade>
                   </div>
-                </Card>
-              </Fade>
+                );
+              })}
             </div>
-          );
-        })}
+          )}
+        </div>
       </Form>
     </div>
   );

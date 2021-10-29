@@ -8,3 +8,14 @@
   margin: auto !important;
   margin-bottom: 5px !important;
 }
+
+.wrapper {
+  position: relative;
+}
+
+.spinner1 {
+  /* display: flex; */
+  position: absolute;
+  margin-top: 30vh;
+  margin-left: auto !important;
+}
