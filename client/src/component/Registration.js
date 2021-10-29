@@ -6,6 +6,7 @@ import { Fade } from "react-awesome-reveal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Axios from "axios";
 import "../App.css";
+import Spinner from "react-bootstrap/Spinner";
 
 function Registration() {
   const [movieName, setMovieName] = useState("");
@@ -13,7 +14,7 @@ function Registration() {
   const [movieReviewList, setMovieReviewList] = useState([]);
   const [newReview, setNewReview] = useState("");
   const [edit, setEdit] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const editMovie = () => {
     setEdit(!edit);
@@ -45,12 +46,16 @@ function Registration() {
   };
 
   useEffect(() => {
+    setTimeout(setLoading, 800, false);
+    //setLoading(false);
+  }, [movieReviewList]);
+
+  useEffect(() => {
     Axios.get("https://crud-back-end-node.herokuapp.com/api/get").then(
       (response) => {
         setMovieReviewList(response.data);
       }
     );
-    setLoading(false);
   }, []);
 
   return (
@@ -78,6 +83,8 @@ function Registration() {
           />
         </Form.Group>
         <Button onClick={submitReview}>Submit</Button>
+        <br />
+        {loading ? <Spinner animation="grow" /> : ""}
         {movieReviewList.map((value) => {
           return (
             <div>
@@ -88,53 +95,49 @@ function Registration() {
                 triggerOnce // to present each element on itself while moving down
                 direction="up"
               >
-                {loading ? (
-                  <div>wait...</div>
-                ) : (
-                  <Card className="text-center">
-                    <Card.Header style={{ margin: "auto" }}>Movies</Card.Header>
-                    <Card.Body>
-                      <Card.Title>
-                        {edit ? (
-                          <Form.Control
-                            type="text"
-                            defaultValue={value.name}
-                            onChange={(e) => {
-                              setNewReview(e.target.value);
-                            }}
-                          />
-                        ) : (
-                          <div>{value.name}</div>
-                        )}
-                      </Card.Title>
-                      <Card.Text>{value.review}</Card.Text>
-                      <Button
-                        variant="primary"
-                        onClick={() => {
-                          deleteReview(value.name);
-                        }}
-                      >
-                        Delete
-                      </Button>
-                      <div>{newReview}</div>
-                      <Button
-                        variant="primary"
-                        onClick={() => {
-                          updateReview(value.name);
-                        }}
-                      >
-                        Change
-                      </Button>
+                <Card className="text-center">
+                  <Card.Header style={{ margin: "auto" }}>Movies</Card.Header>
+                  <Card.Body>
+                    <Card.Title>
+                      {edit ? (
+                        <Form.Control
+                          type="text"
+                          defaultValue={value.name}
+                          onChange={(e) => {
+                            setNewReview(e.target.value);
+                          }}
+                        />
+                      ) : (
+                        <div>{value.name}</div>
+                      )}
+                    </Card.Title>
+                    <Card.Text>{value.review}</Card.Text>
+                    <Button
+                      variant="primary"
+                      onClick={() => {
+                        deleteReview(value.name);
+                      }}
+                    >
+                      Delete
+                    </Button>
+                    <div>{newReview}</div>
+                    <Button
+                      variant="primary"
+                      onClick={() => {
+                        updateReview(value.name);
+                      }}
+                    >
+                      Change
+                    </Button>
 
-                      <Button variant="primary" onClick={editMovie}>
-                        Edit
-                      </Button>
-                    </Card.Body>
-                    <div>
-                      <br />
-                    </div>
-                  </Card>
-                )}
+                    <Button variant="primary" onClick={editMovie}>
+                      Edit
+                    </Button>
+                  </Card.Body>
+                  <div>
+                    <br />
+                  </div>
+                </Card>
               </Fade>
             </div>
           );
