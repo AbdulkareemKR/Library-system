@@ -25,6 +25,8 @@ function Registration() {
       movieName: movieName,
       movieReview: review,
     });
+    setMovieName("");
+    setReview("");
     setMovieReviewList([
       ...movieReviewList,
       { name: movieName, review: review },
@@ -46,7 +48,7 @@ function Registration() {
   };
 
   useEffect(() => {
-    setTimeout(setLoading, 2000, false);
+    setTimeout(setLoading, 1000, false);
     //setLoading(false);
   }, [movieReviewList]);
 
@@ -56,7 +58,7 @@ function Registration() {
         setMovieReviewList(response.data);
       }
     );
-  }, []);
+  }, [movieReviewList]);
 
   return (
     <div>
@@ -69,6 +71,7 @@ function Registration() {
             onChange={(e) => {
               setMovieName(e.target.value);
             }}
+            value={movieName}
           />
         </Form.Group>
 
@@ -80,6 +83,7 @@ function Registration() {
             onChange={(e) => {
               setReview(e.target.value);
             }}
+            value={review}
           />
         </Form.Group>
         <Button onClick={submitReview}>Submit</Button>
@@ -123,7 +127,7 @@ function Registration() {
                           </Card.Title>
                           <Card.Text>{value.review}</Card.Text>
                           <Button
-                            variant="primary"
+                            variant="danger"
                             onClick={() => {
                               deleteReview(value.name);
                             }}
