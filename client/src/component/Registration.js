@@ -64,10 +64,10 @@ function Registration() {
     <div>
       <Form>
         <Form.Group className="mb-3">
-          <Form.Label>Movie Name</Form.Label>
+          <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter email"
+            placeholder="Enter your name"
             onChange={(e) => {
               setMovieName(e.target.value);
             }}
@@ -76,10 +76,10 @@ function Registration() {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Review</Form.Label>
+          <Form.Label>Description</Form.Label>
           <Form.Control
             type="text"
-            placeholder="review"
+            placeholder="Enter your description"
             onChange={(e) => {
               setReview(e.target.value);
             }}
@@ -109,7 +109,7 @@ function Registration() {
                     >
                       <Card className="text-center">
                         <Card.Header style={{ margin: "auto" }}>
-                          Movies
+                          Information Card
                         </Card.Header>
                         <Card.Body>
                           <Card.Title>
