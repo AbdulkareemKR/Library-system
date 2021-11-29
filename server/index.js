@@ -13,6 +13,13 @@ const db = mysql.createPool({
   database: "heroku_14bd760e873f76d",
 });
 
+// const db = mysql.createPool({
+//   host: "localhost",
+//   user: "root",
+//   password: "password",
+//   database: "CRUD",
+// });
+
 app.use(cors()); //must be written
 app.use(express.json()); //must be written
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -72,14 +79,14 @@ app.post("/login", (req, res) => {
   const password = req.body.password;
 
   const sqlSelect =
-    "SELECT * FROM registration WHERE username = ? AND password ?";
+    "SELECT * FROM registration WHERE username = ? AND password = ?";
   db.query(sqlSelect, [username, password], (err, result) => {
     if (err) {
       res.send({ err: err });
     }
 
     if (result.length > 0) {
-      res.send(result);
+      console.log(result);
     } else {
       res.send({ message: "wrong username or password" });
     }

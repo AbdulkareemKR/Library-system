@@ -30,9 +30,10 @@ function Registration() {
       password: passwordLog,
     }).then((response) => {
       if (response.data.message) {
+        console.log(response);
         setLogingStatus(response.data.message);
       } else {
-        setLogingStatus(response.data[0].username);
+        setLogingStatus(response.data.username);
       }
     });
   };
