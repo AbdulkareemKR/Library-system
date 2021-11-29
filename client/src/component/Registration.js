@@ -33,7 +33,7 @@ function Registration() {
         console.log(response);
         setLogingStatus(response.data.message);
       } else {
-        setLogingStatus(response.data.username);
+        setLogingStatus(response.data[0].username);
       }
     });
   };

@@ -86,7 +86,7 @@ app.post("/login", (req, res) => {
     }
 
     if (result.length > 0) {
-      console.log(result);
+      res.send(result);
     } else {
       res.send({ message: "wrong username or password" });
     }
