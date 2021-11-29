@@ -8,7 +8,7 @@ import Axios from "axios";
 import "../App.css";
 import Spinner from "react-bootstrap/Spinner";
 
-function Registration() {
+function InformationCard() {
   const [movieName, setMovieName] = useState("");
   const [review, setReview] = useState("");
   const [movieReviewList, setMovieReviewList] = useState([]);
@@ -164,4 +164,4 @@ function Registration() {
   );
 }
 
-export default Registration;
+export default InformationCard;
