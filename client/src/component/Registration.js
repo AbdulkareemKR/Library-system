@@ -11,13 +11,29 @@ import Spinner from "react-bootstrap/Spinner";
 function Registration() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [usernameLog, setUsernameLog] = useState("");
+  const [passwordLog, setPasswordLog] = useState("");
+  const [loginStatus, setLogingStatus] = useState("");
 
   const register = () => {
     Axios.post("http://localhost:3001/register", {
       username: username,
       password: password,
-    }).then((Response) => {
-      console.log(Response);
+    }).then((response) => {
+      console.log(response);
+    });
+  };
+
+  const login = () => {
+    Axios.post("http://localhost:3001/login", {
+      username: usernameLog,
+      password: passwordLog,
+    }).then((response) => {
+      if (response.data.message) {
+        setLogingStatus(response.data.message);
+      } else {
+        setLogingStatus(response.data[0].username);
+      }
     });
   };
 
@@ -48,7 +64,7 @@ function Registration() {
         <Form.Control
           type="text"
           placeholder="username"
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setUsernameLog(e.target.value)}
         />
       </Form.Group>
       <Form.Group className="mb-3">
@@ -56,9 +72,11 @@ function Registration() {
         <Form.Control
           type="text"
           placeholder="password"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => setPasswordLog(e.target.value)}
         />
       </Form.Group>
+      <Button onClick={login}>login</Button>
+      <div>{loginStatus}</div>
     </div>
   );
 }
