@@ -54,6 +54,18 @@ app.put("/api/update", (req, res) => {
   });
 });
 
+/////////////////////////////////REGISTRATION////////////////////////////////////////////////////////
+app.post("/register", (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  const sqlInsert = "INSERT INTO registration (name, review) VALUES (?,?)";
+  db.query(sqlInsert, [username, password], (err, result) => {
+    console.log(result);
+    console.log(err);
+  });
+});
+
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {

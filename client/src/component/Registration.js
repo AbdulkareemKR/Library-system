@@ -12,6 +12,15 @@ function Registration() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const register = () => {
+    Axios.post("http://localhost:3001/register", {
+      username: username,
+      password: password,
+    }).then((Response) => {
+      console.log(Response);
+    });
+  };
+
   return (
     <div>
       <h1>Registration</h1>
@@ -31,6 +40,7 @@ function Registration() {
           onChange={(e) => setPassword(e.target.value)}
         />
       </Form.Group>
+      <Button onClick={register}>register</Button>
 
       <h1>Login</h1>
       <Form.Group className="mb-3">
