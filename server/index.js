@@ -4,6 +4,8 @@ const mysql = require("mysql");
 const cors = require("cors");
 const app = express();
 const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
 
 // mysql://baa3edb8227a69:1dca83a3@us-cdbr-east-04.cleardb.com/heroku_14bd760e873f76d?reconnect=true
 // TAKE THE INFO FROM THE LINE ABOVE
@@ -21,9 +23,18 @@ const db = mysql.createPool({
 //   database: "CRUD",
 // });
 
-app.use(cors()); //must be written
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
+
+app.use(cookieParser); //must be written
+
 app.use(express.json()); //must be written
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true })); //must be written
 
 app.get("/api/get", (req, res) => {
   const sqlSelect = "SELECT * FROM movie_reviews";
@@ -63,6 +74,17 @@ app.put("/api/update", (req, res) => {
 });
 
 /////////////////////////////////REGISTRATION////////////////////////////////////////////////////////
+app.use(
+  session({
+    key: "userId",
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      expires: 60 * 60,
+    },
+  })
+);
 
 const saltRounds = 10;
 
@@ -96,6 +118,7 @@ app.post("/login", (req, res) => {
     if (result.length > 0) {
       bcrypt.compare(password, result[0].password, (error, response) => {
         if (response) {
+          req.session.user = result;
           res.send(result);
         } else {
           res.send({ message: "username or password is incorrect" });
@@ -105,6 +128,14 @@ app.post("/login", (req, res) => {
       res.send({ message: "User does not exists" });
     }
   });
+});
+
+app.get("login", (req, res) => {
+  if (req.session.user) {
+    res.send({ loggedIn: true, user: req.session.user });
+  } else {
+    res.send({ loggedIn: false });
+  }
 });
 
 const PORT = process.env.PORT || 3001;
