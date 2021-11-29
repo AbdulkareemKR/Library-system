@@ -3,7 +3,9 @@ const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const cors = require("cors");
 const app = express();
+const bcrypt = require("bcrypt");
 
+const saltRounds = 10;
 // mysql://baa3edb8227a69:1dca83a3@us-cdbr-east-04.cleardb.com/heroku_14bd760e873f76d?reconnect=true
 // TAKE THE INFO FROM THE LINE ABOVE
 const db = mysql.createPool({
