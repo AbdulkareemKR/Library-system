@@ -5,7 +5,6 @@ const cors = require("cors");
 const app = express();
 const bcrypt = require("bcrypt");
 
-const saltRounds = 10;
 // mysql://baa3edb8227a69:1dca83a3@us-cdbr-east-04.cleardb.com/heroku_14bd760e873f76d?reconnect=true
 // TAKE THE INFO FROM THE LINE ABOVE
 const db = mysql.createPool({
@@ -64,15 +63,23 @@ app.put("/api/update", (req, res) => {
 });
 
 /////////////////////////////////REGISTRATION////////////////////////////////////////////////////////
+
+const saltRounds = 10;
+
 app.post("/register", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
-  const sqlInsert =
-    "INSERT INTO registration (username, password) VALUES (?,?)";
-  db.query(sqlInsert, [username, password], (err, result) => {
-    console.log(result);
-    console.log(err);
+  bcrypt.hash(password, saltRounds, (err, hash) => {
+    if (err) {
+      console.log(err);
+    }
+    const sqlInsert =
+      "INSERT INTO registration (username, password) VALUES (?,?)";
+    db.query(sqlInsert, [username, hash], (err, result) => {
+      console.log(result);
+      console.log(err);
+    });
   });
 });
 
@@ -80,17 +87,22 @@ app.post("/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
-  const sqlSelect =
-    "SELECT * FROM registration WHERE username = ? AND password = ?";
-  db.query(sqlSelect, [username, password], (err, result) => {
+  const sqlSelect = "SELECT * FROM registration WHERE username = ?";
+  db.query(sqlSelect, username, (err, result) => {
     if (err) {
       res.send({ err: err });
     }
 
     if (result.length > 0) {
-      res.send(result);
+      bcrypt.compare(password, result[0].password, (error, response) => {
+        if (response) {
+          res.send(result);
+        } else {
+          res.send({ message: "username or password is incorrect" });
+        }
+      });
     } else {
-      res.send({ message: "wrong username or password" });
+      res.send({ message: "User does not exists" });
     }
   });
 });

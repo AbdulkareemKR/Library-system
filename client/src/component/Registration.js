@@ -52,7 +52,7 @@ function Registration() {
       <Form.Group className="mb-3">
         <Form.Label>password</Form.Label>
         <Form.Control
-          type="text"
+          type="password"
           placeholder="password"
           onChange={(e) => setPassword(e.target.value)}
         />
@@ -71,7 +71,7 @@ function Registration() {
       <Form.Group className="mb-3">
         <Form.Label>password</Form.Label>
         <Form.Control
-          type="text"
+          type="password"
           placeholder="password"
           onChange={(e) => setPasswordLog(e.target.value)}
         />
