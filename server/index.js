@@ -9,27 +9,29 @@ const session = require("express-session");
 
 // mysql://baa3edb8227a69:1dca83a3@us-cdbr-east-04.cleardb.com/heroku_14bd760e873f76d?reconnect=true
 // TAKE THE INFO FROM THE LINE ABOVE
-// const db = mysql.createPool({
-//   host: "us-cdbr-east-04.cleardb.com",
-//   user: "baa3edb8227a69",
-//   password: "1dca83a3",
-//   database: "heroku_14bd760e873f76d",
-// });
-
 const db = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "password",
-  database: "localhost",
+  host: "us-cdbr-east-04.cleardb.com",
+  user: "baa3edb8227a69",
+  password: "1dca83a3",
+  database: "heroku_14bd760e873f76d",
 });
 
-app.use(
-  cors({
-    origin: ["http://localhost:3000"],
-    methods: ["GET", "POST"],
-    credentials: true,
-  })
-);
+// const db = mysql.createPool({
+//   host: "localhost",
+//   user: "root",
+//   password: "password",
+//   database: "registration",
+// });
+
+// app.use(
+//   cors({
+//     origin: ["http://localhost:3000"],
+//     methods: ["GET", "POST"],
+//     credentials: true,
+//   })
+// );
+
+app.use(cors());
 
 app.use(cookieParser); //must be written
 
@@ -89,6 +91,7 @@ app.use(
 const saltRounds = 10;
 
 app.post("/register", (req, res) => {
+  console.log("backend registration");
   const username = req.body.username;
   const password = req.body.password;
 
@@ -106,6 +109,7 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
+  console.log("login backend");
   const username = req.body.username;
   const password = req.body.password;
 
@@ -118,7 +122,8 @@ app.post("/login", (req, res) => {
     if (result.length > 0) {
       bcrypt.compare(password, result[0].password, (error, response) => {
         if (response) {
-          req.session.user = result;
+          // req.session.user = result;
+          console.log(req.session.user);
           res.send(result);
         } else {
           res.send({ message: "username or password is incorrect" });
@@ -130,13 +135,13 @@ app.post("/login", (req, res) => {
   });
 });
 
-app.get("login", (req, res) => {
-  if (req.session.user) {
-    res.send({ loggedIn: true, user: req.session.user });
-  } else {
-    res.send({ loggedIn: false });
-  }
-});
+// app.get("/login", (req, res) => {
+//   if (req.session.user) {
+//     res.send({ loggedIn: true, user: req.session.user });
+//   } else {
+//     res.send({ loggedIn: false });
+//   }
+// });
 
 const PORT = process.env.PORT || 3001;
 

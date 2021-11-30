@@ -15,17 +15,19 @@ function Registration() {
   const [passwordLog, setPasswordLog] = useState("");
   const [loginStatus, setLogingStatus] = useState("");
 
-  Axios.defaults.withCredentials = true; //must be written
+  //   Axios.defaults.withCredentials = true; //must be written
 
-  useEffect(() => {
-    Axios.get("http://localhost:3001/register").then((response) => {
-      if (response.data.loggedIn == true) {
-        setLogingStatus(response.data.user[0].username);
-      }
-    });
-  }, []);
+  //   useEffect(() => {
+  //     Axios.get("http://localhost:3001/login").then((response) => {
+  //       console.log(response);
+  //       if (response.data.loggedIn === true) {
+  //         setLogingStatus(response.data.user[0].username);
+  //       }
+  //     });
+  //   }, []);
 
   const register = () => {
+    console.log("registring");
     Axios.post("http://localhost:3001/register", {
       username: username,
       password: password,
