@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Fade } from "react-awesome-reveal";
@@ -15,16 +17,16 @@ function Registration() {
   const [passwordLog, setPasswordLog] = useState("");
   const [loginStatus, setLogingStatus] = useState("");
 
-  //   Axios.defaults.withCredentials = true; //must be written
+  Axios.defaults.withCredentials = true; //must be written
 
-  //   useEffect(() => {
-  //     Axios.get("http://localhost:3001/login").then((response) => {
-  //       console.log(response);
-  //       if (response.data.loggedIn === true) {
-  //         setLogingStatus(response.data.user[0].username);
-  //       }
-  //     });
-  //   }, []);
+  useEffect(() => {
+    Axios.get("http://localhost:3001/login").then((response) => {
+      console.log(response);
+      if (response.data.loggedIn === true) {
+        setLogingStatus(response.data.user[0].username);
+      }
+    });
+  }, []);
 
   const register = () => {
     console.log("registring");
@@ -52,44 +54,45 @@ function Registration() {
 
   return (
     <div>
-      <h1>Registration</h1>
-      <Form.Group className="mb-3">
-        <Form.Label>username</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="username"
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>password</Form.Label>
-        <Form.Control
-          type="password"
-          placeholder="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </Form.Group>
-      <Button onClick={register}>register</Button>
-
-      <h1>Login</h1>
-      <Form.Group className="mb-3">
-        <Form.Label>username</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="username"
-          onChange={(e) => setUsernameLog(e.target.value)}
-        />
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>password</Form.Label>
-        <Form.Control
-          type="password"
-          placeholder="password"
-          onChange={(e) => setPasswordLog(e.target.value)}
-        />
-      </Form.Group>
-      <Button onClick={login}>login</Button>
-      <div>{loginStatus}</div>
+      <Col xs={5} style={{ margin: "auto" }}>
+        <h1>Registration</h1>
+        <Form.Group className="mb-3">
+          <Form.Label>username</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="username"
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Form.Group>
+        <Button onClick={register}>register</Button>
+        <h1>Login</h1>
+        <Form.Group className="mb-3">
+          <Form.Label>username</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="username"
+            onChange={(e) => setUsernameLog(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="password"
+            onChange={(e) => setPasswordLog(e.target.value)}
+          />
+        </Form.Group>
+        <Button onClick={login}>login</Button>
+        <div>{loginStatus}</div>=
+      </Col>
     </div>
   );
 }

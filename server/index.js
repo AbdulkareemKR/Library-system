@@ -4,8 +4,9 @@ const mysql = require("mysql");
 const cors = require("cors");
 const app = express();
 const bcrypt = require("bcrypt");
-const cookieParser = require("cookie-parser");
+const cookieParser = require("cookie-parser"); //must be written
 const session = require("express-session");
+const jwt = require("jsonwebtoken");
 
 // mysql://baa3edb8227a69:1dca83a3@us-cdbr-east-04.cleardb.com/heroku_14bd760e873f76d?reconnect=true
 // TAKE THE INFO FROM THE LINE ABOVE
@@ -23,17 +24,15 @@ const db = mysql.createPool({
 //   database: "registration",
 // });
 
-// app.use(
-//   cors({
-//     origin: ["http://localhost:3000"],
-//     methods: ["GET", "POST"],
-//     credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
 
-app.use(cors());
-
-app.use(cookieParser); //must be written
+// app.use(cors());
 
 app.use(express.json()); //must be written
 app.use(bodyParser.urlencoded({ extended: true })); //must be written
@@ -83,7 +82,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      expires: 60 * 60,
+      expires: 60 * 60 * 24,
     },
   })
 );
@@ -109,7 +108,6 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  console.log("login backend");
   const username = req.body.username;
   const password = req.body.password;
 
@@ -122,7 +120,7 @@ app.post("/login", (req, res) => {
     if (result.length > 0) {
       bcrypt.compare(password, result[0].password, (error, response) => {
         if (response) {
-          // req.session.user = result;
+          req.session.user = result;
           console.log(req.session.user);
           res.send(result);
         } else {
@@ -135,13 +133,13 @@ app.post("/login", (req, res) => {
   });
 });
 
-// app.get("/login", (req, res) => {
-//   if (req.session.user) {
-//     res.send({ loggedIn: true, user: req.session.user });
-//   } else {
-//     res.send({ loggedIn: false });
-//   }
-// });
+app.get("/login", (req, res) => {
+  if (req.session.user) {
+    res.send({ loggedIn: true, user: req.session.user });
+  } else {
+    res.send({ loggedIn: false });
+  }
+});
 
 const PORT = process.env.PORT || 3001;
 
