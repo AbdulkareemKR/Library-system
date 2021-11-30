@@ -107,6 +107,10 @@ app.post("/register", (req, res) => {
   });
 });
 
+app.get("/isUserAuth", verifyJWT, (req, res) => {
+  res.send("your are authenticated");
+});
+
 app.post("/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -120,9 +124,13 @@ app.post("/login", (req, res) => {
     if (result.length > 0) {
       bcrypt.compare(password, result[0].password, (error, response) => {
         if (response) {
+          const id = result[0].id;
+          const token = jwt.sign({ id }, "jwtSecret", {
+            expiresIn: 300,
+          });
+
           req.session.user = result;
-          console.log(req.session.user);
-          res.send(result);
+          res.json({ auth: true, token: token, result: result });
         } else {
           res.send({ message: "username or password is incorrect" });
         }
