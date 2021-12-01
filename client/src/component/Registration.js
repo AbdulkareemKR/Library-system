@@ -9,6 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Axios from "axios";
 import "../App.css";
 import Spinner from "react-bootstrap/Spinner";
+import { Navigate } from "react-router-dom";
 
 function Registration() {
   const [username, setUsername] = useState("");
@@ -47,6 +48,7 @@ function Registration() {
         console.log(response);
         setLogingStatus(false);
       } else {
+        // return <Navigate to="/info" />;
         localStorage.setItem("token", response.data.token);
         setLogingStatus(true);
       }

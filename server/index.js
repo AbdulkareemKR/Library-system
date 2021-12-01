@@ -148,6 +148,7 @@ app.post("/login", (req, res) => {
 
           req.session.user = result;
           res.json({ auth: true, token: token, result: result });
+          // return res.redirect("info");
         } else {
           res.send({
             auth: false,
