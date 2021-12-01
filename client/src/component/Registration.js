@@ -102,7 +102,7 @@ function Registration() {
         <Button onClick={login}>login</Button>
         <div>
           {loginStatus && (
-            <Button onClick={userAuthenticated}>Check hAuthentication</Button>
+            <Button onClick={userAuthenticated}>Check Authentication</Button>
           )}
         </div>
       </Col>
