@@ -48,13 +48,11 @@ function InformationCard() {
   };
 
   const deleteReview = (movie) => {
-    Axios.delete(
-      `https://crud-back-end-node.herokuapp.com/api/delete/${movie}`
-    );
+    Axios.delete(`http://localhost:3001/api/delete/${movie}`);
   };
 
   const updateReview = (movie) => {
-    Axios.put("https://crud-back-end-node.herokuapp.com/api/update", {
+    Axios.put("http://localhost:3001/api/update", {
       movieName: movie,
       movieReview: newReview,
     });
@@ -62,12 +60,10 @@ function InformationCard() {
   };
 
   useEffect(() => {
-    Axios.get("https://crud-back-end-node.herokuapp.com/api/get").then(
-      (response) => {
-        setMovieReviewList(response.data);
-        setLoading(false);
-      }
-    );
+    Axios.get("http://localhost:3001/api/get").then((response) => {
+      setMovieReviewList(response.data);
+      setLoading(false);
+    });
   }, [movieReviewList]);
 
   return (
@@ -109,9 +105,9 @@ function InformationCard() {
             />
           ) : (
             <div>
-              {movieReviewList.map((value) => {
+              {movieReviewList.map((value, i) => {
                 return (
-                  <div>
+                  <div key={i}>
                     <Fade
                       durtion={1200}
                       cascade
