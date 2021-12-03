@@ -21,7 +21,7 @@ const db = mysql.createPool({
 // const db = mysql.createPool({
 //   host: "localhost",
 //   user: "root",
-//   password: "password",
+//   password: "",
 //   database: "registration",
 // });
 
@@ -45,7 +45,7 @@ app.get("/api/get", (req, res) => {
   });
 });
 
-app.post("/api/insert", (req, res) => {
+app.post("/api/insert", validateToken, (req, res) => {
   const movieName = req.body.movieName;
   const movieReview = req.body.movieReview;
 

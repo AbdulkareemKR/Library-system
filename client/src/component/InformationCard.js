@@ -22,16 +22,29 @@ function InformationCard() {
   };
 
   const submitReview = () => {
-    Axios.post("https://crud-back-end-node.herokuapp.com/api/insert", {
-      movieName: movieName,
-      movieReview: review,
+    Axios.post(
+      "http://localhost:3001/api/insert",
+      {
+        movieName: movieName,
+        movieReview: review,
+      },
+      {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      }
+    ).then((response) => {
+      if (response.data.error) {
+        alert(response.data.error);
+      } else {
+        setMovieName("");
+        setReview("");
+        setMovieReviewList([
+          ...movieReviewList,
+          { name: movieName, review: review },
+        ]);
+      }
     });
-    setMovieName("");
-    setReview("");
-    setMovieReviewList([
-      ...movieReviewList,
-      { name: movieName, review: review },
-    ]);
   };
 
   const deleteReview = (movie) => {

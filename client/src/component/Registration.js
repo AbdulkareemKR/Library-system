@@ -48,7 +48,7 @@ function Registration() {
         setLogingStatus(false);
       } else {
         // return <Navigate to="/info" />;
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("accessToken", response.data.token);
         setLogingStatus(true);
         navigate("/info");
       }
