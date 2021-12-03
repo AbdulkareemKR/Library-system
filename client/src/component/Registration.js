@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
 import { Fade } from "react-awesome-reveal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Axios from "axios";
 import "../App.css";
 import Spinner from "react-bootstrap/Spinner";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Registration() {
   const [username, setUsername] = useState("");
@@ -17,6 +15,7 @@ function Registration() {
   const [usernameLog, setUsernameLog] = useState("");
   const [passwordLog, setPasswordLog] = useState("");
   const [loginStatus, setLogingStatus] = useState(false);
+  let navigate = useNavigate();
 
   Axios.defaults.withCredentials = true; //must be written
 
@@ -51,6 +50,7 @@ function Registration() {
         // return <Navigate to="/info" />;
         localStorage.setItem("token", response.data.token);
         setLogingStatus(true);
+        navigate("/info");
       }
     });
   };

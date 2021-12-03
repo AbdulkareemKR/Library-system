@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Fade } from "react-awesome-reveal";
@@ -48,14 +49,10 @@ function InformationCard() {
   };
 
   useEffect(() => {
-    setTimeout(setLoading, 1000, false);
-    //setLoading(false);
-  }, [movieReviewList]);
-
-  useEffect(() => {
     Axios.get("https://crud-back-end-node.herokuapp.com/api/get").then(
       (response) => {
         setMovieReviewList(response.data);
+        setLoading(false);
       }
     );
   }, [movieReviewList]);
@@ -63,31 +60,33 @@ function InformationCard() {
   return (
     <div>
       <Form>
-        <Form.Group className="mb-3">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter your name"
-            onChange={(e) => {
-              setMovieName(e.target.value);
-            }}
-            value={movieName}
-          />
-        </Form.Group>
+        <Col xs={5} style={{ margin: "auto" }}>
+          <Form.Group className="mb-3">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter your name"
+              onChange={(e) => {
+                setMovieName(e.target.value);
+              }}
+              value={movieName}
+            />
+          </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter your description"
-            onChange={(e) => {
-              setReview(e.target.value);
-            }}
-            value={review}
-          />
-        </Form.Group>
-        <Button onClick={submitReview}>Submit</Button>
-        <br />
+          <Form.Group className="mb-3">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter your description"
+              onChange={(e) => {
+                setReview(e.target.value);
+              }}
+              value={review}
+            />
+          </Form.Group>
+          <Button onClick={submitReview}>Submit</Button>
+          <br />
+        </Col>
         <div className="wrapper">
           {loading ? (
             <Spinner
