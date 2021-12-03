@@ -10,10 +10,10 @@ import "../App.css";
 import Spinner from "react-bootstrap/Spinner";
 
 function InformationCard() {
-  const [movieName, setMovieName] = useState("");
-  const [review, setReview] = useState("");
+  const [name, setName] = useState("");
+  const [information, setInformation] = useState("");
   const [movieReviewList, setMovieReviewList] = useState([]);
-  const [newReview, setNewReview] = useState("");
+  const [newName, SetNewName] = useState("");
   const [edit, setEdit] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -25,8 +25,8 @@ function InformationCard() {
     Axios.post(
       "http://localhost:3001/api/insert",
       {
-        movieName: movieName,
-        movieReview: review,
+        name: name,
+        information: information,
       },
       {
         headers: {
@@ -37,18 +37,18 @@ function InformationCard() {
       if (response.data.error) {
         alert(response.data.error);
       } else {
-        setMovieName("");
-        setReview("");
+        setName("");
+        setInformation("");
         setMovieReviewList([
           ...movieReviewList,
-          { name: movieName, review: review },
+          { name: name, information: information },
         ]);
       }
     });
   };
 
-  const deleteReview = (movie) => {
-    Axios.delete(`http://localhost:3001/api/delete/${movie}`, {
+  const deleteReview = (name) => {
+    Axios.delete(`http://localhost:3001/api/delete/${name}`, {
       headers: {
         accessToken: localStorage.getItem("accessToken"),
       },
@@ -59,12 +59,12 @@ function InformationCard() {
     });
   };
 
-  const updateReview = (movie) => {
+  const updateReview = (name) => {
     Axios.put("http://localhost:3001/api/update", {
-      movieName: movie,
-      movieReview: newReview,
+      name: name,
+      information: newName,
     });
-    setNewReview("");
+    SetNewName("");
   };
 
   useEffect(() => {
@@ -84,9 +84,9 @@ function InformationCard() {
               type="text"
               placeholder="Enter your name"
               onChange={(e) => {
-                setMovieName(e.target.value);
+                setName(e.target.value);
               }}
-              value={movieName}
+              value={name}
             />
           </Form.Group>
 
@@ -96,9 +96,9 @@ function InformationCard() {
               type="text"
               placeholder="Enter your description"
               onChange={(e) => {
-                setReview(e.target.value);
+                setInformation(e.target.value);
               }}
-              value={review}
+              value={information}
             />
           </Form.Group>
           <Button onClick={submitReview}>Submit</Button>
@@ -134,14 +134,14 @@ function InformationCard() {
                                 type="text"
                                 defaultValue={value.name}
                                 onChange={(e) => {
-                                  setNewReview(e.target.value);
+                                  SetNewName(e.target.value);
                                 }}
                               />
                             ) : (
                               <div>{value.name}</div>
                             )}
                           </Card.Title>
-                          <Card.Text>{value.review}</Card.Text>
+                          <Card.Text>{value.information}</Card.Text>
                           <Button
                             variant="danger"
                             onClick={() => {
@@ -150,7 +150,7 @@ function InformationCard() {
                           >
                             Delete
                           </Button>
-                          <div>{newReview}</div>
+                          <div>{newName}</div>
                           <Button
                             variant="primary"
                             onClick={() => {
