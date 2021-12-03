@@ -28,7 +28,7 @@ const db = mysql.createPool({
 app.use(
   cors({
     origin: ["http://localhost:3000"],
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "DELETE", "PUT"],
     credentials: true,
   })
 );
@@ -56,7 +56,7 @@ app.post("/api/insert", validateToken, (req, res) => {
   });
 });
 
-app.delete("/api/delete/:movieName", (req, res) => {
+app.delete("/api/delete/:movieName", validateToken, (req, res) => {
   const deletedName = req.params.movieName;
 
   const sqlDelete = "DELETE FROM movie_reviews WHERE name = ?";

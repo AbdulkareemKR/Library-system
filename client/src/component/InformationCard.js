@@ -48,7 +48,15 @@ function InformationCard() {
   };
 
   const deleteReview = (movie) => {
-    Axios.delete(`http://localhost:3001/api/delete/${movie}`);
+    Axios.delete(`http://localhost:3001/api/delete/${movie}`, {
+      headers: {
+        accessToken: localStorage.getItem("accessToken"),
+      },
+    }).then((response) => {
+      if (response.data.error) {
+        alert(response.data.error);
+      }
+    });
   };
 
   const updateReview = (movie) => {
