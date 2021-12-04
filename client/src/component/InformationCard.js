@@ -12,7 +12,7 @@ import Spinner from "react-bootstrap/Spinner";
 function InformationCard() {
   const [name, setName] = useState("");
   const [information, setInformation] = useState("");
-  const [movieReviewList, setMovieReviewList] = useState([]);
+  const [cardList, setCardList] = useState([]);
   const [newName, SetNewName] = useState("");
   const [edit, setEdit] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -39,10 +39,7 @@ function InformationCard() {
       } else {
         setName("");
         setInformation("");
-        setMovieReviewList([
-          ...movieReviewList,
-          { name: name, information: information },
-        ]);
+        setCardList([...cardList, { name: name, information: information }]);
       }
     });
   };
@@ -69,10 +66,10 @@ function InformationCard() {
 
   useEffect(() => {
     Axios.get("http://localhost:3001/api/get").then((response) => {
-      setMovieReviewList(response.data);
+      setCardList(response.data);
       setLoading(false);
     });
-  }, [movieReviewList]);
+  }, [cardList]);
 
   return (
     <div>
@@ -113,7 +110,7 @@ function InformationCard() {
             />
           ) : (
             <div>
-              {movieReviewList.map((value, i) => {
+              {cardList.map((value, i) => {
                 return (
                   <div key={i}>
                     <Fade

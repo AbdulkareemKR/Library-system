@@ -52,7 +52,7 @@ app.post("/api/insert", validateToken, (req, res) => {
 
   const sqlInsert =
     "INSERT INTO info-card (username, name, information) VALUES (?,?)";
-  db.query(sqlInsert, [name, information], (err, result) => {
+  db.query(sqlInsert, [username, name, information], (err, result) => {
     console.log(result);
     console.log("submitted");
   });
