@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser"); //must be written
 const session = require("express-session");
 const jwt = require("jsonwebtoken");
 const { validateToken } = require("./middlewares/AuthMiddleware");
+const lkdhf;lkasdj
 
 // mysql://baa3edb8227a69:1dca83a3@us-cdbr-east-04.cleardb.com/heroku_14bd760e873f76d?reconnect=true
 // TAKE THE INFO FROM THE LINE ABOVE
