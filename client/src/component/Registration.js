@@ -14,7 +14,7 @@ function Registration() {
   const [password, setPassword] = useState("");
   const [usernameLog, setUsernameLog] = useState("");
   const [passwordLog, setPasswordLog] = useState("");
-  const [loginStatus, setLogingStatus] = useState(false);
+  const [loginStatus, setLogingStatus] = useState("");
   let navigate = useNavigate();
 
   Axios.defaults.withCredentials = true; //must be written
@@ -29,12 +29,12 @@ function Registration() {
   }, []);
 
   const register = () => {
-    console.log("registring");
     Axios.post("http://localhost:3001/register", {
       username: username,
       password: password,
     }).then((response) => {
       console.log(response);
+      navigate("/info");
     });
   };
 
@@ -45,11 +45,10 @@ function Registration() {
     }).then((response) => {
       if (!response.data.auth) {
         console.log(response);
-        setLogingStatus(false);
+        setLogingStatus(response.data.message);
       } else {
-        // return <Navigate to="/info" />;
         localStorage.setItem("accessToken", response.data.token);
-        setLogingStatus(true);
+        setLogingStatus(response.data.message);
         navigate("/info");
       }
     });
@@ -103,9 +102,10 @@ function Registration() {
         </Form.Group>
         <Button onClick={login}>login</Button>
         <div>
-          {loginStatus && (
+          {/* {loginStatus && (
             <Button onClick={userAuthenticated}>Check Authentication</Button>
-          )}
+          )} */}
+          {loginStatus}
         </div>
       </Col>
     </div>

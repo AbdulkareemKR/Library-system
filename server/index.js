@@ -39,9 +39,13 @@ app.use(express.json()); //must be written
 app.use(bodyParser.urlencoded({ extended: true })); //must be written
 
 app.get("/api/get", (req, res) => {
-  const sqlSelect = "SELECT * FROM info-card";
+  const sqlSelect = "SELECT * FROM card";
   db.query(sqlSelect, (err, result) => {
-    res.send(result);
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
   });
 });
 
@@ -51,17 +55,21 @@ app.post("/api/insert", validateToken, (req, res) => {
   const username = req.user.username;
 
   const sqlInsert =
-    "INSERT INTO info-card (username, name, information) VALUES (?,?)";
+    "INSERT INTO card (username, name, information) VALUES (?,?,?)";
   db.query(sqlInsert, [username, name, information], (err, result) => {
-    console.log(result);
-    console.log("submitted");
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(result);
+      console.log("submitted");
+    }
   });
 });
 
 app.delete("/api/delete/:name", validateToken, (req, res) => {
   const deletedName = req.params.name;
 
-  const sqlDelete = "DELETE FROM info-card WHERE name = ?";
+  const sqlDelete = "DELETE FROM card WHERE name = ?";
   db.query(sqlDelete, deletedName, (err, result) => {
     if (err) console.log(err);
   });
@@ -70,7 +78,7 @@ app.delete("/api/delete/:name", validateToken, (req, res) => {
 app.put("/api/update", (req, res) => {
   const updatedName = req.body.name;
   const updatedReview = req.body.information;
-  const sqlUpdate = "UPDATE info-card SET information = ? WHERE name = ?";
+  const sqlUpdate = "UPDATE card SET information = ? WHERE name = ?";
 
   db.query(sqlUpdate, [updatedReview, updatedName], (err, result) => {
     if (err) console.log(err);
@@ -105,8 +113,28 @@ app.post("/register", (req, res) => {
       "INSERT INTO registration (username, password) VALUES (?,?)";
     db.query(sqlInsert, [username, hash], (err, result) => {
       console.log(result);
-      console.log(err);
     });
+  });
+  const sqlSelect = "SELECT * FROM registration WHERE username = ?";
+  db.query(sqlSelect, username, (err, result) => {
+    if (err) {
+      res.send({ err: err });
+    }
+
+    if (result.length > 0) {
+      bcrypt.compare(password, result[0].password, (error, response) => {
+        if (response) {
+          const id = result[0].id;
+          const username = result[0].username;
+          const token = jwt.sign({ id, username }, "jwtSecret", {
+            expiresIn: 300,
+          });
+
+          req.session.user = result;
+          res.json({ auth: true, token: token, result: result });
+        }
+      });
+    }
   });
 });
 
@@ -145,13 +173,13 @@ app.post("/login", (req, res) => {
       bcrypt.compare(password, result[0].password, (error, response) => {
         if (response) {
           const id = result[0].id;
-          const token = jwt.sign({ id }, "jwtSecret", {
+          const username = result[0].username;
+          const token = jwt.sign({ id, username }, "jwtSecret", {
             expiresIn: 300,
           });
 
           req.session.user = result;
           res.json({ auth: true, token: token, result: result });
-          // return res.redirect("info");
         } else {
           res.send({
             auth: false,

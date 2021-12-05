@@ -16,6 +16,7 @@ function InformationCard() {
   const [newName, SetNewName] = useState("");
   const [edit, setEdit] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [fetch, setFetch] = useState(false);
 
   const editMovie = () => {
     setEdit(!edit);
@@ -35,11 +36,12 @@ function InformationCard() {
       }
     ).then((response) => {
       if (response.data.error) {
-        alert(response.data.error);
+        alert("you are not signed in");
       } else {
         setName("");
         setInformation("");
         setCardList([...cardList, { name: name, information: information }]);
+        setFetch(!fetch);
       }
     });
   };
@@ -66,10 +68,11 @@ function InformationCard() {
 
   useEffect(() => {
     Axios.get("http://localhost:3001/api/get").then((response) => {
-      setCardList(response.data);
+      console.log(response);
       setLoading(false);
+      setCardList(response.data);
     });
-  }, [cardList]);
+  }, [fetch]);
 
   return (
     <div>
@@ -110,9 +113,9 @@ function InformationCard() {
             />
           ) : (
             <div>
-              {cardList.map((value, i) => {
+              {cardList.map((value, key) => {
                 return (
-                  <div key={i}>
+                  <div key={key}>
                     <Fade
                       durtion={1200}
                       cascade
@@ -122,6 +125,7 @@ function InformationCard() {
                     >
                       <Card className="text-center">
                         <Card.Header style={{ margin: "auto" }}>
+                          {/* <div> {value.username} </div> */}
                           Information Card
                         </Card.Header>
                         <Card.Body>
