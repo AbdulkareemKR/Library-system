@@ -58,10 +58,9 @@ app.post("/api/insert", validateToken, (req, res) => {
     "INSERT INTO card (username, name, information) VALUES (?,?,?)";
   db.query(sqlInsert, [username, name, information], (err, result) => {
     if (err) {
-      console.log(err);
+      res.send({ error: err });
     } else {
-      console.log(result);
-      console.log("submitted");
+      res.send({ message: result });
     }
   });
 });
@@ -71,7 +70,12 @@ app.delete("/api/delete/:name", validateToken, (req, res) => {
 
   const sqlDelete = "DELETE FROM card WHERE name = ?";
   db.query(sqlDelete, deletedName, (err, result) => {
-    if (err) console.log(err);
+    if (err) {
+      console.log(err);
+      res.send({ error: err });
+    } else {
+      res.send({ message: result });
+    }
   });
 });
 

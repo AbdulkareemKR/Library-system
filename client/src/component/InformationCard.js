@@ -40,7 +40,7 @@ function InformationCard() {
       } else {
         setName("");
         setInformation("");
-        setCardList([...cardList, { name: name, information: information }]);
+        setCardList([...cardList, { name, information: information }]);
         setFetch(!fetch);
       }
     });
@@ -54,6 +54,8 @@ function InformationCard() {
     }).then((response) => {
       if (response.data.error) {
         alert(response.data.error);
+      } else {
+        setFetch(!fetch);
       }
     });
   };
@@ -68,7 +70,6 @@ function InformationCard() {
 
   useEffect(() => {
     Axios.get("http://localhost:3001/api/get").then((response) => {
-      console.log(response);
       setLoading(false);
       setCardList(response.data);
     });
@@ -125,7 +126,7 @@ function InformationCard() {
                     >
                       <Card className="text-center">
                         <Card.Header style={{ margin: "auto" }}>
-                          {/* <div> {value.username} </div> */}
+                          <div> {value.username} </div>
                           Information Card
                         </Card.Header>
                         <Card.Body>
