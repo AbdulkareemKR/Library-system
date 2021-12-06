@@ -161,7 +161,6 @@ function InformationCard() {
                           >
                             Change
                           </Button>
-
                           <Button variant="primary" onClick={editMovie}>
                             Edit
                           </Button>
