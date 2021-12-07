@@ -3,15 +3,21 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
   padding: 3px;
+  font-family: "Cairo", sans-serif;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
 .button {
   background-image: linear-gradient(to right, #8b5c00, #ffb000);
-  border: none;
-  margin-bottom: 10px;
+  font-family: "Cairo", sans-serif;
+  font-weight: 600;
+  border: solid 1px white;
 }
 
 .button:hover {
   background-image: linear-gradient(to right, #8b5c00, #ffb000);
   background-clip: text;
+  -webkit-text-fill-color: transparent;
+  border: solid 1px #c78900;
 }

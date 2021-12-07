@@ -84,7 +84,9 @@ function Registration() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
-        <Button onClick={register}>register</Button>
+        <Button className={styles.button} onClick={register}>
+          register
+        </Button>
         <h1 className={styles.text}>Login</h1>
         <Form.Group className="mb-3">
           <Form.Label>username</Form.Label>
