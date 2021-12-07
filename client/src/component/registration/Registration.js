@@ -8,6 +8,7 @@ import Axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as Svgw } from "./wave.svg";
+import styles from "./registration.module.css";
 
 function Registration() {
   const [username, setUsername] = useState("");
@@ -66,7 +67,7 @@ function Registration() {
     <div>
       <Svgw />
       <Col xs={5} style={{ margin: "auto" }}>
-        <h1>Registration</h1>
+        <h1 className={styles.text}>Registration</h1>
         <Form.Group className="mb-3">
           <Form.Label>username</Form.Label>
           <Form.Control
@@ -84,7 +85,7 @@ function Registration() {
           />
         </Form.Group>
         <Button onClick={register}>register</Button>
-        <h1>Login</h1>
+        <h1 className={styles.text}>Login</h1>
         <Form.Group className="mb-3">
           <Form.Label>username</Form.Label>
           <Form.Control
@@ -101,7 +102,9 @@ function Registration() {
             onChange={(e) => setPasswordLog(e.target.value)}
           />
         </Form.Group>
-        <Button onClick={login}>login</Button>
+        <Button className={styles.button} onClick={login}>
+          login
+        </Button>
         <div>
           {/* {loginStatus && (
             <Button onClick={userAuthenticated}>Check Authentication</Button>
