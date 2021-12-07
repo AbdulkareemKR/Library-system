@@ -8,6 +8,7 @@ import Axios from "axios";
 import "../App.css";
 import Spinner from "react-bootstrap/Spinner";
 import { useNavigate } from "react-router-dom";
+import { ReactComponent as Svgw } from "./wave.svg";
 
 function Registration() {
   const [username, setUsername] = useState("");
@@ -64,6 +65,7 @@ function Registration() {
 
   return (
     <div>
+      <Svgw />
       <Col xs={5} style={{ margin: "auto" }}>
         <h1>Registration</h1>
         <Form.Group className="mb-3">
