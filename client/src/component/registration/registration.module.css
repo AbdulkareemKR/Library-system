@@ -13,6 +13,7 @@
   font-family: "Cairo", sans-serif;
   font-weight: 600;
   border: solid 1px white;
+  margin-bottom: 10px;
 }
 
 .button:hover {
