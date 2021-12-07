@@ -6,7 +6,6 @@ import Card from "react-bootstrap/Card";
 import { Fade } from "react-awesome-reveal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Axios from "axios";
-import "../App.css";
 import Spinner from "react-bootstrap/Spinner";
 
 function InformationCard() {

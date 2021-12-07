@@ -5,7 +5,6 @@ import Button from "react-bootstrap/Button";
 import { Fade } from "react-awesome-reveal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Axios from "axios";
-import "../App.css";
 import Spinner from "react-bootstrap/Spinner";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as Svgw } from "./wave.svg";
