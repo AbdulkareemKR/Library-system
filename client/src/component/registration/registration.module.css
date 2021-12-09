@@ -12,9 +12,10 @@
   background-image: linear-gradient(to right, #8b5c00, #ffb000);
   font-family: "Cairo", sans-serif;
   font-weight: 600;
-  border: solid 1px white;
+  border: solid 1px #c78900;
   margin-bottom: 10px;
   outline: none;
+  box-shadow: 0px 1px 2px 1px grey;
 }
 
 .button:hover {
@@ -26,4 +27,12 @@
 
 .button:focus {
   outline: none;
+  border: solid 1px #c78900;
+  box-shadow: 0px 1px 1px 1px grey;
+}
+
+.button:active {
+  background-color: blue;
+  transform: translateY(1px);
+  box-shadow: 0px 1px 0px 0px grey !important;
 }
