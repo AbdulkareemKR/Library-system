@@ -14,6 +14,7 @@
   font-weight: 600;
   border: solid 1px white;
   margin-bottom: 10px;
+  outline: none;
 }
 
 .button:hover {
@@ -21,4 +22,8 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
   border: solid 1px #c78900;
+}
+
+.button:focus {
+  outline: none;
 }
