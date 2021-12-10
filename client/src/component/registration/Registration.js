@@ -9,6 +9,7 @@ import Spinner from "react-bootstrap/Spinner";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as Svgw } from "../SVGs/wave.svg";
 import styles from "./registration.module.css";
+import "../../App.css";
 
 function Registration() {
   const [username, setUsername] = useState("");
@@ -84,7 +85,7 @@ function Registration() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
-        <Button className={styles.button} onClick={register}>
+        <Button className="original-button" onClick={register}>
           register
         </Button>
         <h1 className={styles.text}>Login</h1>
@@ -104,7 +105,7 @@ function Registration() {
             onChange={(e) => setPasswordLog(e.target.value)}
           />
         </Form.Group>
-        <Button className={styles.button} onClick={login}>
+        <Button className="original-button" onClick={login}>
           login
         </Button>
         <div>
