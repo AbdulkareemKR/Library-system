@@ -13,6 +13,7 @@ import Axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
 import { ReactComponent as Svgw } from "../SVGs/wave.svg";
 import styles from "./homePage.module.css";
+import "../../App.css";
 
 function HomePage() {
   return (
@@ -32,7 +33,7 @@ function HomePage() {
                 className="me-2"
                 aria-label="Search"
               />
-              <Button variant="outline-success">Search</Button>
+              <Button className="secondary-button">Search</Button>
             </Form>
           </Nav>
         </Container>
