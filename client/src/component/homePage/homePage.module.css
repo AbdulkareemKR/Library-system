@@ -1,0 +1,10 @@
+.container {
+  font-family: "Cairo", sans-serif;
+  width: 80%;
+  margin: 15px 10px;
+  padding: 20px 40px;
+  font-size: 20px;
+  background-color: rgba(240, 238, 238, 0.918);
+  border-radius: 15px;
+  display: inline-block;
+}

@@ -66,7 +66,6 @@ function Registration() {
 
   return (
     <div>
-      <Svgw />
       <Col xs={5} style={{ margin: "auto" }}>
         <h1 className={styles.text}>Registration</h1>
         <Form.Group className="mb-3">
