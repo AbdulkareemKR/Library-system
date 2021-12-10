@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
 import { useNavigate } from "react-router-dom";
-import { ReactComponent as Svgw } from "./wave.svg";
+import { ReactComponent as Svgw } from "../SVGs/wave.svg";
 import styles from "./registration.module.css";
 
 function Registration() {
