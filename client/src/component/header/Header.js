@@ -12,11 +12,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
 import { ReactComponent as Svgw } from "../SVGs/wave.svg";
-import styles from "./homePage.module.css";
+import styles from "./header.module.css";
 import "../../App.css";
 import RegistrationModal from "../registrationModal/RegistrationModal";
 
-function HomePage() {
+function Header() {
   const [showModal, setModal] = useState(false);
   const [logIn, setLogIn] = useState(true);
   const [page, setPage] = useState("home");
@@ -76,4 +76,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default Header;
