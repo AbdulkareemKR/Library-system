@@ -28,6 +28,7 @@ function HomePage() {
             <Nav.Link href="#pricing">Pricing</Nav.Link>
             <Form className="d-flex">
               <FormControl
+                size="sm"
                 type="search"
                 placeholder="Search"
                 className="me-2"
@@ -35,6 +36,9 @@ function HomePage() {
               />
               <Button className="secondary-button">Search</Button>
             </Form>
+            <Button className={`secondary-button ${styles.signIn}`}>
+              Sign in
+            </Button>
           </Nav>
         </Container>
       </Navbar>
