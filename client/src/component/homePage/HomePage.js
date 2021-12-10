@@ -22,6 +22,7 @@ function HomePage() {
   const [page, setPage] = useState("home");
 
   const fireModal = () => {
+    console.log("yes");
     setModal(true);
   };
 
@@ -35,10 +36,6 @@ function HomePage() {
     setLogIn(false);
   };
 
-  const pageClick = (page) => {
-    console.log(page);
-    setPage(page);
-  };
   return (
     <div>
       <Svgw />
@@ -61,7 +58,7 @@ function HomePage() {
             </Form>
             <Button
               className={`secondary-button ${styles.signIn}`}
-              onclick={fireModal}
+              onClick={fireModal}
             >
               Sign in
             </Button>
