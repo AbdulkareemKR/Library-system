@@ -41,11 +41,11 @@ function Header() {
       <Svgw />
       <Navbar className={styles.navbar} variant="dark">
         <Container>
-          <Navbar.Brand href="#home">KFUPM LIBRARY</Navbar.Brand>
+          <Navbar.Brand href="/home">KFUPM LIBRARY</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Books</Nav.Link>
-            <Nav.Link href="#pricing">About Us</Nav.Link>
+            <Nav.Link href="/home">Home</Nav.Link>
+            <Nav.Link href="/Books">Books</Nav.Link>
+            <Nav.Link href="/AboutUs">About Us</Nav.Link>
             <Form className="d-flex">
               <FormControl
                 size="sm"
