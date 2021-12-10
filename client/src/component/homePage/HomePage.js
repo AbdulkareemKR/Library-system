@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Col from "react-bootstrap/Col";
@@ -14,8 +14,31 @@ import Spinner from "react-bootstrap/Spinner";
 import { ReactComponent as Svgw } from "../SVGs/wave.svg";
 import styles from "./homePage.module.css";
 import "../../App.css";
+import RegistrationModal from "../registrationModal/RegistrationModal";
 
 function HomePage() {
+  const [showModal, setModal] = useState(false);
+  const [logIn, setLogIn] = useState(true);
+  const [page, setPage] = useState("home");
+
+  const fireModal = () => {
+    setModal(true);
+  };
+
+  const handleClose = () => {
+    setModal(false);
+  };
+  const handleLogIn = () => {
+    setLogIn(true);
+  };
+  const handleLogOut = () => {
+    setLogIn(false);
+  };
+
+  const pageClick = (page) => {
+    console.log(page);
+    setPage(page);
+  };
   return (
     <div>
       <Svgw />
@@ -36,12 +59,22 @@ function HomePage() {
               />
               <Button className="secondary-button">Search</Button>
             </Form>
-            <Button className={`secondary-button ${styles.signIn}`}>
+            <Button
+              className={`secondary-button ${styles.signIn}`}
+              onclick={fireModal}
+            >
               Sign in
             </Button>
           </Nav>
         </Container>
       </Navbar>
+      <RegistrationModal
+        showModal={showModal}
+        logIn={logIn}
+        handleClose={handleClose}
+        handleLogIn={handleLogIn}
+        handleLogOut={handleLogOut}
+      />
     </div>
   );
 }
