@@ -14,12 +14,14 @@ import Spinner from "react-bootstrap/Spinner";
 import { ReactComponent as Svgw } from "../SVGs/wave.svg";
 import styles from "./header.module.css";
 import "../../App.css";
+import { useNavigate } from "react-router-dom";
 import RegistrationModal from "../registrationModal/RegistrationModal";
 
 function Header() {
   const [showModal, setModal] = useState(false);
   const [logIn, setLogIn] = useState(true);
   const [page, setPage] = useState("home");
+  let navigate = useNavigate();
 
   const fireModal = () => {
     console.log("yes");
@@ -44,8 +46,8 @@ function Header() {
           <Navbar.Brand href="/home">KFUPM LIBRARY</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="/home">Home</Nav.Link>
-            <Nav.Link href="/Books">Books</Nav.Link>
-            <Nav.Link href="/AboutUs">About Us</Nav.Link>
+            <Nav.Link href="/book">Books</Nav.Link>
+            <Nav.Link href="/aboutUs">About Us</Nav.Link>
             <Form className="d-flex">
               <FormControl
                 size="sm"
@@ -58,7 +60,7 @@ function Header() {
             </Form>
             <Button
               className={`secondary-button ${styles.signIn}`}
-              onClick={fireModal}
+              onClick={() => navigate("/")}
             >
               Sign in
             </Button>
