@@ -10,6 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
 import styles from "./bookPage.module.css";
+import BookInfoPage from "../bookInfoPage/BookInfoPage";
 
 function BookPage() {
   const [name, setName] = useState("");
@@ -58,7 +59,10 @@ function BookPage() {
                           triggerOnce // to present each element on itself while moving down
                           direction="up"
                         >
-                          <Card className={`${styles.card}`}>
+                          <Card
+                            onClick={<BookInfoPage />}
+                            className={`${styles.card}`}
+                          >
                             <Card.Header style={{ margin: "auto" }}>
                               <div>
                                 {/* <img src={`data:image/png;base64,${objImg}`} /> */}
