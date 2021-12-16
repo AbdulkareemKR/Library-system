@@ -1,0 +1,21 @@
+/* .bookCard {
+  columns: 3 auto;
+} */
+
+.card {
+  width: 80%;
+  margin: auto;
+  margin-bottom: 30px;
+}
+
+.bookImage {
+  width: 30%;
+}
+
+.bookName {
+  margin-top: 7px;
+  padding: 3px;
+  font-family: "Cairo", sans-serif;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
