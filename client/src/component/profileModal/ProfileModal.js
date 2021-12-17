@@ -1,7 +1,7 @@
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Col, Row, Form } from "react-bootstrap";
-import styles from "./registrationModal.module.css";
+import styles from "./profileModal.module.css";
 import { FaIdCard } from "react-icons/fa";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { HiTag } from "react-icons/hi";
@@ -11,7 +11,7 @@ import Container from "react-bootstrap/Container";
 
 // import React, { useState } from "react";
 
-function RegistrationModal(props) {
+function ProfileModal(props) {
   return (
     <div>
       <Modal
@@ -26,7 +26,7 @@ function RegistrationModal(props) {
               className={styles.title}
               id="contained-modal-title-vcenter"
             >
-              {props.logIn ? "تسجيل الدخول " : " إنشاء حساب "}
+              {props.logIn ? "My Books" : "Account Informaion"}
               <BsFillPeopleFill className={styles.icons} />
             </Modal.Title>
           </Modal.Header>
@@ -39,7 +39,7 @@ function RegistrationModal(props) {
                   }`}
                   onClick={props.handleLogOut}
                 >
-                  إنشاء حساب
+                  Account Informaion
                 </Button>
               </Col>
               <Col>
@@ -49,7 +49,7 @@ function RegistrationModal(props) {
                   }`}
                   onClick={props.handleLogIn}
                 >
-                  تسجيل دخول
+                  My Books
                 </Button>
               </Col>
             </Row>
@@ -62,42 +62,44 @@ function RegistrationModal(props) {
                 ) : (
                   <Form.Group as={Row} className={styles.group}>
                     <Form.Label className={styles.label} column sm="4">
-                      <FaIdCard className={styles.icons} /> الاسم
+                      <FaIdCard className={styles.icons} /> Username
                     </Form.Label>
                     <Col>
                       <Form.Control
                         required
                         className={styles.input}
                         type="text"
-                        placeholder="أدخل اسمك"
+                        placeholder="Username"
+                        disabled
                       />
                     </Col>
                   </Form.Group>
                 )}
                 <Form.Group as={Row} className={styles.group}>
                   <Form.Label className={styles.label} column sm="4">
-                    <MdEmail className={styles.icons} /> الايميل
+                    <MdEmail className={styles.icons} /> Email
                   </Form.Label>
                   <Col>
                     <Form.Control
                       required
                       className={styles.input}
                       type="email"
-                      placeholder="أدخل ايميلك"
+                      placeholder="Email"
+                      disabled
                     />
                   </Col>
                 </Form.Group>
 
                 <Form.Group as={Row} className={styles.group}>
                   <Form.Label className={styles.label} column sm="4">
-                    <AiFillUnlock className={styles.icons} /> كلمة المرور
+                    <AiFillUnlock className={styles.icons} /> Password
                   </Form.Label>
                   <Col>
                     <Form.Control
                       required
                       className={styles.input}
                       type="password"
-                      placeholder="أدخل كلمة المرور"
+                      placeholder="************"
                     />
                   </Col>
                 </Form.Group>
@@ -168,4 +170,4 @@ function RegistrationModal(props) {
   );
 }
 
-export default RegistrationModal;
+export default ProfileModal;

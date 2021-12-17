@@ -43,92 +43,39 @@ function BookPage() {
           <Spinner animation="grow" className="spinner1" />
         ) : (
           <div className={styles.bookCard}>
-            <Container fluid>
-              <Row>
-                <Col>
-                  {cardList.slice(0, cardList.length / 2).map((value, key) => {
-                    return (
-                      <div key={key}>
-                        <Fade
-                          durtion={1200}
-                          cascade
-                          damping={0.02}
-                          triggerOnce // to present each element on itself while moving down
-                          direction="up"
-                        >
-                          <Card className={`${styles.card}`}>
-                            <Card.Header style={{ margin: "auto" }}>
-                              <div></div>
-                              Book
-                            </Card.Header>
-                            <Card.Body>
-                              <img
-                                src={value.image}
-                                className={styles.bookImage}
-                              />
-                              <div className={styles.bookName}>
-                                {value.name}
-                              </div>
-                            </Card.Body>
-                            <div>
-                              <br />
-                            </div>
-                            <Button
-                              className={"original-button"}
-                              onClick={() => bookInformation(value)}
-                            >
-                              Book Page
-                            </Button>
-                          </Card>
-                        </Fade>
+            {cardList.map((value, key) => {
+              return (
+                <div key={key}>
+                  <Fade
+                    durtion={1200}
+                    cascade
+                    damping={0.02}
+                    triggerOnce // to present each element on itself while moving down
+                    direction="up"
+                  >
+                    <Card className={`${styles.card}`}>
+                      <Card.Header style={{ margin: "auto" }}>
+                        <div></div>
+                        Book
+                      </Card.Header>
+                      <Card.Body>
+                        <img src={value.image} className={styles.bookImage} />
+                        <div className={styles.bookName}>{value.name}</div>
+                      </Card.Body>
+                      <div>
+                        <br />
                       </div>
-                    );
-                  })}
-                </Col>
-                <Col>
-                  {cardList
-                    .slice(cardList.length / 2, cardList.length - 1)
-                    .map((value, key) => {
-                      return (
-                        <div key={key}>
-                          <Fade
-                            durtion={1200}
-                            cascade
-                            damping={0.02}
-                            triggerOnce // to present each element on itself while moving down
-                            direction="up"
-                          >
-                            <Card className={`${styles.card}`}>
-                              <Card.Header style={{ margin: "auto" }}>
-                                <div></div>
-                                Book
-                              </Card.Header>
-                              <Card.Body>
-                                <img
-                                  src={value.image}
-                                  className={styles.bookImage}
-                                />
-                                <div className={styles.bookName}>
-                                  {value.name}
-                                </div>
-                              </Card.Body>
-                              <div>
-                                <br />
-                              </div>
-                              <Button
-                                className={"original-button"}
-                                onClick={() => bookInformation(value)}
-                              >
-                                Book Page
-                              </Button>
-                            </Card>
-                          </Fade>
-                        </div>
-                      );
-                    })}
-                </Col>
-              </Row>
-            </Container>
+                      <Button
+                        className={"original-button"}
+                        onClick={() => bookInformation(value)}
+                      >
+                        More Details
+                      </Button>
+                    </Card>
+                  </Fade>
+                </div>
+              );
+            })}
           </div>
         )}
       </div>

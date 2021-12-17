@@ -2,7 +2,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
 }
 
 .signIn {
@@ -10,4 +10,11 @@
   right: 0;
   margin-right: 20px;
   border-radius: 100px;
+}
+
+.profile {
+  border-radius: 100px;
+  position: absolute;
+  top: 10px;
+  left: 20px;
 }

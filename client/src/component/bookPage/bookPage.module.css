@@ -1,6 +1,9 @@
-/* .bookCard {
-  columns: 3 auto;
-} */
+.bookCard {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  /* grid-auto-rows: 50px; */
+  /* column-gap: 1rem; */
+}
 
 .card {
   width: 80%;

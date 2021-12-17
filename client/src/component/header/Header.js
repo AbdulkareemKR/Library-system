@@ -15,7 +15,8 @@ import { ReactComponent as Svgw } from "../SVGs/wave.svg";
 import styles from "./header.module.css";
 import "../../App.css";
 import { useNavigate } from "react-router-dom";
-import RegistrationModal from "../registrationModal/RegistrationModal";
+import ProfileModal from "../profileModal/ProfileModal";
+import { FaUser } from "react-icons/fa";
 
 function Header() {
   const [showModal, setModal] = useState(false);
@@ -24,7 +25,6 @@ function Header() {
   let navigate = useNavigate();
 
   const fireModal = () => {
-    console.log("yes");
     setModal(true);
   };
 
@@ -42,6 +42,12 @@ function Header() {
     <div>
       <Svgw />
       <Navbar className={styles.navbar} variant="dark">
+        <Button
+          onClick={fireModal}
+          className={`secondary-button ${styles.profile}`}
+        >
+          <FaUser />
+        </Button>
         <Container>
           <Navbar.Brand href="/home">KFUPM LIBRARY</Navbar.Brand>
           <Nav className="me-auto">
@@ -67,7 +73,7 @@ function Header() {
           </Nav>
         </Container>
       </Navbar>
-      <RegistrationModal
+      <ProfileModal
         showModal={showModal}
         logIn={logIn}
         handleClose={handleClose}
