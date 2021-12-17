@@ -26,9 +26,6 @@
 }
 
 .icons {
-  background-image: linear-gradient(to right, #00901f, #02cb20);
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
   color: #00901f;
   font-size: 1.3em;
   margin: 1px;
@@ -63,12 +60,12 @@
 }
 
 .createButton:hover {
-  background-image: linear-gradient(to right, #00901f, #02cb20) !important;
+  background-color: #00901f !important;
   color: white !important;
 }
 
 .createButtonActive {
-  background-image: linear-gradient(to right, #00901f, #02cb20) !important;
+  background-color: #00901f !important;
   color: white !important;
 }
 

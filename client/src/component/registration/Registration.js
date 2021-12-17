@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import { Fade } from "react-awesome-reveal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
 import { useNavigate } from "react-router-dom";
-import { ReactComponent as Svgw } from "../SVGs/wave.svg";
 import styles from "./registration.module.css";
+import KFUPM_Tower from "../images/KFUPM_Tower.png";
 import "../../App.css";
 
 function Registration() {
@@ -66,54 +67,59 @@ function Registration() {
 
   return (
     <div>
-      <Col xs={5} style={{ margin: "auto" }}>
-        <h1 className={styles.text}>Registration</h1>
-        <Form.Group className="mb-3">
-          <Form.Label>username</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Group>
-        <Button className="original-button" onClick={register}>
-          register
-        </Button>
-        <h1 className={styles.text}>Login</h1>
-        <Form.Group className="mb-3">
-          <Form.Label>username</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="username"
-            onChange={(e) => setUsernameLog(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="password"
-            onChange={(e) => setPasswordLog(e.target.value)}
-          />
-        </Form.Group>
-        <Button className="original-button" onClick={login}>
-          login
-        </Button>
-        <div>
-          {/* {loginStatus && (
+      <Row>
+        <Col xs={5} style={{ margin: "auto" }}>
+          <h1 className={styles.text}>Registration</h1>
+          <Form.Group className="mb-3">
+            <Form.Label>username</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="username"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Form.Group>
+          <Button className="original-button" onClick={register}>
+            register
+          </Button>
+          <h1 className={styles.text}>Login</h1>
+          <Form.Group className="mb-3">
+            <Form.Label>username</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="username"
+              onChange={(e) => setUsernameLog(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="password"
+              onChange={(e) => setPasswordLog(e.target.value)}
+            />
+          </Form.Group>
+          <Button className="original-button" onClick={login}>
+            login
+          </Button>
+          <div>
+            {/* {loginStatus && (
             <Button onClick={userAuthenticated}>Check Authentication</Button>
           )} */}
-          {loginStatus}
-        </div>
-      </Col>
+            {loginStatus}
+          </div>
+        </Col>
+        <Col xs={1} style={{ margin: "auto" }}>
+          <img src={KFUPM_Tower} />
+        </Col>
+      </Row>
     </div>
   );
 }
