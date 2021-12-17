@@ -26,7 +26,10 @@
 }
 
 .icons {
-  color: #c78900;
+  background-image: linear-gradient(to right, #00901f, #02cb20);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #00901f;
   font-size: 1.3em;
   margin: 1px;
 }
@@ -49,8 +52,8 @@
   border-radius: 23px;
   background-color: unset !important;
   font-weight: bold;
-  border: #c78900 solid 1px !important;
-  color: #c78900 !important;
+  border: #00901f solid 1px !important;
+  color: #00901f !important;
   transition: 100ms ease-in;
   box-shadow: unset !important;
   -webkit-transition: 100ms ease-in;
@@ -60,12 +63,12 @@
 }
 
 .createButton:hover {
-  background-color: #c78900 !important;
+  background-image: linear-gradient(to right, #00901f, #02cb20) !important;
   color: white !important;
 }
 
 .createButtonActive {
-  background-color: #c78900 !important;
+  background-image: linear-gradient(to right, #00901f, #02cb20) !important;
   color: white !important;
 }
 
