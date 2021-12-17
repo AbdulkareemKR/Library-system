@@ -11,6 +11,8 @@ import Axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
 import styles from "./bookPage.module.css";
 import BookInfoPage from "../bookInfoPage/BookInfoPage";
+import { Route } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function BookPage() {
   const [name, setName] = useState("");
@@ -21,29 +23,32 @@ function BookPage() {
   const [loading, setLoading] = useState(true);
   const [fetch, setFetch] = useState(false);
   const [image, setImage] = useState("");
-  // let objImg;
-  // const mimeType = "image/png";
+  let navigate = useNavigate();
 
   useEffect(() => {
     Axios.get("http://localhost:3001/api/get").then((response) => {
       setLoading(false);
       setCardList(response.data);
-      // objImg = new Buffer.from(response.data[0].image).toString("base64");
-      // console.log(objImg);
-      // console.log(response.data[0].image);
-      // console.log(response.data.image);
-      // setImage(objectURL);
     });
   }, [fetch]);
+
+  const bookInformation = () => {
+    console.log("hellow");
+    console.log(cardList);
+    navigate({
+      pathname: "/bookInfo",
+      state: {
+        id: "dlkfka",
+        // any values/objects/etc you want to also send to pushed route/path
+      },
+    });
+  };
+
   return (
     <div>
       <div className="wrapper">
         {loading ? (
-          <Spinner
-            animation="grow"
-            className="spinner1"
-            // style={{ color: "red" }}
-          />
+          <Spinner animation="grow" className="spinner1" />
         ) : (
           <div className={styles.bookCard}>
             <Container fluid>
@@ -59,15 +64,9 @@ function BookPage() {
                           triggerOnce // to present each element on itself while moving down
                           direction="up"
                         >
-                          <Card
-                            onClick={<BookInfoPage />}
-                            className={`${styles.card}`}
-                          >
+                          <Card className={`${styles.card}`}>
                             <Card.Header style={{ margin: "auto" }}>
-                              <div>
-                                {/* <img src={`data:image/png;base64,${objImg}`} /> */}
-                              </div>
-                              {/* <div>{value.image}</div> */}
+                              <div></div>
                               Book
                             </Card.Header>
                             <Card.Body>
@@ -82,6 +81,7 @@ function BookPage() {
                             <div>
                               <br />
                             </div>
+                            <Button onClick={bookInformation}>press!</Button>
                           </Card>
                         </Fade>
                       </div>
