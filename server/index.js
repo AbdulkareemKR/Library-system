@@ -9,13 +9,13 @@ const session = require("express-session");
 const jwt = require("jsonwebtoken");
 const { validateToken } = require("./middlewares/AuthMiddleware");
 
-// mysql://baa3edb8227a69:1dca83a3@us-cdbr-east-04.cleardb.com/heroku_14bd760e873f76d?reconnect=true
+// mysql://bafaf149291fc0:460af9be@us-cdbr-east-04.cleardb.com/heroku_9182eb343de3cad?reconnect=true
 // TAKE THE INFO FROM THE LINE ABOVE
 const db = mysql.createPool({
   host: "us-cdbr-east-04.cleardb.com",
-  user: "baa3edb8227a69",
-  password: "1dca83a3",
-  database: "heroku_14bd760e873f76d",
+  user: "bafaf149291fc0",
+  password: "460af9be",
+  database: "heroku_9182eb343de3cad",
 });
 
 // const db = mysql.createPool({
