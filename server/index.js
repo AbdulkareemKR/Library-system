@@ -39,7 +39,7 @@ app.use(express.json()); //must be written
 app.use(bodyParser.urlencoded({ extended: true })); //must be written
 
 app.get("/api/get", (req, res) => {
-  const sqlSelect = "SELECT * FROM card";
+  const sqlSelect = "SELECT * FROM book";
   db.query(sqlSelect, (err, result) => {
     if (err) {
       res.send(err);

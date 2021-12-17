@@ -11,7 +11,7 @@ import { Fade } from "react-awesome-reveal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
-import { ReactComponent as Svgw } from "../SVGs/wave.svg";
+import { ReactComponent as Svgw } from "../SVGs/wave (2).svg";
 import styles from "./header.module.css";
 import "../../App.css";
 import { useNavigate } from "react-router-dom";

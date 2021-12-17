@@ -60,11 +60,10 @@ function BookPage() {
                       </Card.Header>
                       <Card.Body>
                         <img src={value.image} className={styles.bookImage} />
-                        <div className={styles.bookName}>{value.name}</div>
+                        <div className={styles.bookName}>{value.Title}</div>
+                        <div>Authors: {value.Author}</div>
                       </Card.Body>
-                      <div>
-                        <br />
-                      </div>
+                      <div></div>
                       <Button
                         className={"original-button"}
                         onClick={() => bookInformation(value)}

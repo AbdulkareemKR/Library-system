@@ -1,6 +1,6 @@
 .bookCard {
   display: grid;
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: repeat(4, auto);
   /* grid-auto-rows: 50px; */
   /* column-gap: 1rem; */
 }
@@ -10,11 +10,11 @@
   margin: auto;
   margin-bottom: 30px;
   box-shadow: 1px 1px 5px 0 rgb(216, 213, 213);
-  height: 400px;
+  height: 350px;
 }
 
 .bookImage {
-  width: 30%;
+  width: 40%;
 }
 
 .bookName {
