@@ -26,8 +26,8 @@ function ProfileModal(props) {
               className={styles.title}
               id="contained-modal-title-vcenter"
             >
+              <BsFillPeopleFill className={styles.icons} />{" "}
               {props.logIn ? "My Books" : "Account Informaion"}
-              <BsFillPeopleFill className={styles.icons} />
             </Modal.Title>
           </Modal.Header>
           <Container fluid style={{ margin: "auto" }}>
@@ -100,48 +100,12 @@ function ProfileModal(props) {
                       className={styles.input}
                       type="password"
                       placeholder="************"
+                      disabled
                     />
                   </Col>
                 </Form.Group>
 
-                {props.logIn ? (
-                  ""
-                ) : (
-                  <div>
-                    <Form.Group as={Row} className={styles.group}>
-                      <Form.Label className={styles.label} column sm="4">
-                        <AiFillUnlock className={styles.icons} />
-                        تأكيد كلمة المرور
-                      </Form.Label>
-                      <Col>
-                        <Form.Control
-                          required
-                          className={styles.input}
-                          type="password"
-                          placeholder="أعد ادخال كلمة المرور"
-                        />
-                      </Col>
-                    </Form.Group>
-                    <Form.Group as={Row} className={styles.group}>
-                      <Form.Label className={styles.label} column sm="4">
-                        <HiTag className={styles.icons} /> المرحلة الدراسية
-                      </Form.Label>
-                      <Col>
-                        <Form.Control as="select" className={styles.input}>
-                          <option>دون الابتدائي</option>
-                          <option>ابتدائي</option>
-                          <option>متوسط</option>
-                          <option>ثانوي</option>
-                          <option>جامعي</option>
-                          <option>أب</option>
-                        </Form.Control>
-                      </Col>
-                    </Form.Group>
-                  </div>
-                )}
-                <a className={styles.forget} href={"/"}>
-                  هل نسيت كلمة المرور؟
-                </a>
+                {props.logIn ? "" : <div></div>}
               </Modal.Body>
               <Modal.Footer className={styles.footer}>
                 {props.logIn ? (
@@ -150,7 +114,7 @@ function ProfileModal(props) {
                     type="submit"
                     // onClick={() => setModalShow(false)}
                   >
-                    سجل دخول
+                    Edit Reservations
                   </Button>
                 ) : (
                   <Button
@@ -158,7 +122,7 @@ function ProfileModal(props) {
                     type="submit"
                     // onClick={() => setModalShow(false)}
                   >
-                    أنشئ الحساب
+                    Edit Information
                   </Button>
                 )}
               </Modal.Footer>

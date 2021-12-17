@@ -26,7 +26,7 @@
 }
 
 .icons {
-  color: #d49747;
+  color: #c78900;
   font-size: 1.3em;
   margin: 1px;
 }
@@ -49,8 +49,8 @@
   border-radius: 23px;
   background-color: unset !important;
   font-weight: bold;
-  border: #d49747 solid 1px !important;
-  color: #d49747 !important;
+  border: #c78900 solid 1px !important;
+  color: #c78900 !important;
   transition: 100ms ease-in;
   box-shadow: unset !important;
   -webkit-transition: 100ms ease-in;
@@ -60,12 +60,12 @@
 }
 
 .createButton:hover {
-  background-color: #d49747 !important;
+  background-color: #c78900 !important;
   color: white !important;
 }
 
 .createButtonActive {
-  background-color: #d49747 !important;
+  background-color: #c78900 !important;
   color: white !important;
 }
 
@@ -124,12 +124,12 @@
 .forget {
   font-weight: bold;
   font-size: small;
-  color: #d49747 !important;
+  color: #c78900 !important;
   margin: auto;
 }
 
 .forget:hover {
-  color: #d49747;
+  color: #c78900;
   filter: brightness(0.75);
 }
 
