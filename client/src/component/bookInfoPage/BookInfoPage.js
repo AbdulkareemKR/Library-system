@@ -1,15 +1,19 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import styles from "./bookInfoPage.module.css";
 
 function BookInfoPage(props) {
-  const { state } = useNavigate();
+  const location = useLocation();
 
   return (
     <div>
-      akhdfka
-      {props.state}
-      {state}
-      {props.id}
+      <img src={location.state.image} className={styles.bookImage} />
+      <div className={styles.bookName}>{location.state.name}</div>
+      <div>
+        <br />
+      </div>
+      <Button className={"original-button"}>Reserve The Book</Button>
     </div>
   );
 }

@@ -5,9 +5,8 @@
   font-family: "Cairo", sans-serif;
   font-weight: 600;
   border: solid 1px #c78900 !important;
-  margin-bottom: 10px;
   outline: none !important;
-  box-shadow: 0px 1px 2px 1px grey !important;
+  box-shadow: 0px 1px 3px 1px rgb(185, 185, 185) !important;
 }
 
 .original-button:hover {
@@ -20,12 +19,12 @@
 .original-button:focus {
   outline: none !important;
   border: solid 1px #c78900 !important;
-  box-shadow: 0px 1px 1px 1px grey !important;
+  box-shadow: 0px 1px 5px 1px rgb(185, 185, 185) !important;
 }
 
 .original-button:active {
   transform: translateY(1px);
-  box-shadow: 0px 1px 0px 0px grey !important;
+  box-shadow: 0px 1px 0px 0px rgb(185, 185, 185) !important;
 }
 
 .secondary-button {

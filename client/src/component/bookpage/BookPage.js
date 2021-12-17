@@ -32,16 +32,8 @@ function BookPage() {
     });
   }, [fetch]);
 
-  const bookInformation = () => {
-    console.log("hellow");
-    console.log(cardList);
-    navigate({
-      pathname: "/bookInfo",
-      state: {
-        id: "dlkfka",
-        // any values/objects/etc you want to also send to pushed route/path
-      },
-    });
+  const bookInformation = (value) => {
+    navigate("/bookInfo", { state: { ...value } });
   };
 
   return (
@@ -81,7 +73,12 @@ function BookPage() {
                             <div>
                               <br />
                             </div>
-                            <Button onClick={bookInformation}>press!</Button>
+                            <Button
+                              className={"original-button"}
+                              onClick={() => bookInformation(value)}
+                            >
+                              Book Page
+                            </Button>
                           </Card>
                         </Fade>
                       </div>
@@ -103,10 +100,7 @@ function BookPage() {
                           >
                             <Card className={`${styles.card}`}>
                               <Card.Header style={{ margin: "auto" }}>
-                                <div>
-                                  {/* <img src={`data:image/png;base64,${objImg}`} /> */}
-                                </div>
-                                {/* <div>{value.image}</div> */}
+                                <div></div>
                                 Book
                               </Card.Header>
                               <Card.Body>
@@ -121,6 +115,12 @@ function BookPage() {
                               <div>
                                 <br />
                               </div>
+                              <Button
+                                className={"original-button"}
+                                onClick={() => bookInformation(value)}
+                              >
+                                Book Page
+                              </Button>
                             </Card>
                           </Fade>
                         </div>

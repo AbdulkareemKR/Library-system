@@ -1,0 +1,11 @@
+.bookImage {
+  width: 20%;
+}
+
+.bookName {
+  margin-top: 7px;
+  padding: 3px;
+  font-family: "Cairo", sans-serif;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
