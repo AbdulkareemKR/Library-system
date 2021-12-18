@@ -69,46 +69,58 @@ function Registration() {
     <div>
       <Row>
         <Col xs={5} style={{ margin: "auto" }}>
-          <h1 className={styles.text}>Registration</h1>
-          <Form.Group className="mb-3">
-            <Form.Label>username</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="username"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Form.Group>
-          <Button className="original-button" onClick={register}>
-            register
-          </Button>
-          <h1 className={styles.text}>Login</h1>
-          <Form.Group className="mb-3">
-            <Form.Label>username</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="username"
-              onChange={(e) => setUsernameLog(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="password"
-              onChange={(e) => setPasswordLog(e.target.value)}
-            />
-          </Form.Group>
-          <Button className="original-button" onClick={login}>
-            login
-          </Button>
+          <Form>
+            <h1 className={styles.text}>Registration</h1>
+            <Form.Group className="mb-3">
+              <Form.Label>username</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="username"
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>password</Form.Label>
+              <Form.Control
+                required
+                type="password"
+                placeholder="password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Form.Group>
+            <Button
+              type="submit"
+              className="original-button"
+              onSubmit={register}
+            >
+              register
+            </Button>
+          </Form>
+          <Form>
+            <h1 className={styles.text}>Login</h1>
+            <Form.Group className="mb-3">
+              <Form.Label>username</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="username"
+                onChange={(e) => setUsernameLog(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>password</Form.Label>
+              <Form.Control
+                required
+                type="password"
+                placeholder="password"
+                onChange={(e) => setPasswordLog(e.target.value)}
+              />
+            </Form.Group>
+            <Button type="submit" className="original-button" onSubmit={login}>
+              login
+            </Button>
+          </Form>
           <div>
             {/* {loginStatus && (
             <Button onClick={userAuthenticated}>Check Authentication</Button>

@@ -55,18 +55,25 @@ function BookPage() {
                   >
                     <Card className={`${styles.card}`}>
                       <Card.Header style={{ margin: "auto" }}>
-                        <div></div>
                         {value.Subject}
                       </Card.Header>
                       <Card.Body>
                         <img src={value.image} className={styles.bookImage} />
                         <div className={styles.bookName}>{value.Title}</div>
                         <div className={styles.author}>
-                          <span className={styles.authorCustom}>Author:</span>{" "}
-                          {value.Author}
+                          Author:{" "}
+                          <span className={styles.authorCustom}>
+                            {value.Author}
+                          </span>
+                        </div>
+                        <div className={styles.status}>
+                          {value.NumberOfCopies > 0 ? (
+                            <div style={{ color: "green" }}>Available</div>
+                          ) : (
+                            <div style={{ color: "red" }}>Not Available</div>
+                          )}
                         </div>
                       </Card.Body>
-                      <div></div>
                       <Button
                         className={"original-button"}
                         onClick={() => bookInformation(value)}

@@ -1,6 +1,8 @@
 .bookCard {
   display: grid;
   grid-template-columns: repeat(4, auto);
+  font-family: "Cairo", sans-serif;
+
   /* grid-auto-rows: 50px; */
   /* column-gap: 1rem; */
 }
@@ -10,7 +12,7 @@
   margin: auto;
   margin-bottom: 30px;
   box-shadow: 1px 1px 5px 0 rgb(216, 213, 213);
-  height: 350px;
+  height: 380px;
 }
 
 .bookImage {
@@ -20,16 +22,18 @@
 .bookName {
   margin-top: 7px;
   padding: 3px;
-  font-family: "Cairo", sans-serif;
   font-weight: 600;
   letter-spacing: 1px;
 }
 
-.author {
-  font-family: "Cairo", sans-serif;
-}
+/* .author {
+} */
 
 .authorCustom {
   color: blue;
+  font-weight: bold;
+}
+
+.status {
   font-weight: bold;
 }
