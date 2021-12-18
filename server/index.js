@@ -57,7 +57,10 @@ const saltRounds = 10;
 
 app.post("/register", (req, res) => {
   console.log("backend registration");
-  const username = req.body.username;
+  const name = req.body.name;
+  const nationalId = req.body.nationalId;
+  const studentId = req.body.studentId;
+  const email = req.body.email;
   const password = req.body.password;
 
   bcrypt.hash(password, saltRounds, (err, hash) => {
@@ -65,32 +68,21 @@ app.post("/register", (req, res) => {
       console.log(err);
     }
     const sqlInsert =
-      "INSERT INTO registration (username, password) VALUES (?,?)";
-    db.query(sqlInsert, [username, hash], (err, result) => {
-      console.log(result);
-    });
+      "INSERT INTO person (Name, NationalID, StudetnID, Email, Password) VALUES (?, ?, ?, ?, ?)";
+    db.query(
+      sqlInsert,
+      [name, nationalId, studentId, email, hash],
+      (err, result) => {
+        console.log(result);
+      }
+    );
   });
-  const sqlSelect = "SELECT * FROM registration WHERE username = ?";
-  db.query(sqlSelect, username, (err, result) => {
-    if (err) {
-      res.send({ err: err });
-    }
-
-    if (result.length > 0) {
-      bcrypt.compare(password, result[0].password, (error, response) => {
-        if (response) {
-          const id = result[0].id;
-          const username = result[0].username;
-          const token = jwt.sign({ id, username }, "jwtSecret", {
-            expiresIn: 300,
-          });
-
-          req.session.user = result;
-          res.json({ auth: true, token: token, result: result });
-        }
-      });
-    }
+  const token = jwt.sign({ name, email }, "jwtSecret", {
+    expiresIn: 60 * 60,
   });
+
+  req.session.user = result;
+  res.json({ auth: true, token: token, result: result });
 });
 
 const verifyJWT = (req, res, next) => {
@@ -115,11 +107,11 @@ app.get("/isUserAuth", verifyJWT, (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  const username = req.body.username;
+  const email = req.body.email;
   const password = req.body.password;
 
-  const sqlSelect = "SELECT * FROM registration WHERE username = ?";
-  db.query(sqlSelect, username, (err, result) => {
+  const sqlSelect = "SELECT * FROM registration WHERE Email = ?";
+  db.query(sqlSelect, email, (err, result) => {
     if (err) {
       res.send({ err: err });
     }
@@ -128,8 +120,8 @@ app.post("/login", (req, res) => {
       bcrypt.compare(password, result[0].password, (error, response) => {
         if (response) {
           const id = result[0].id;
-          const username = result[0].username;
-          const token = jwt.sign({ id, username }, "jwtSecret", {
+          const email = result[0].email;
+          const token = jwt.sign({ id, email }, "jwtSecret", {
             expiresIn: 300,
           });
 
@@ -138,7 +130,7 @@ app.post("/login", (req, res) => {
         } else {
           res.send({
             auth: false,
-            message: "username or password is incorrect",
+            message: "email or password is incorrect",
           });
         }
       });

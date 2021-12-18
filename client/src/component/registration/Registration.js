@@ -47,8 +47,10 @@ function Registration() {
 
   const register = () => {
     Axios.post("http://localhost:3001/register", {
-      email: email,
+      name: name,
       nationalId: nationalId,
+      studentId: studentId,
+      email: email,
       password: password,
     }).then((response) => {
       console.log(response);
