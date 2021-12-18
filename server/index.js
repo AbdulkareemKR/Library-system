@@ -18,13 +18,6 @@ const db = mysql.createPool({
   database: "heroku_9182eb343de3cad",
 });
 
-// const db = mysql.createPool({
-//   host: "localhost",
-//   user: "root",
-//   password: "",
-//   database: "registration",
-// });
-
 app.use(
   cors({
     origin: ["http://localhost:3000"],
@@ -32,8 +25,6 @@ app.use(
     credentials: true,
   })
 );
-
-// app.use(cors());
 
 app.use(express.json()); //must be written
 app.use(bodyParser.urlencoded({ extended: true })); //must be written
@@ -46,46 +37,6 @@ app.get("/api/get", (req, res) => {
     } else {
       res.send(result);
     }
-  });
-});
-
-app.post("/api/insert", validateToken, (req, res) => {
-  const name = req.body.name;
-  const information = req.body.information;
-  const username = req.user.username;
-
-  const sqlInsert =
-    "INSERT INTO card (username, name, information) VALUES (?,?,?)";
-  db.query(sqlInsert, [username, name, information], (err, result) => {
-    if (err) {
-      res.send({ error: err });
-    } else {
-      res.send({ message: result });
-    }
-  });
-});
-
-app.delete("/api/delete/:name", validateToken, (req, res) => {
-  const deletedName = req.params.name;
-
-  const sqlDelete = "DELETE FROM card WHERE name = ?";
-  db.query(sqlDelete, deletedName, (err, result) => {
-    if (err) {
-      console.log(err);
-      res.send({ error: err });
-    } else {
-      res.send({ message: result });
-    }
-  });
-});
-
-app.put("/api/update", (req, res) => {
-  const updatedName = req.body.name;
-  const updatedReview = req.body.information;
-  const sqlUpdate = "UPDATE card SET information = ? WHERE name = ?";
-
-  db.query(sqlUpdate, [updatedReview, updatedName], (err, result) => {
-    if (err) console.log(err);
   });
 });
 
