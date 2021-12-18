@@ -13,6 +13,10 @@ import styles from "./bookPage.module.css";
 import BookInfoPage from "../bookInfoPage/BookInfoPage";
 import { Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown";
+import { GrSort } from "react-icons/gr";
+import FormControl from "react-bootstrap/FormControl";
 
 function BookPage() {
   const [name, setName] = useState("");
@@ -38,6 +42,20 @@ function BookPage() {
 
   return (
     <div>
+      <div>
+        <FormControl
+          size="sm"
+          type="search"
+          placeholder="Quick Search"
+          className="me-2"
+          aria-label="Search"
+        />
+        <DropdownButton id="dropdown-basic-button" title={<GrSort />}>
+          <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+          <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+          <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+        </DropdownButton>
+      </div>
       <div className="wrapper">
         {loading ? (
           <Spinner animation="grow" className="spinner1" />

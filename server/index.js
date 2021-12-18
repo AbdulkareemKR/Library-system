@@ -40,6 +40,22 @@ app.get("/api/get", (req, res) => {
   });
 });
 
+app.post("/api/insert", validateToken, (req, res) => {
+  const name = req.body.name;
+  const information = req.body.information;
+  const username = req.user.username;
+
+  const sqlInsert =
+    "INSERT INTO card (username, name, information) VALUES (?,?,?)";
+  db.query(sqlInsert, [username, name, information], (err, result) => {
+    if (err) {
+      res.send({ error: err });
+    } else {
+      res.send({ message: result });
+    }
+  });
+});
+
 /////////////////////////////////REGISTRATION////////////////////////////////////////////////////////
 app.use(
   session({
@@ -71,7 +87,7 @@ app.post("/register", (req, res) => {
       "INSERT INTO person (name, nationalID, type, email, password) VALUES (?, ?, ?, ?, ?)";
     db.query(
       sqlInsert,
-      [name, nationalId, "student", email, hash],
+      [name, nationalId, type, email, hash],
       (err, result) => {
         console.log(result);
       }
@@ -127,18 +143,20 @@ app.post("/login", (req, res) => {
         console.log(response);
         if (error) {
           console.log(error);
-          console.log("errors");
         } else if (response) {
-          console.log("no error");
           const name = result[0].name;
           const email = result[0].email;
           const token = jwt.sign({ name, email }, "jwtSecret", {
             expiresIn: 300,
           });
 
-          console.log("no print");
           req.session.user = result;
-          res.json({ auth: true, token: token, result: result });
+          res.json({
+            auth: true,
+            token: token,
+            result: result,
+            type: result[0].type,
+          });
         } else {
           res.send({
             auth: false,

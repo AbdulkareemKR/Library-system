@@ -48,6 +48,7 @@ function Registration() {
   const register = () => {
     Axios.post("http://localhost:3001/register", {
       name: name,
+      type: "member",
       nationalId: nationalId,
       studentId: studentId,
       email: email,
@@ -69,7 +70,11 @@ function Registration() {
       } else {
         localStorage.setItem("accessToken", response.data.token);
         setLogingStatus(response.data.message);
-        navigate("/home");
+        if (response.data.type == "member") {
+          navigate("/home");
+        } else {
+          navigate("/libHome");
+        }
       }
     });
   };

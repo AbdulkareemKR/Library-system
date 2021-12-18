@@ -1,4 +1,5 @@
 import "./App.css";
+import LibrarianHomePage from "./component/librarian/LibrarianHomePage";
 import BookInfoPage from "./component/bookInfoPage/BookInfoPage";
 import Header from "./component/header/Header";
 import BookPage from "./component/bookPage/BookPage";
@@ -13,6 +14,7 @@ function App() {
       <Router>
         <Header />
         <Routes>
+          <Route path="/LibHome" element={<LibrarianHomePage />} />
           <Route path="/bookInfo" element={<BookInfoPage />} />
           <Route path="/book" element={<BookPage />} />
           <Route path="/" element={<Registration />} />
