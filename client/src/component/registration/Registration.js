@@ -19,20 +19,20 @@ function Registration() {
   const [usernameLog, setUsernameLog] = useState("");
   const [passwordLog, setPasswordLog] = useState("");
   const [loginStatus, setLogingStatus] = useState("");
-  const [loginButton, setLogInButton] = useState("login");
+  const [loginButton, setLoginButton] = useState("login");
   let navigate = useNavigate();
 
   Axios.defaults.withCredentials = true; //must be written
 
   const handleLoginButton = () => {
-    setLogInButton("login");
+    setLoginButton("login");
   };
   const handleRegisterButton = () => {
-    setLogInButton("register");
+    setLoginButton("register");
   };
 
   const handleLibrarianButton = () => {
-    setLogInButton("librarian");
+    setLoginButton("librarian");
   };
 
   useEffect(() => {
@@ -85,16 +85,20 @@ function Registration() {
           <Row className={styles.registrationButtons}>
             <div>
               <Button
-                className={`${styles.createButton} ${
-                  loginButton == "librarian" ? "" : `${styles.librarian}`
+                className={`${styles.librarian} ${
+                  loginButton == "librarian" ? `${styles.librarianAcitive}` : ""
                 }`}
                 onClick={handleLibrarianButton}
-              ></Button>
+              >
+                Librarian
+              </Button>
             </div>
             <Col className={styles.col}>
               <Button
                 className={`${styles.createButton} ${
-                  loginButton == "login" ? "" : `${styles.createButtonActive}`
+                  loginButton == "register"
+                    ? `${styles.createButtonActive}`
+                    : ""
                 }`}
                 onClick={handleRegisterButton}
               >
@@ -104,9 +108,7 @@ function Registration() {
             <Col className={styles.col}>
               <Button
                 className={`${styles.createButton} ${
-                  loginButton == "register"
-                    ? ""
-                    : `${styles.createButtonActive}`
+                  loginButton == "login" ? `${styles.createButtonActive}` : ""
                 }`}
                 onClick={handleLoginButton}
               >
@@ -176,7 +178,7 @@ function Registration() {
             </Form>
           ) : (
             <Form>
-              <h3 className={styles.text}>Login</h3>
+              <h3 className={`${styles.librarianText}`}>Login</h3>
               <Form.Group className="mb-3">
                 <Form.Label>username</Form.Label>
                 <Form.Control
@@ -197,7 +199,7 @@ function Registration() {
               </Form.Group>
               <Button
                 type="submit"
-                className="original-button"
+                className={`${styles.librarianButton}`}
                 onSubmit={login}
               >
                 login
