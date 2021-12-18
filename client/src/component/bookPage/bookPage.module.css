@@ -24,3 +24,12 @@
   font-weight: 600;
   letter-spacing: 1px;
 }
+
+.author {
+  font-family: "Cairo", sans-serif;
+}
+
+.authorCustom {
+  color: blue;
+  font-weight: bold;
+}

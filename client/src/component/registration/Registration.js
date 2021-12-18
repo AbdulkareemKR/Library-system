@@ -37,7 +37,7 @@ function Registration() {
       password: password,
     }).then((response) => {
       console.log(response);
-      navigate("/info");
+      navigate("/home");
     });
   };
 
@@ -52,7 +52,7 @@ function Registration() {
       } else {
         localStorage.setItem("accessToken", response.data.token);
         setLogingStatus(response.data.message);
-        navigate("/info");
+        navigate("/home");
       }
     });
   };

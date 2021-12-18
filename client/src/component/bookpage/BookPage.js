@@ -56,12 +56,15 @@ function BookPage() {
                     <Card className={`${styles.card}`}>
                       <Card.Header style={{ margin: "auto" }}>
                         <div></div>
-                        Book
+                        {value.Subject}
                       </Card.Header>
                       <Card.Body>
                         <img src={value.image} className={styles.bookImage} />
                         <div className={styles.bookName}>{value.Title}</div>
-                        <div>Authors: {value.Author}</div>
+                        <div className={styles.author}>
+                          <span className={styles.authorCustom}>Author:</span>{" "}
+                          {value.Author}
+                        </div>
                       </Card.Body>
                       <div></div>
                       <Button

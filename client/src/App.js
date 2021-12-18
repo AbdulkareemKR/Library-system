@@ -17,7 +17,6 @@ function App() {
           <Route path="/book" element={<BookPage />} />
           <Route path="/" element={<Registration />} />
           <Route path="/home" element={<HomePage />} />
-          <Route path="/info" element={<InformationCard />} />
         </Routes>
       </Router>
     </div>
