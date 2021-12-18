@@ -58,7 +58,7 @@ function Header() {
               <FormControl
                 size="sm"
                 type="search"
-                placeholder="Search"
+                placeholder="Quick Search"
                 className="me-2"
                 aria-label="Search"
               />

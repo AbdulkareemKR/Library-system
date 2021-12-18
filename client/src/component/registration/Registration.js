@@ -14,10 +14,11 @@ import KFUPM_Tower from "../images/KFUPM_Tower.png";
 import "../../App.css";
 
 function Registration() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [usernameLog, setUsernameLog] = useState("");
-  const [passwordLog, setPasswordLog] = useState("");
+  const [name, setName] = useState("");
+  const [nationalId, setNationalId] = useState("");
+  const [studentId, setStudentId] = useState("");
   const [loginStatus, setLogingStatus] = useState("");
   const [loginButton, setLoginButton] = useState("login");
   let navigate = useNavigate();
@@ -39,14 +40,15 @@ function Registration() {
     Axios.get("http://localhost:3001/login").then((response) => {
       console.log(response);
       if (response.data.loggedIn === true) {
-        setLogingStatus(response.data.user[0].username);
+        setLogingStatus(response.data.user[0].email);
       }
     });
   }, []);
 
   const register = () => {
     Axios.post("http://localhost:3001/register", {
-      username: username,
+      email: email,
+      nationalId: nationalId,
       password: password,
     }).then((response) => {
       console.log(response);
@@ -56,8 +58,8 @@ function Registration() {
 
   const login = () => {
     Axios.post("http://localhost:3001/login", {
-      username: usernameLog,
-      password: passwordLog,
+      email: email,
+      password: password,
     }).then((response) => {
       if (!response.data.auth) {
         console.log(response);
@@ -128,8 +130,8 @@ function Registration() {
                 <Form.Control
                   required
                   type="text"
-                  placeholder="username"
-                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Enter your name"
+                  onChange={(e) => setName(e.target.value)}
                 />
               </Form.Group>
 
@@ -138,8 +140,8 @@ function Registration() {
                 <Form.Control
                   required
                   type="number"
-                  placeholder="username"
-                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Enter your National ID"
+                  onChange={(e) => setNationalId(e.target.value)}
                 />
               </Form.Group>
 
@@ -148,8 +150,8 @@ function Registration() {
                 <Form.Control
                   required
                   type="number"
-                  placeholder="username"
-                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Ener your student ID"
+                  onChange={(e) => setStudentId(e.target.value)}
                 />
               </Form.Group>
 
@@ -158,8 +160,8 @@ function Registration() {
                 <Form.Control
                   required
                   type="email"
-                  placeholder="username"
-                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Enter your email address"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </Form.Group>
 
@@ -168,7 +170,7 @@ function Registration() {
                 <Form.Control
                   required
                   type="password"
-                  placeholder="password"
+                  placeholder="Enter your password"
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </Form.Group>
@@ -188,8 +190,8 @@ function Registration() {
                 <Form.Control
                   required
                   type="email"
-                  placeholder="username"
-                  onChange={(e) => setUsernameLog(e.target.value)}
+                  placeholder="Enter your email address"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </Form.Group>
               <Form.Group className="mb-3">
@@ -197,8 +199,8 @@ function Registration() {
                 <Form.Control
                   required
                   type="password"
-                  placeholder="password"
-                  onChange={(e) => setPasswordLog(e.target.value)}
+                  placeholder="Enter your password"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Form.Group>
               <Button
@@ -217,8 +219,8 @@ function Registration() {
                 <Form.Control
                   required
                   type="email"
-                  placeholder="username"
-                  onChange={(e) => setUsernameLog(e.target.value)}
+                  placeholder="Enter your email address"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </Form.Group>
               <Form.Group className="mb-3">
@@ -226,8 +228,8 @@ function Registration() {
                 <Form.Control
                   required
                   type="password"
-                  placeholder="password"
-                  onChange={(e) => setPasswordLog(e.target.value)}
+                  placeholder="Enter your password"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Form.Group>
               <Button
