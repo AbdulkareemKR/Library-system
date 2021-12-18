@@ -38,10 +38,10 @@ function Registration() {
 
   useEffect(() => {
     Axios.get("http://localhost:3001/login").then((response) => {
-      console.log(response);
-      if (response.data.loggedIn === true) {
-        setLogingStatus(response.data.user[0].email);
-      }
+      console.log("from get", response);
+      // if (response.data.loggedIn === true) {
+      //   setLogingStatus(response.data.user[0].email);
+      // }
     });
   }, []);
 
@@ -176,11 +176,7 @@ function Registration() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </Form.Group>
-              <Button
-                type="submit"
-                className="original-button"
-                onSubmit={register}
-              >
+              <Button className="original-button" onClick={register}>
                 Register
               </Button>
             </Form>
@@ -205,11 +201,7 @@ function Registration() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </Form.Group>
-              <Button
-                type="submit"
-                className="original-button"
-                onSubmit={login}
-              >
+              <Button className="original-button" onClick={login}>
                 Login
               </Button>
             </Form>
@@ -234,11 +226,7 @@ function Registration() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </Form.Group>
-              <Button
-                type="submit"
-                className={`${styles.librarianButton}`}
-                onSubmit={login}
-              >
+              <Button className={`${styles.librarianButton}`} onClick={login}>
                 Login
               </Button>
             </Form>

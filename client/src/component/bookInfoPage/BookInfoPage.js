@@ -10,7 +10,7 @@ function BookInfoPage(props) {
     <div>
       <img src={location.state.image} className={styles.bookImage} />
       <div className={styles.bookName}>{location.state.name}</div>
-      <div>{location.state.Description}</div>
+      <div>{location.state.description}</div>
       <Button className={"original-button"}>Reserve The Book</Button>
     </div>
   );

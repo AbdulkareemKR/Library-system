@@ -68,10 +68,10 @@ app.post("/register", (req, res) => {
       console.log(err);
     }
     const sqlInsert =
-      "INSERT INTO person (Name, NationalID, StudetnID, Email, Password) VALUES (?, ?, ?, ?, ?)";
+      "INSERT INTO person (name, nationalID, type, email, password) VALUES (?, ?, ?, ?, ?)";
     db.query(
       sqlInsert,
-      [name, nationalId, studentId, email, hash],
+      [name, nationalId, "student", email, hash],
       (err, result) => {
         console.log(result);
       }
@@ -81,8 +81,8 @@ app.post("/register", (req, res) => {
     expiresIn: 60 * 60,
   });
 
-  req.session.user = result;
-  res.json({ auth: true, token: token, result: result });
+  req.session.user = { name, email };
+  res.json({ auth: true, token: token, result: { name, email } });
 });
 
 const verifyJWT = (req, res, next) => {
@@ -95,7 +95,7 @@ const verifyJWT = (req, res, next) => {
       if (err) {
         res.json({ auth: false, message: "failed to authenticate" });
       } else {
-        res.userId = decoded.id;
+        res.userId = decoded.nationalId;
         next();
       }
     });
@@ -110,21 +110,33 @@ app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  const sqlSelect = "SELECT * FROM registration WHERE Email = ?";
+  const sqlSelect = "SELECT * FROM person WHERE email = ?";
   db.query(sqlSelect, email, (err, result) => {
+    console.log(result);
     if (err) {
       res.send({ err: err });
+      console.log(err);
     }
+    console.log("Database value: ", result[0].password);
+    console.log("passed value: ", password);
 
     if (result.length > 0) {
+      console.log("iam in bcrypt");
       bcrypt.compare(password, result[0].password, (error, response) => {
-        if (response) {
-          const id = result[0].id;
+        console.log("after bcrypt");
+        console.log(response);
+        if (error) {
+          console.log(error);
+          console.log("errors");
+        } else if (response) {
+          console.log("no error");
+          const name = result[0].name;
           const email = result[0].email;
-          const token = jwt.sign({ id, email }, "jwtSecret", {
+          const token = jwt.sign({ name, email }, "jwtSecret", {
             expiresIn: 300,
           });
 
+          console.log("no print");
           req.session.user = result;
           res.json({ auth: true, token: token, result: result });
         } else {

@@ -112,7 +112,6 @@ function ProfileModal(props) {
                   <Button
                     className={`${styles.createButton} ${styles.submit}`}
                     type="submit"
-                    // onClick={() => setModalShow(false)}
                   >
                     Edit Reservations
                   </Button>
@@ -120,7 +119,6 @@ function ProfileModal(props) {
                   <Button
                     className={`${styles.createButton} ${styles.submit}`}
                     type="submit"
-                    // onClick={() => setModalShow(false)}
                   >
                     Edit Information
                   </Button>

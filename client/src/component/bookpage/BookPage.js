@@ -55,19 +55,19 @@ function BookPage() {
                   >
                     <Card className={`${styles.card}`}>
                       <Card.Header style={{ margin: "auto" }}>
-                        {value.Subject}
+                        {value.subject}
                       </Card.Header>
                       <Card.Body>
                         <img src={value.image} className={styles.bookImage} />
-                        <div className={styles.bookName}>{value.Title}</div>
+                        <div className={styles.bookName}>{value.title}</div>
                         <div className={styles.author}>
                           Author:{" "}
                           <span className={styles.authorCustom}>
-                            {value.Author}
+                            {value.author}
                           </span>
                         </div>
                         <div className={styles.status}>
-                          {value.NumberOfCopies > 0 ? (
+                          {value.numberOfCopies > 0 ? (
                             <div style={{ color: "green" }}>Available</div>
                           ) : (
                             <div style={{ color: "red" }}>Not Available</div>
