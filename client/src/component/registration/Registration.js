@@ -86,7 +86,9 @@ function Registration() {
             <div>
               <Button
                 className={`${styles.librarian} ${
-                  loginButton == "librarian" ? `${styles.librarianAcitive}` : ""
+                  loginButton === "librarian"
+                    ? `${styles.librarianAcitive}`
+                    : ""
                 }`}
                 onClick={handleLibrarianButton}
               >
@@ -96,7 +98,7 @@ function Registration() {
             <Col className={styles.col}>
               <Button
                 className={`${styles.createButton} ${
-                  loginButton == "register"
+                  loginButton === "register"
                     ? `${styles.createButtonActive}`
                     : ""
                 }`}
@@ -108,7 +110,7 @@ function Registration() {
             <Col className={styles.col}>
               <Button
                 className={`${styles.createButton} ${
-                  loginButton == "login" ? `${styles.createButtonActive}` : ""
+                  loginButton === "login" ? `${styles.createButtonActive}` : ""
                 }`}
                 onClick={handleLoginButton}
               >
@@ -118,11 +120,11 @@ function Registration() {
           </Row>
         </Container>
         <Col xs={5} style={{ margin: "auto" }}>
-          {loginButton == "login" ? (
+          {loginButton === "login" ? (
             <Form>
               <h3 className={styles.text}>Registration</h3>
               <Form.Group className="mb-3">
-                <Form.Label>username</Form.Label>
+                <Form.Label>Name</Form.Label>
                 <Form.Control
                   required
                   type="text"
@@ -130,8 +132,39 @@ function Registration() {
                   onChange={(e) => setUsername(e.target.value)}
                 />
               </Form.Group>
+
               <Form.Group className="mb-3">
-                <Form.Label>password</Form.Label>
+                <Form.Label>National ID</Form.Label>
+                <Form.Control
+                  required
+                  type="number"
+                  placeholder="username"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Student ID</Form.Label>
+                <Form.Control
+                  required
+                  type="number"
+                  placeholder="username"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  required
+                  type="email"
+                  placeholder="username"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Password</Form.Label>
                 <Form.Control
                   required
                   type="password"
@@ -144,17 +177,17 @@ function Registration() {
                 className="original-button"
                 onSubmit={register}
               >
-                register
+                Register
               </Button>
             </Form>
-          ) : loginButton == "register" ? (
+          ) : loginButton === "register" ? (
             <Form>
               <h3 className={styles.text}>Login</h3>
               <Form.Group className="mb-3">
-                <Form.Label>username</Form.Label>
+                <Form.Label>Email</Form.Label>
                 <Form.Control
                   required
-                  type="text"
+                  type="email"
                   placeholder="username"
                   onChange={(e) => setUsernameLog(e.target.value)}
                 />
@@ -173,23 +206,23 @@ function Registration() {
                 className="original-button"
                 onSubmit={login}
               >
-                login
+                Login
               </Button>
             </Form>
           ) : (
             <Form>
               <h3 className={`${styles.librarianText}`}>Login</h3>
               <Form.Group className="mb-3">
-                <Form.Label>username</Form.Label>
+                <Form.Label>Email</Form.Label>
                 <Form.Control
                   required
-                  type="text"
+                  type="email"
                   placeholder="username"
                   onChange={(e) => setUsernameLog(e.target.value)}
                 />
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>password</Form.Label>
+                <Form.Label>Password</Form.Label>
                 <Form.Control
                   required
                   type="password"
@@ -202,7 +235,7 @@ function Registration() {
                 className={`${styles.librarianButton}`}
                 onSubmit={login}
               >
-                login
+                Login
               </Button>
             </Form>
           )}
