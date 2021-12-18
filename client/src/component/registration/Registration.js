@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import { Fade } from "react-awesome-reveal";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -18,9 +19,21 @@ function Registration() {
   const [usernameLog, setUsernameLog] = useState("");
   const [passwordLog, setPasswordLog] = useState("");
   const [loginStatus, setLogingStatus] = useState("");
+  const [loginButton, setLogInButton] = useState("login");
   let navigate = useNavigate();
 
   Axios.defaults.withCredentials = true; //must be written
+
+  const handleLoginButton = () => {
+    setLogInButton("login");
+  };
+  const handleRegisterButton = () => {
+    setLogInButton("register");
+  };
+
+  const handleLibrarianButton = () => {
+    setLogInButton("librarian");
+  };
 
   useEffect(() => {
     Axios.get("http://localhost:3001/login").then((response) => {
@@ -68,68 +81,131 @@ function Registration() {
   return (
     <div>
       <Row>
+        <Container fluid style={{ margin: "auto" }}>
+          <Row className={styles.registrationButtons}>
+            <div>
+              <Button
+                className={`${styles.createButton} ${
+                  loginButton == "librarian" ? "" : `${styles.librarian}`
+                }`}
+                onClick={handleLibrarianButton}
+              ></Button>
+            </div>
+            <Col className={styles.col}>
+              <Button
+                className={`${styles.createButton} ${
+                  loginButton == "login" ? "" : `${styles.createButtonActive}`
+                }`}
+                onClick={handleRegisterButton}
+              >
+                Login
+              </Button>
+            </Col>
+            <Col className={styles.col}>
+              <Button
+                className={`${styles.createButton} ${
+                  loginButton == "register"
+                    ? ""
+                    : `${styles.createButtonActive}`
+                }`}
+                onClick={handleLoginButton}
+              >
+                Registration
+              </Button>
+            </Col>
+          </Row>
+        </Container>
         <Col xs={5} style={{ margin: "auto" }}>
-          <Form>
-            <h1 className={styles.text}>Registration</h1>
-            <Form.Group className="mb-3">
-              <Form.Label>username</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="username"
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>password</Form.Label>
-              <Form.Control
-                required
-                type="password"
-                placeholder="password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Form.Group>
-            <Button
-              type="submit"
-              className="original-button"
-              onSubmit={register}
-            >
-              register
-            </Button>
-          </Form>
-          <Form>
-            <h1 className={styles.text}>Login</h1>
-            <Form.Group className="mb-3">
-              <Form.Label>username</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="username"
-                onChange={(e) => setUsernameLog(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>password</Form.Label>
-              <Form.Control
-                required
-                type="password"
-                placeholder="password"
-                onChange={(e) => setPasswordLog(e.target.value)}
-              />
-            </Form.Group>
-            <Button type="submit" className="original-button" onSubmit={login}>
-              login
-            </Button>
-          </Form>
-          <div>
-            {/* {loginStatus && (
-            <Button onClick={userAuthenticated}>Check Authentication</Button>
-          )} */}
-            {loginStatus}
-          </div>
-        </Col>
-        <Col xs={1} style={{ margin: "auto" }}>
-          <img src={KFUPM_Tower} />
+          {loginButton == "login" ? (
+            <Form>
+              <h3 className={styles.text}>Registration</h3>
+              <Form.Group className="mb-3">
+                <Form.Label>username</Form.Label>
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="username"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>password</Form.Label>
+                <Form.Control
+                  required
+                  type="password"
+                  placeholder="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </Form.Group>
+              <Button
+                type="submit"
+                className="original-button"
+                onSubmit={register}
+              >
+                register
+              </Button>
+            </Form>
+          ) : loginButton == "register" ? (
+            <Form>
+              <h3 className={styles.text}>Login</h3>
+              <Form.Group className="mb-3">
+                <Form.Label>username</Form.Label>
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="username"
+                  onChange={(e) => setUsernameLog(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>password</Form.Label>
+                <Form.Control
+                  required
+                  type="password"
+                  placeholder="password"
+                  onChange={(e) => setPasswordLog(e.target.value)}
+                />
+              </Form.Group>
+              <Button
+                type="submit"
+                className="original-button"
+                onSubmit={login}
+              >
+                login
+              </Button>
+            </Form>
+          ) : (
+            <Form>
+              <h3 className={styles.text}>Login</h3>
+              <Form.Group className="mb-3">
+                <Form.Label>username</Form.Label>
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="username"
+                  onChange={(e) => setUsernameLog(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>password</Form.Label>
+                <Form.Control
+                  required
+                  type="password"
+                  placeholder="password"
+                  onChange={(e) => setPasswordLog(e.target.value)}
+                />
+              </Form.Group>
+              <Button
+                type="submit"
+                className="original-button"
+                onSubmit={login}
+              >
+                login
+              </Button>
+            </Form>
+          )}
+
+          <div>{loginStatus}</div>
         </Col>
       </Row>
     </div>
