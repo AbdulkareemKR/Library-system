@@ -40,6 +40,58 @@ app.get("/api/get", (req, res) => {
   });
 });
 
+app.delete("/api/deleteMember/:email", (req, res) => {
+  const email = req.params.email;
+
+  console.log("i am here", email);
+  const sqlSelect = `DELETE FROM person WHERE email = "${email}"`;
+  db.query(sqlSelect, (err, result) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.delete("/api/deleteBook/:ISBN", (req, res) => {
+  const isbn = req.params.ISBN;
+
+  const sqlSelect = `DELETE FROM book WHERE ISBN = "${isbn}"`;
+  db.query(sqlSelect, (err, result) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.get("/api/member", (req, res) => {
+  const sqlSelect = 'SELECT * FROM person WHERE type = "member"';
+  db.query(sqlSelect, (err, result) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.post("/api/memberSearch", (req, res) => {
+  const name = req.body.name;
+
+  const sqlSelect = `SELECT * FROM person WHERE name LIKE "%${name}%"`;
+
+  db.query(sqlSelect, (err, result) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
 app.post("/api/bookSearch", (req, res) => {
   const search = req.body.search;
   const sort = req.body.sort;
@@ -81,6 +133,60 @@ app.post("/api/insert", validateToken, (req, res) => {
   });
 });
 
+app.post("/api/addBook", (req, res) => {
+  const {
+    isbn,
+    title,
+    subject,
+    barcodeNumber,
+    author,
+    image,
+    rackNumber,
+    publicationDate,
+    numberOfCopies,
+    description,
+  } = req.body;
+
+  console.log(
+    isbn,
+    title,
+    subject,
+    barcodeNumber,
+    author,
+    image,
+    rackNumber,
+    publicationDate,
+    numberOfCopies,
+    description
+  );
+  const sqlInsert =
+    "INSERT INTO book (ISBN, title, subject, barcodeNumber, author, image, rackNumber, publicationDate,numberOfCopies, description) VALUES (?,?,?,?,?,?,?,?,?,?)";
+  db.query(
+    sqlInsert,
+    [
+      isbn,
+      title,
+      subject,
+      barcodeNumber,
+      author,
+      image,
+      rackNumber,
+      publicationDate,
+      numberOfCopies,
+      description,
+    ],
+    (err, result) => {
+      if (err) {
+        res.send({ error: err });
+        console.log(err);
+      } else {
+        res.send({ message: result });
+        console.log(result);
+      }
+    }
+  );
+});
+
 /////////////////////////////////REGISTRATION////////////////////////////////////////////////////////
 app.use(
   session({
@@ -118,6 +224,7 @@ app.post("/register", (req, res) => {
       }
     );
   });
+
   const token = jwt.sign({ name, email }, "jwtSecret", {
     expiresIn: 60 * 60,
   });
