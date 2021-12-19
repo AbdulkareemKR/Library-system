@@ -54,6 +54,19 @@ app.delete("/api/deleteMember/:email", (req, res) => {
   });
 });
 
+app.delete("/api/deleteBook/:ISBN", (req, res) => {
+  const isbn = req.params.ISBN;
+
+  const sqlSelect = `DELETE FROM book WHERE ISBN = "${isbn}"`;
+  db.query(sqlSelect, (err, result) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
 app.get("/api/member", (req, res) => {
   const sqlSelect = 'SELECT * FROM person WHERE type = "member"';
   db.query(sqlSelect, (err, result) => {
@@ -147,7 +160,7 @@ app.post("/api/addBook", (req, res) => {
     description
   );
   const sqlInsert =
-    "INSERT INTO book (ISBN, title, subject, barcodeNumber, author, image, rackNumber, publicationDate,numberOfCopies, description) VALUES (?,?,?,?,?,?,?,?,?,?,)";
+    "INSERT INTO book (ISBN, title, subject, barcodeNumber, author, image, rackNumber, publicationDate,numberOfCopies, description) VALUES (?,?,?,?,?,?,?,?,?,?)";
   db.query(
     sqlInsert,
     [
@@ -165,7 +178,7 @@ app.post("/api/addBook", (req, res) => {
     (err, result) => {
       if (err) {
         res.send({ error: err });
-        console.log(error);
+        console.log(err);
       } else {
         res.send({ message: result });
         console.log(result);

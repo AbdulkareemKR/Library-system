@@ -126,6 +126,16 @@ function LibrarianHomePage() {
     );
   };
 
+  const deleteBook = (ISBN) => {
+    Axios.delete(`http://localhost:3001/api/deleteBook/${ISBN}`).then(
+      (response) => {
+        const newList = cardList.filter((item) => item.ISBN !== ISBN);
+        setCardList(newList);
+        console.log(response);
+      }
+    );
+  };
+
   const userAuthenticated = () => {
     Axios.get("http://localhost:3001/isUserAuth", {
       headers: { "x-access-token": localStorage.getItem("token") },
@@ -316,6 +326,7 @@ function LibrarianHomePage() {
                           <Button
                             variant="danger"
                             className={styles.deleteBookButton}
+                            onClick={() => deleteBook(value.ISBN)}
                           >
                             Delete Book
                           </Button>
