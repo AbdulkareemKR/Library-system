@@ -14,6 +14,9 @@ import "../../App.css";
 import Card from "react-bootstrap/Card";
 import { GrSort, GrSearch } from "react-icons/gr";
 import FormControl from "react-bootstrap/FormControl";
+import { IoAddCircleOutline } from "react-icons/io5";
+import { AiFillEdit } from "react-icons/ai";
+import Modal from "react-bootstrap/Modal";
 
 function LibrarianHomePage() {
   const [email, setEmail] = useState("");
@@ -24,8 +27,20 @@ function LibrarianHomePage() {
   const [loginStatus, setLogingStatus] = useState("");
   const [loginButton, setLoginButton] = useState("login");
   let navigate = useNavigate();
-  const [cardList, setCardList] = useState([]);
+  const [memberList, setMemberList] = useState([]);
   const [search, setSearch] = useState("");
+  const [cardList, setCardList] = useState("");
+  const [modalShow, setModalShow] = useState(false);
+  const [bookISBN, setBookISBN] = useState("");
+  const [bookTitle, setBookTitle] = useState("");
+  const [bookSubject, setBookSubject] = useState("");
+  const [bookBarcodeNumber, setBookBarcodeNumber] = useState("");
+  const [bookAuthor, setBookAuthor] = useState("");
+  const [bookURL, setBookURL] = useState("");
+  const [bookPublishDate, setBookPublishDate] = useState("");
+  const [bookRackNumber, setBookRackNumber] = useState("");
+  const [bookDescription, setBookDescription] = useState("");
+  const [bookNumberOfCopies, setBookNumberOfCopies] = useState("");
 
   Axios.defaults.withCredentials = true; //must be written
 
@@ -36,13 +51,19 @@ function LibrarianHomePage() {
     setLoginButton("register");
   };
 
-  const handleLibrarianButton = () => {
-    setLoginButton("librarian");
+  const handleBookManagement = () => {
+    setLoginButton("bookManagement");
   };
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/api/member").then((response) => {
+    Axios.get("http://localhost:3001/api/get").then((response) => {
       setCardList(response.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    Axios.get("http://localhost:3001/api/member").then((response) => {
+      setMemberList(response.data);
       console.log(response.data);
     });
   }, []);
@@ -60,7 +81,7 @@ function LibrarianHomePage() {
     Axios.post("http://localhost:3001/api/memberSearch", {
       name: search,
     }).then((response) => {
-      setCardList(response.data);
+      setMemberList(response.data);
     });
   };
 
@@ -78,11 +99,28 @@ function LibrarianHomePage() {
     });
   };
 
+  const addBook = () => {
+    Axios.post("http://localhost:3001/api/addBook", {
+      isbn: bookISBN,
+      title: bookTitle,
+      subject: bookSubject,
+      barcodeNumber: bookBarcodeNumber,
+      author: bookAuthor,
+      image: bookURL,
+      rackNumber: bookRackNumber,
+      publicationDate: bookPublishDate,
+      numberOfCopies: bookNumberOfCopies,
+      description: bookDescription,
+    }).then((response) => {
+      console.log(response);
+    });
+  };
+
   const deleteMember = (email) => {
     Axios.delete(`http://localhost:3001/api/deleteMember/${email}`).then(
       (response) => {
-        const newList = cardList.filter((item) => item.email !== email);
-        setCardList(newList);
+        const newList = memberList.filter((item) => item.email !== email);
+        setMemberList(newList);
         console.log(response);
       }
     );
@@ -121,6 +159,18 @@ function LibrarianHomePage() {
                 onClick={handleRegisterButton}
               >
                 Cancel Membership
+              </Button>
+            </Col>
+            <Col className={styles.col}>
+              <Button
+                className={`${styles.createButton} ${
+                  loginButton === "bookManagement"
+                    ? `${styles.createButtonActive}`
+                    : ""
+                }`}
+                onClick={handleBookManagement}
+              >
+                Books Management
               </Button>
             </Col>
           </Row>
@@ -198,7 +248,7 @@ function LibrarianHomePage() {
                 />
               </Row>
               <h3 className={styles.text}>Canceling Membership</h3>
-              {cardList.map((value, key) => {
+              {memberList.map((value, key) => {
                 return (
                   <div key={key}>
                     <Fade
@@ -230,12 +280,189 @@ function LibrarianHomePage() {
               })}
             </div>
           ) : (
-            ""
+            <div className={styles.bookCard}>
+              {cardList.map((value, key) => {
+                return (
+                  <div key={key}>
+                    <Fade
+                      durtion={1200}
+                      cascade
+                      damping={0.02}
+                      triggerOnce // to present each element on itself while moving down
+                      direction="up"
+                    >
+                      <Card className={`${styles.card}`}>
+                        <Card.Header style={{ margin: "auto" }}>
+                          {value.subject}
+                        </Card.Header>
+                        <Card.Body>
+                          <img src={value.image} className={styles.bookImage} />
+                          <div className={styles.bookName}>{value.title}</div>
+                          <div className={styles.author}>
+                            Author:{" "}
+                            <span className={styles.authorCustom}>
+                              {value.author}
+                            </span>
+                          </div>
+                          <div className={styles.status}>
+                            {value.numberOfCopies > 0 ? (
+                              <div style={{ color: "green" }}>Available</div>
+                            ) : (
+                              <div style={{ color: "red" }}>Not Available</div>
+                            )}
+                          </div>
+                        </Card.Body>
+                        <div style={{ display: "inline-block" }}>
+                          <Button
+                            variant="danger"
+                            className={styles.deleteBookButton}
+                          >
+                            Delete Book
+                          </Button>
+                          <Button
+                            variant="warning"
+                            className={styles.editBookButton}
+                          >
+                            <AiFillEdit /> Edit Book
+                          </Button>
+                        </div>
+                      </Card>
+                    </Fade>
+                  </div>
+                );
+              })}
+              <Button
+                variant="success"
+                className={styles.addBookButton}
+                onClick={() => setModalShow(true)}
+              >
+                <IoAddCircleOutline /> Add Book
+              </Button>
+            </div>
           )}
 
           <div>{loginStatus}</div>
         </Col>
       </Row>
+      <Modal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            <h3 className={styles.text}>Adding Book</h3>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>ISBN</Form.Label>
+              <Form.Control
+                required
+                type="number"
+                placeholder="Enter Book ISBN"
+                onChange={(e) => setBookISBN(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Book Name</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Enter the book name"
+                onChange={(e) => setBookTitle(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Book Subject</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Ener your student ID"
+                onChange={(e) => setBookSubject(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Barcode Number</Form.Label>
+              <Form.Control
+                required
+                type="number"
+                placeholder="Enter the barcode number of the book"
+                onChange={(e) => setBookBarcodeNumber(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Author</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Enter the book author"
+                onChange={(e) => setBookAuthor(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Rack Number</Form.Label>
+              <Form.Control
+                required
+                type="number"
+                placeholder="Enter the rack number of the book"
+                onChange={(e) => setBookRackNumber(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Publication Date</Form.Label>
+              <Form.Control
+                required
+                type="date"
+                placeholder="Enter the puplication date"
+                onChange={(e) => setBookPublishDate(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Number Of Copies</Form.Label>
+              <Form.Control
+                required
+                type="number"
+                placeholder="Enter the number of copies "
+                onChange={(e) => setBookNumberOfCopies(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Book Description</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Enter the book author"
+                onChange={(e) => setBookDescription(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Image</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Enter the image URL"
+                onChange={(e) => setBookURL(e.target.value)}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer></Modal.Footer>
+        <Button className="original-button" onClick={addBook}>
+          Add Book
+        </Button>
+      </Modal>
     </div>
   );
 }

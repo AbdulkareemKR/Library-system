@@ -54,6 +54,11 @@
   width: 50%;
 }
 
+.bookImage {
+  width: 70px;
+  height: 100px;
+}
+
 .createButton {
   font-weight: inherit;
   font-family: inherit;
@@ -240,6 +245,22 @@
 .searchButton:focus {
   background-color: #00901f !important;
   box-shadow: none !important;
+}
+
+.addBookButton {
+  position: fixed;
+  right: 20%;
+  top: 50%;
+}
+
+.editBookButton {
+  display: inline-block;
+  width: 40%;
+}
+
+.deleteBookButton {
+  display: inline-block;
+  width: 40%;
 }
 
 @media only screen and (max-width: 420px) {

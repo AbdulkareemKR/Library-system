@@ -120,6 +120,60 @@ app.post("/api/insert", validateToken, (req, res) => {
   });
 });
 
+app.post("/api/addBook", (req, res) => {
+  const {
+    isbn,
+    title,
+    subject,
+    barcodeNumber,
+    author,
+    image,
+    rackNumber,
+    publicationDate,
+    numberOfCopies,
+    description,
+  } = req.body;
+
+  console.log(
+    isbn,
+    title,
+    subject,
+    barcodeNumber,
+    author,
+    image,
+    rackNumber,
+    publicationDate,
+    numberOfCopies,
+    description
+  );
+  const sqlInsert =
+    "INSERT INTO book (ISBN, title, subject, barcodeNumber, author, image, rackNumber, publicationDate,numberOfCopies, description) VALUES (?,?,?,?,?,?,?,?,?,?,)";
+  db.query(
+    sqlInsert,
+    [
+      isbn,
+      title,
+      subject,
+      barcodeNumber,
+      author,
+      image,
+      rackNumber,
+      publicationDate,
+      numberOfCopies,
+      description,
+    ],
+    (err, result) => {
+      if (err) {
+        res.send({ error: err });
+        console.log(error);
+      } else {
+        res.send({ message: result });
+        console.log(result);
+      }
+    }
+  );
+});
+
 /////////////////////////////////REGISTRATION////////////////////////////////////////////////////////
 app.use(
   session({
@@ -157,6 +211,7 @@ app.post("/register", (req, res) => {
       }
     );
   });
+
   const token = jwt.sign({ name, email }, "jwtSecret", {
     expiresIn: 60 * 60,
   });
