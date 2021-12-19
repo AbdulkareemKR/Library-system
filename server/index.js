@@ -40,6 +40,17 @@ app.get("/api/get", (req, res) => {
   });
 });
 
+app.get("/api/member", (req, res) => {
+  const sqlSelect = 'SELECT * FROM person WHERE type = "member"';
+  db.query(sqlSelect, (err, result) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
 app.post("/api/bookSearch", (req, res) => {
   const search = req.body.search;
   const sort = req.body.sort;
