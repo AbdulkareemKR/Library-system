@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import styles from "./librarianHomePage.module.css";
 import "../../App.css";
 import Card from "react-bootstrap/Card";
+import { GrSort, GrSearch } from "react-icons/gr";
+import FormControl from "react-bootstrap/FormControl";
 
 function LibrarianHomePage() {
   const [email, setEmail] = useState("");
@@ -23,6 +25,7 @@ function LibrarianHomePage() {
   const [loginButton, setLoginButton] = useState("login");
   let navigate = useNavigate();
   const [cardList, setCardList] = useState([]);
+  const [search, setSearch] = useState("");
 
   Axios.defaults.withCredentials = true; //must be written
 
@@ -53,6 +56,14 @@ function LibrarianHomePage() {
     });
   }, []);
 
+  const handleSearch = () => {
+    Axios.post("http://localhost:3001/api/memberSearch", {
+      name: search,
+    }).then((response) => {
+      setCardList(response.data);
+    });
+  };
+
   const register = () => {
     Axios.post("http://localhost:3001/register", {
       name: name,
@@ -67,7 +78,15 @@ function LibrarianHomePage() {
     });
   };
 
-  const deleteMember = () => {};
+  const deleteMember = (email) => {
+    Axios.delete(`http://localhost:3001/api/deleteMember/${email}`).then(
+      (response) => {
+        const newList = cardList.filter((item) => item.email !== email);
+        setCardList(newList);
+        console.log(response);
+      }
+    );
+  };
 
   const userAuthenticated = () => {
     Axios.get("http://localhost:3001/isUserAuth", {
@@ -165,6 +184,19 @@ function LibrarianHomePage() {
             </Form>
           ) : loginButton === "register" ? (
             <div className={styles.bookCard}>
+              <Button onClick={handleSearch} className={styles.searchButton}>
+                <GrSearch />
+              </Button>
+
+              <Row style={{ display: "inline-block" }}>
+                <FormControl
+                  type="search"
+                  placeholder="Search"
+                  className={styles.search}
+                  aria-label="Search"
+                  onChange={(event) => setSearch(event.target.value)}
+                />
+              </Row>
               <h3 className={styles.text}>Canceling Membership</h3>
               {cardList.map((value, key) => {
                 return (
@@ -180,12 +212,14 @@ function LibrarianHomePage() {
                         <Card.Header style={{ margin: "auto" }}>
                           <div className={styles.bookName}>{value.name}</div>
                         </Card.Header>
-                        <Card.Body>{value.email}</Card.Body>
+                        <Card.Body style={{ color: "#00901f" }}>
+                          {value.email}
+                        </Card.Body>
                         {/* <Card.Body>{value.nationalID}</Card.Body> */}
                         <Button
                           variant="danger"
                           className={styles.deleteButton}
-                          onClick={deleteMember}
+                          onClick={() => deleteMember(value.email)}
                         >
                           Delete Member
                         </Button>

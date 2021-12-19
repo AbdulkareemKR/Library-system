@@ -40,8 +40,36 @@ app.get("/api/get", (req, res) => {
   });
 });
 
+app.delete("/api/deleteMember/:email", (req, res) => {
+  const email = req.params.email;
+
+  console.log("i am here", email);
+  const sqlSelect = `DELETE FROM person WHERE email = "${email}"`;
+  db.query(sqlSelect, (err, result) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
 app.get("/api/member", (req, res) => {
   const sqlSelect = 'SELECT * FROM person WHERE type = "member"';
+  db.query(sqlSelect, (err, result) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.post("/api/memberSearch", (req, res) => {
+  const name = req.body.name;
+
+  const sqlSelect = `SELECT * FROM person WHERE name LIKE "%${name}%"`;
+
   db.query(sqlSelect, (err, result) => {
     if (err) {
       res.send(err);
