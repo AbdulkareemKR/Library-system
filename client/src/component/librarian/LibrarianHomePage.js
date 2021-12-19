@@ -41,8 +41,19 @@ function LibrarianHomePage() {
   const [bookRackNumber, setBookRackNumber] = useState("");
   const [bookDescription, setBookDescription] = useState("");
   const [bookNumberOfCopies, setBookNumberOfCopies] = useState("");
+  const [bookEdit, setBookEdit] = useState(false);
 
   Axios.defaults.withCredentials = true; //must be written
+
+  const handleModalAdd = () => {
+    setBookEdit(false);
+    setModalShow(true);
+  };
+
+  const handleModalEdit = (isbn) => {
+    setBookEdit(isbn);
+    setModalShow(true);
+  };
 
   const handleLoginButton = () => {
     setLoginButton("login");
@@ -100,6 +111,23 @@ function LibrarianHomePage() {
   };
 
   const addBook = () => {
+    Axios.post("http://localhost:3001/api/addBook", {
+      isbn: bookISBN,
+      title: bookTitle,
+      subject: bookSubject,
+      barcodeNumber: bookBarcodeNumber,
+      author: bookAuthor,
+      image: bookURL,
+      rackNumber: bookRackNumber,
+      publicationDate: bookPublishDate,
+      numberOfCopies: bookNumberOfCopies,
+      description: bookDescription,
+    }).then((response) => {
+      console.log(response);
+    });
+  };
+
+  const editBook = () => {
     Axios.post("http://localhost:3001/api/addBook", {
       isbn: bookISBN,
       title: bookTitle,
@@ -333,6 +361,7 @@ function LibrarianHomePage() {
                           <Button
                             variant="warning"
                             className={styles.editBookButton}
+                            onClick={handleModalEdit}
                           >
                             <AiFillEdit /> Edit Book
                           </Button>
@@ -345,7 +374,7 @@ function LibrarianHomePage() {
               <Button
                 variant="success"
                 className={styles.addBookButton}
-                onClick={() => setModalShow(true)}
+                onClick={handleModalAdd}
               >
                 <IoAddCircleOutline /> Add Book
               </Button>
@@ -364,7 +393,9 @@ function LibrarianHomePage() {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            <h3 className={styles.text}>Adding Book</h3>
+            <h3 className={styles.text}>
+              {bookEdit != false ? "Editing Book" : "Adding Book"}
+            </h3>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -470,9 +501,15 @@ function LibrarianHomePage() {
           </Form>
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
-        <Button className="original-button" onClick={addBook}>
-          Add Book
-        </Button>
+        {bookEdit != false ? (
+          <Button className="original-button" onClick={editBook}>
+            Edit Book
+          </Button>
+        ) : (
+          <Button className="original-button" onClick={addBook}>
+            Add Book
+          </Button>
+        )}
       </Modal>
     </div>
   );
