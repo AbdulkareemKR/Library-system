@@ -15,8 +15,15 @@ import { Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
-import { GrSort } from "react-icons/gr";
+import { GrSort, GrSearch } from "react-icons/gr";
 import FormControl from "react-bootstrap/FormControl";
+import { MdDateRange } from "react-icons/md";
+import DateRangePicker from "react-bootstrap-daterangepicker";
+// you will need the css that comes with bootstrap@3. if you are using
+// a tool like webpack, you can do the following:
+// import "bootstrap/dist/css/bootstrap.css";
+// you will also need the css that comes with bootstrap-daterangepicker
+import "bootstrap-daterangepicker/daterangepicker.css";
 
 function BookPage() {
   const [name, setName] = useState("");
@@ -25,37 +32,116 @@ function BookPage() {
   const [newName, setNewName] = useState("");
   const [edit, setEdit] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [fetch, setFetch] = useState(false);
+  const [, setFetch] = useState(false);
   const [image, setImage] = useState("");
   let navigate = useNavigate();
+  const [sort, setSort] = useState("title");
+  const [subject, setSubject] = useState("All");
+  const [search, setSearch] = useState("");
+  const [date, setDate] = useState({});
 
   useEffect(() => {
     Axios.get("http://localhost:3001/api/get").then((response) => {
       setLoading(false);
       setCardList(response.data);
     });
-  }, [fetch]);
+  }, []);
 
   const bookInformation = (value) => {
     navigate("/bookInfo", { state: { ...value } });
   };
 
+  const handleSort = (e) => {
+    setSort(e);
+  };
+
+  const handleSubject = (e) => {
+    setSubject(e);
+  };
+
+  const handleSearch = () => {
+    Axios.post("http://localhost:3001/api/bookSearch", {
+      search: search,
+      sort: sort,
+      subject: subject,
+      startDate: date.startDate,
+      endDate: date.endDate,
+    }).then((response) => {
+      console.log(response.data);
+      setCardList(response.data);
+    });
+  };
+
+  const handleDate = (e, picker) => {
+    const start = picker.startDate._d;
+    const end = picker.endDate._d;
+    const startDate = `${start.getFullYear()}-${start.getMonth()}-${start.getDate()}`;
+    const endDate = `${end.getFullYear()}-${end.getMonth()}-${end.getDate()}`;
+    console.log(startDate, endDate);
+    setDate({ startDate: startDate, endDate: endDate });
+    console.log(date);
+  };
+
   return (
     <div>
-      <div>
+      <Button onClick={handleSearch} className={styles.searchButton}>
+        <GrSearch />
+      </Button>
+
+      <Row style={{ display: "inline-block" }}>
         <FormControl
-          size="sm"
           type="search"
-          placeholder="Quick Search"
-          className="me-2"
+          placeholder="Search"
+          className={styles.search}
           aria-label="Search"
+          onChange={(event) => setSearch(event.target.value)}
         />
-        <DropdownButton id="dropdown-basic-button" title={<GrSort />}>
-          <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-          <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-          <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+        <DropdownButton
+          variant="success"
+          onChange={(event) => setSort(event.target.value)}
+          style={{ display: "inline" }}
+          id="dropdown-basic-button"
+          className={styles.sort}
+          title={sort != "" ? sort : <GrSort style={{ color: "white" }} />}
+          onSelect={handleSort}
+        >
+          <Dropdown.Item eventKey="title">Title</Dropdown.Item>
+          <Dropdown.Item eventKey="author">Author</Dropdown.Item>
         </DropdownButton>
-      </div>
+
+        <DropdownButton
+          variant="warning"
+          onChange={(event) => setSort(event.target.value)}
+          style={{ display: "inline" }}
+          id="dropdown-basic-button"
+          className={styles.sort}
+          title={
+            subject != "" ? subject : <GrSort style={{ color: "white" }} />
+          }
+          onSelect={handleSubject}
+        >
+          <Dropdown.Item eventKey="All">All</Dropdown.Item>
+          <Dropdown.Item eventKey="Science">Science</Dropdown.Item>
+          <Dropdown.Item eventKey="Law">law</Dropdown.Item>
+          <Dropdown.Item eventKey="History">History</Dropdown.Item>
+          <Dropdown.Item eventKey="Business">Business</Dropdown.Item>
+        </DropdownButton>
+
+        <DateRangePicker
+          onApply={(e, picker) => handleDate(e, picker)}
+          initialSettings={{ startDate: "1/1/2014", endDate: "3/1/2014" }}
+        >
+          <button
+            style={{
+              display: "inline-block",
+              width: "40px",
+              backgroundColor: "white",
+            }}
+          >
+            <MdDateRange />
+          </button>
+        </DateRangePicker>
+      </Row>
       <div className="wrapper">
         {loading ? (
           <Spinner animation="grow" className="spinner1" />
