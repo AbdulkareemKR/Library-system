@@ -40,6 +40,31 @@ app.get("/api/get", (req, res) => {
   });
 });
 
+app.post("/api/bookSearch", (req, res) => {
+  const search = req.body.search;
+  const sort = req.body.sort;
+  const subject = req.body.subject;
+  const startDate = req.body.startDate;
+  const endDate = req.body.endDate;
+
+  console.log("iam in backend", search, sort, subject);
+  const sqlSelect = `SELECT * FROM book WHERE ${sort} LIKE "%${search}%"${
+    subject != "All" ? ` AND subject = "${subject}"` : ""
+  }${
+    startDate
+      ? ` AND publicationDate BETWEEN "${startDate}" AND "${endDate}"`
+      : ""
+  }`;
+  console.log(sqlSelect);
+  db.query(sqlSelect, (err, result) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
 app.post("/api/insert", validateToken, (req, res) => {
   const name = req.body.name;
   const information = req.body.information;
