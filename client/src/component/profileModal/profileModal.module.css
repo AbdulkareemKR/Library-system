@@ -121,6 +121,17 @@
   transition: 300ms ease;
 }
 
+.card {
+  font-weight: bold;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.cradBody {
+  color: black !important;
+}
+
 .forget {
   font-weight: bold;
   font-size: small;

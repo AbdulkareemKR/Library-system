@@ -17,6 +17,10 @@ import { Fade } from "react-awesome-reveal";
 
 function ProfileModal(props) {
   const [memberInfo, setMemberInfo] = useState([]);
+  const [checkoutTime, setCheckoutTime] = useState(0);
+  const [penalty, setPenalty] = useState(0);
+  const [returned, setReturned] = useState(true);
+  const current = new Date();
 
   const handleMemberInfo = () => {
     props.handleLogIn();
@@ -33,6 +37,16 @@ function ProfileModal(props) {
       }
     });
   };
+
+  // const penaltyAndTime = function (data) {
+  //   if (data.returnDate == null) {
+  //     setReturned(false);
+  //   } else {
+  //     const current = new Date();
+  //     console.log("hellow");
+  //     setCheckoutTime(current - data.checkoutDat);
+  //   }
+  // };
 
   return (
     <div>
@@ -81,40 +95,50 @@ function ProfileModal(props) {
               <Modal.Body className="show-grid">
                 {props.logIn ? (
                   <div className={styles.bookCard}>
-                    {memberInfo.length != 0
-                      ? memberInfo.map((value, key) => {
-                          return (
-                            <div key={key}>
-                              <Fade
-                                durtion={1200}
-                                cascade
-                                damping={0.02}
-                                triggerOnce // to present each element on itself while moving down
-                                direction="up"
-                              >
-                                <Card className={`${styles.card}`}>
-                                  <Card.Header style={{ margin: "auto" }}>
-                                    <div className={styles.bookName}>
-                                      {value.ISBN}
-                                    </div>
-                                  </Card.Header>
-                                  <Card.Body style={{ color: "#00901f" }}>
-                                    {value.cheackoutDate}
-                                  </Card.Body>
-                                  {/* <Card.Body>{value.nationalID}</Card.Body> */}
-                                  <Button
-                                    variant="danger"
-                                    className={styles.deleteButton}
-                                    // onClick={() => deleteMember(value.email)}
-                                  >
-                                    Return Book
-                                  </Button>
-                                </Card>
-                              </Fade>
-                            </div>
-                          );
-                        })
-                      : ""}
+                    {memberInfo.map((value, key) => {
+                      return (
+                        <div key={key}>
+                          <Fade
+                            durtion={1200}
+                            cascade
+                            damping={0.02}
+                            triggerOnce // to present each element on itself while moving down
+                            direction="up"
+                          >
+                            <Card className={styles.card}>
+                              <Card.Header>
+                                <div>{value.title}</div>
+                              </Card.Header>
+                              <Card.Body className={styles.cardBody}>
+                                {value.subject} <br />
+                                Check out Date:{" "}
+                                {value.checkoutDate.substring(0, 10)}
+                                {value.checkoutDate}
+                                {/* {value.returnDate == null
+                                  ? setCheckoutTime(current.getTime())
+                                  : value.checkoutDate}
+                                {checkoutTime} */}
+                                {value.returnDate}
+                              </Card.Body>
+                              {/* <Card.Body>{value.nationalID}</Card.Body> */}
+                              {value.returnDate != null ? (
+                                <Button variant="success">
+                                  The book has beend returned
+                                </Button>
+                              ) : (
+                                <Button
+                                  variant="warning"
+                                  className={styles.deleteButton}
+                                  // onClick={() => deleteMember(value.email)}
+                                >
+                                  Return Book
+                                </Button>
+                              )}
+                            </Card>
+                          </Fade>
+                        </div>
+                      );
+                    })}
                   </div>
                 ) : (
                   <div>

@@ -43,7 +43,8 @@ function BookPage() {
   useEffect(() => {
     Axios.get("http://localhost:3001/api/get").then((response) => {
       setLoading(false);
-      setCardList(response.data);
+      setCardList(response.data.result);
+      console.log(response.data);
     });
   }, []);
 
@@ -165,6 +166,7 @@ function BookPage() {
                         <img src={value.image} className={styles.bookImage} />
                         <div className={styles.bookName}>{value.title}</div>
                         <div className={styles.author}>
+                          Author:{" "}
                           <span className={styles.authorCustom}>
                             {value.author}
                           </span>

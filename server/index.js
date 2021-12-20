@@ -33,8 +33,10 @@ app.get("/api/get", (req, res) => {
   const sqlSelect = "SELECT * FROM book";
   db.query(sqlSelect, (err, result) => {
     if (err) {
+      console.log(err);
       res.json({ error: err });
     } else {
+      console.log(result);
       res.json({ result: result });
     }
   });
@@ -333,7 +335,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      expires: 60 * 60 * 24 * 60 * 60 * 24 * 60,
+      expires: 60 * 60 * 24 * 60 * 60 * 24 * 60 * 100000,
     },
   })
 );
@@ -364,7 +366,7 @@ app.post("/register", (req, res) => {
   });
 
   const token = jwt.sign({ name, nationalId }, "jwtSecret", {
-    expiresIn: 60 * 60 * 24 * 60,
+    expiresIn: 60 * 60 * 24 * 60 * 999999,
   });
 
   req.session.user = { name, nationalId };
