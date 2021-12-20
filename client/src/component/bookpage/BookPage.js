@@ -165,11 +165,11 @@ function BookPage() {
                         <img src={value.image} className={styles.bookImage} />
                         <div className={styles.bookName}>{value.title}</div>
                         <div className={styles.author}>
-                          Author:{" "}
                           <span className={styles.authorCustom}>
                             {value.author}
                           </span>
                         </div>
+                        <div>{value.publicationDate.substring(0, 10)}</div>
                         <div className={styles.status}>
                           {value.numberOfCopies > 0 ? (
                             <div style={{ color: "green" }}>Available</div>

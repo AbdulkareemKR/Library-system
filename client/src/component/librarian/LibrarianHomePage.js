@@ -51,8 +51,8 @@ function LibrarianHomePage() {
     setModalShow(true);
   };
 
-  const handleModalEdit = (isbn) => {
-    setBookEdit(isbn);
+  const handleModalEdit = (bookInfo) => {
+    setBookEdit(bookInfo);
     setModalShow(true);
   };
 
@@ -140,7 +140,7 @@ function LibrarianHomePage() {
       publicationDate: bookPublishDate,
       numberOfCopies: bookNumberOfCopies,
       description: bookDescription,
-      oldisbn: bookEdit,
+      oldisbn: bookEdit.ISBN,
     }).then((response) => {
       console.log(response);
       setFetch(true);
@@ -364,7 +364,7 @@ function LibrarianHomePage() {
                           <Button
                             variant="warning"
                             className={styles.editBookButton}
-                            onClick={() => handleModalEdit(value.ISBN)}
+                            onClick={() => handleModalEdit(value)}
                           >
                             <AiFillEdit /> Edit Book
                           </Button>
@@ -396,8 +396,12 @@ function LibrarianHomePage() {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            <h3 className={styles.text}>
-              {bookEdit != false ? "Editing Book" : "Adding Book"}
+            <h3>
+              {bookEdit != false ? (
+                <div style={{ color: "#FFCA2C" }}>Editing Book</div>
+              ) : (
+                <div className={styles.text}>Adding Book</div>
+              )}
             </h3>
             {console.log("book edit", bookEdit)}
           </Modal.Title>
@@ -407,6 +411,7 @@ function LibrarianHomePage() {
             <Form.Group className="mb-3">
               <Form.Label>ISBN</Form.Label>
               <Form.Control
+                value={bookEdit ? bookEdit.ISBN : ""}
                 required
                 type="number"
                 placeholder="Enter Book ISBN"
@@ -417,6 +422,7 @@ function LibrarianHomePage() {
             <Form.Group className="mb-3">
               <Form.Label>Book Name</Form.Label>
               <Form.Control
+                value={bookEdit ? bookEdit.title : ""}
                 required
                 type="text"
                 placeholder="Enter the book name"
@@ -427,6 +433,7 @@ function LibrarianHomePage() {
             <Form.Group className="mb-3">
               <Form.Label>Book Subject</Form.Label>
               <Form.Control
+                value={bookEdit ? bookEdit.subject : ""}
                 required
                 type="text"
                 placeholder="Ener your student ID"
@@ -437,6 +444,7 @@ function LibrarianHomePage() {
             <Form.Group className="mb-3">
               <Form.Label>Barcode Number</Form.Label>
               <Form.Control
+                value={bookEdit ? bookEdit.barcodeNumber : ""}
                 required
                 type="number"
                 placeholder="Enter the barcode number of the book"
@@ -447,6 +455,7 @@ function LibrarianHomePage() {
             <Form.Group className="mb-3">
               <Form.Label>Author</Form.Label>
               <Form.Control
+                value={bookEdit ? bookEdit.author : ""}
                 required
                 type="text"
                 placeholder="Enter the book author"
@@ -457,6 +466,7 @@ function LibrarianHomePage() {
             <Form.Group className="mb-3">
               <Form.Label>Rack Number</Form.Label>
               <Form.Control
+                value={bookEdit ? bookEdit.rackNumber : ""}
                 required
                 type="number"
                 placeholder="Enter the rack number of the book"
@@ -467,8 +477,11 @@ function LibrarianHomePage() {
             <Form.Group className="mb-3">
               <Form.Label>Publication Date</Form.Label>
               <Form.Control
+                value={
+                  bookEdit ? bookEdit.publicationDate.substring(0, 10) : ""
+                }
                 required
-                type="date"
+                type="text"
                 placeholder="Enter the puplication date"
                 onChange={(e) => setBookPublishDate(e.target.value)}
               />
@@ -477,6 +490,7 @@ function LibrarianHomePage() {
             <Form.Group className="mb-3">
               <Form.Label>Number Of Copies</Form.Label>
               <Form.Control
+                value={bookEdit ? bookEdit.numberOfCopies : ""}
                 required
                 type="number"
                 placeholder="Enter the number of copies "
@@ -487,6 +501,7 @@ function LibrarianHomePage() {
             <Form.Group className="mb-3">
               <Form.Label>Book Description</Form.Label>
               <Form.Control
+                value={bookEdit ? bookEdit.description : ""}
                 required
                 type="text"
                 placeholder="Enter the book author"
@@ -496,6 +511,7 @@ function LibrarianHomePage() {
             <Form.Group className="mb-3">
               <Form.Label>Image</Form.Label>
               <Form.Control
+                value={bookEdit ? bookEdit.image : ""}
                 required
                 type="text"
                 placeholder="Enter the image URL"
@@ -506,7 +522,7 @@ function LibrarianHomePage() {
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
         {bookEdit != false ? (
-          <Button className="original-button" onClick={editBook}>
+          <Button variant="warning" onClick={editBook}>
             Edit Book
           </Button>
         ) : (
