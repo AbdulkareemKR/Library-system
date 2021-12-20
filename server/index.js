@@ -134,20 +134,46 @@ app.post("/api/insert", validateToken, (req, res) => {
 });
 
 app.post("/api/checkoutBook", validateToken, (req, res) => {
-  const name = req.body.name;
-  const information = req.body.information;
+  const isbn = req.body.isbn;
   const nationalId = req.user.nationalId;
+  const copyNumber = req.body.copyNumber;
+  const checkoutDate = req.body.checkoutDate;
+  const returnDate = req.body.returnDate;
+  console.log(checkoutDate);
 
   console.log("this is nationalid ", nationalId);
-  // const sqlInsert =
-  //   "INSERT INTO card (username, name, information) VALUES (?,?,?)";
-  // db.query(sqlInsert, [username, name, information], (err, result) => {
-  //   if (err) {
-  //     res.send({ error: err });
-  //   } else {
-  //     res.send({ message: result });
-  //   }
-  // });
+  const sqlInsert =
+    "INSERT INTO check_out (ISBN, nationalID, copyNumber, checkoutDate, returnDate) VALUES (?,?,?,?,?)";
+  db.query(
+    sqlInsert,
+    [isbn, nationalId, copyNumber, checkoutDate, returnDate],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        res.send({ error: err });
+      } else {
+        res.send({ message: result });
+        console.log(result);
+      }
+    }
+  );
+
+  console.log("finished first");
+
+  const sqlUpdate = `UPDATE book SET numberOfCopies = ${
+    copyNumber - 1
+  } WHERE ISBN = ${isbn};`;
+  db.query(sqlUpdate, [copyNumber, isbn], (err, result) => {
+    if (err) {
+      res.send({ error: err });
+      console.log(err);
+    } else {
+      res.send({ message: result });
+      console.log(result);
+    }
+  });
+
+  console.log("finished second");
 });
 
 app.post("/api/addBook", (req, res) => {
@@ -178,6 +204,7 @@ app.post("/api/addBook", (req, res) => {
   );
   const sqlInsert =
     "INSERT INTO book (ISBN, title, subject, barcodeNumber, author, image, rackNumber, publicationDate,numberOfCopies, description) VALUES (?,?,?,?,?,?,?,?,?,?)";
+
   db.query(
     sqlInsert,
     [
@@ -267,7 +294,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      expires: 60 * 60 * 24,
+      expires: 60 * 60 * 24 * 60,
     },
   })
 );

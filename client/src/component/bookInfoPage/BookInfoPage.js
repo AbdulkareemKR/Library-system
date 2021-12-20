@@ -9,16 +9,24 @@ function BookInfoPage(props) {
 
   const checkoutBook = () => {
     const current = new Date();
-    const date = `${current.getDate()}-${
+    const date = `${current.getFullYear()}-${
       current.getMonth() + 1
-    }-${current.getFullYear()}`;
+    }-${current.getDate()}`;
 
-    Axios.post("http://localhost:3001/api/checkoutBook", {
-      isbn: location.state.ISBN,
-      copyNumber: location.state.numberOfCopies,
-      checkoutDate: date,
-      returnDate: null,
-    }).then((response) => {
+    Axios.post(
+      "http://localhost:3001/api/checkoutBook",
+      {
+        isbn: location.state.ISBN,
+        copyNumber: location.state.numberOfCopies,
+        checkoutDate: date,
+        returnDate: null,
+      },
+      {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      }
+    ).then((response) => {
       console.log(response);
     });
   };
@@ -45,8 +53,8 @@ function BookInfoPage(props) {
             {location.state.author}
           </p>
           <p>
-            <span className={styles.bookBullets}>Publication Date </span>
-            {location.state.publicationDate}
+            <span className={styles.bookBullets}>Publication Date: </span>
+            {location.state.publicationDate.substring(0, 10)}
           </p>
           <p>
             <span className={styles.bookBullets}>Number of Copies: </span>

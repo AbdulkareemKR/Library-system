@@ -7,11 +7,13 @@ const validateToken = (req, res, next) => {
 
   try {
     const validToken = verify(accessToken, "jwtSecret");
+    console.log("valid token", validToken);
     req.user = validToken;
     if (validToken) {
       return next();
     }
   } catch (err) {
+    console.log("err", err);
     return res.json({ error: err });
   }
 };
