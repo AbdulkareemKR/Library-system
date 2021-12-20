@@ -28,6 +28,10 @@ function BookInfoPage(props) {
       }
     ).then((response) => {
       console.log(response);
+      Axios.put("http://localhost:3001/api/decrementBook", {
+        isbn: location.state.ISBN,
+        numberOfCopies: location.state.numberOfCopies,
+      });
     });
   };
 

@@ -157,13 +157,17 @@ app.post("/api/checkoutBook", validateToken, (req, res) => {
       }
     }
   );
-
   console.log("finished first");
+});
+
+app.put("/api/decrementBook", (req, res) => {
+  const isbn = req.body.isbn;
+  const numberOfCopies = req.body.numberOfCopies;
 
   const sqlUpdate = `UPDATE book SET numberOfCopies = ${
-    copyNumber - 1
+    numberOfCopies - 1
   } WHERE ISBN = ${isbn};`;
-  db.query(sqlUpdate, [copyNumber, isbn], (err, result) => {
+  db.query(sqlUpdate, [numberOfCopies, isbn], (err, result) => {
     if (err) {
       res.send({ error: err });
       console.log(err);
