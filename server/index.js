@@ -187,6 +187,61 @@ app.post("/api/addBook", (req, res) => {
   );
 });
 
+app.put("/api/editBook", (req, res) => {
+  const {
+    isbn,
+    title,
+    subject,
+    barcodeNumber,
+    author,
+    image,
+    rackNumber,
+    publicationDate,
+    numberOfCopies,
+    description,
+    oldisbn,
+  } = req.body;
+
+  console.log(
+    isbn,
+    title,
+    subject,
+    barcodeNumber,
+    author,
+    image,
+    rackNumber,
+    publicationDate,
+    numberOfCopies,
+    description,
+    oldisbn
+  );
+  const sqlInsert = `INSERT INTO book (UPDATE book SET ISBN = "${isbn}", title = "${title}", subject = "${subject}", barcodeNumber = "${barcodeNumber}", author = "${author}", image = "${image}, rackNumber = "${rackNumber}", publicationDate = "${publicationDate}", numberOfCopies = "${numberOfCopies}", description = "${description}" WHERE ISBN = "${oldisbn}";`;
+  db.query(
+    sqlInsert,
+    [
+      isbn,
+      title,
+      subject,
+      barcodeNumber,
+      author,
+      image,
+      rackNumber,
+      publicationDate,
+      numberOfCopies,
+      description,
+    ],
+    (err, result) => {
+      if (err) {
+        res.send({ error: err });
+        console.log(err);
+      } else {
+        res.send({ message: result });
+        console.log(result);
+      }
+    }
+  );
+});
+
 /////////////////////////////////REGISTRATION////////////////////////////////////////////////////////
 app.use(
   session({

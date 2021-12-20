@@ -42,6 +42,7 @@ function LibrarianHomePage() {
   const [bookDescription, setBookDescription] = useState("");
   const [bookNumberOfCopies, setBookNumberOfCopies] = useState("");
   const [bookEdit, setBookEdit] = useState(false);
+  const [fetch, setFetch] = useState(false);
 
   Axios.defaults.withCredentials = true; //must be written
 
@@ -139,19 +140,19 @@ function LibrarianHomePage() {
       publicationDate: bookPublishDate,
       numberOfCopies: bookNumberOfCopies,
       description: bookDescription,
+      oldisbn: bookEdit,
     }).then((response) => {
       console.log(response);
+      setFetch(true);
     });
   };
 
   const deleteMember = (email) => {
-    Axios.delete(`http://localhost:3001/api/deleteMember/${email}`).then(
-      (response) => {
-        const newList = memberList.filter((item) => item.email !== email);
-        setMemberList(newList);
-        console.log(response);
-      }
-    );
+    Axios.put(`http://localhost:3001/api/editBook`).then((response) => {
+      const newList = memberList.filter((item) => item.email !== email);
+      setMemberList(newList);
+      console.log(response);
+    });
   };
 
   const deleteBook = (ISBN) => {
