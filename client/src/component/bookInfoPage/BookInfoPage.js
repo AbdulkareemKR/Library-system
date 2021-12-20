@@ -35,6 +35,28 @@ function BookInfoPage(props) {
     });
   };
 
+  const reserveBook = () => {
+    const current = new Date();
+    const date = `${current.getFullYear()}-${
+      current.getMonth() + 1
+    }-${current.getDate()}`;
+
+    Axios.post(
+      "http://localhost:3001/api/reserveBook",
+      {
+        isbn: location.state.ISBN,
+        reservationDate: date,
+      },
+      {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      }
+    ).then((response) => {
+      console.log(response);
+    });
+  };
+
   return (
     <div>
       <div className={styles.container}>
@@ -47,7 +69,9 @@ function BookInfoPage(props) {
                 Check Out The Book
               </Button>
             ) : (
-              <Button variant="warning">Reserve The Book</Button>
+              <Button onClick={reserveBook} variant="warning">
+                Reserve The Book
+              </Button>
             )}
           </div>
         </div>

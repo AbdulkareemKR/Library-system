@@ -133,6 +133,26 @@ app.post("/api/insert", validateToken, (req, res) => {
   });
 });
 
+app.post("/api/reserveBook", validateToken, (req, res) => {
+  const isbn = req.body.isbn;
+  const nationalId = req.user.nationalId;
+  const reservationDate = req.body.reservationDate;
+
+  console.log("this is nationalid ", nationalId);
+  const sqlInsert =
+    "INSERT INTO reserve (ISBN, nationalID, reservationDate) VALUES (?,?,?)";
+  db.query(sqlInsert, [isbn, nationalId, reservationDate], (err, result) => {
+    if (err) {
+      console.log(err);
+      res.send({ error: err });
+    } else {
+      res.send({ message: result });
+      console.log(result);
+    }
+  });
+  console.log("finished reservation");
+});
+
 app.post("/api/checkoutBook", validateToken, (req, res) => {
   const isbn = req.body.isbn;
   const nationalId = req.user.nationalId;
@@ -157,7 +177,7 @@ app.post("/api/checkoutBook", validateToken, (req, res) => {
       }
     }
   );
-  console.log("finished first");
+  console.log("finished checkout");
 });
 
 app.put("/api/decrementBook", (req, res) => {
@@ -177,7 +197,7 @@ app.put("/api/decrementBook", (req, res) => {
     }
   });
 
-  console.log("finished second");
+  console.log("finished decrement");
 });
 
 app.post("/api/addBook", (req, res) => {
