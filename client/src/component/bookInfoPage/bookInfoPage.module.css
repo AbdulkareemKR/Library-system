@@ -1,5 +1,12 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  column-gap: 5px;
+}
+
 .bookImage {
-  width: 20%;
+  width: 200px;
+  margin: 20px;
 }
 
 .bookName {
@@ -8,4 +15,20 @@
   font-family: "Cairo", sans-serif;
   font-weight: 600;
   letter-spacing: 1px;
+}
+
+.description {
+  width: 400px;
+  text-align: left;
+}
+
+.bookContainer {
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+.bookBullets {
+  color: #00901f;
+  font-weight: bold;
 }

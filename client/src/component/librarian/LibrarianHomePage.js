@@ -129,7 +129,7 @@ function LibrarianHomePage() {
   };
 
   const editBook = () => {
-    Axios.post("http://localhost:3001/api/addBook", {
+    Axios.put("http://localhost:3001/api/editBook", {
       isbn: bookISBN,
       title: bookTitle,
       subject: bookSubject,
@@ -148,11 +148,13 @@ function LibrarianHomePage() {
   };
 
   const deleteMember = (email) => {
-    Axios.put(`http://localhost:3001/api/editBook`).then((response) => {
-      const newList = memberList.filter((item) => item.email !== email);
-      setMemberList(newList);
-      console.log(response);
-    });
+    Axios.delete(`http://localhost:3001/api/deleteMember/${email}`).then(
+      (response) => {
+        const newList = memberList.filter((item) => item.email !== email);
+        setMemberList(newList);
+        console.log(response);
+      }
+    );
   };
 
   const deleteBook = (ISBN) => {
@@ -362,7 +364,7 @@ function LibrarianHomePage() {
                           <Button
                             variant="warning"
                             className={styles.editBookButton}
-                            onClick={handleModalEdit}
+                            onClick={() => handleModalEdit(value.ISBN)}
                           >
                             <AiFillEdit /> Edit Book
                           </Button>
@@ -397,6 +399,7 @@ function LibrarianHomePage() {
             <h3 className={styles.text}>
               {bookEdit != false ? "Editing Book" : "Adding Book"}
             </h3>
+            {console.log("book edit", bookEdit)}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

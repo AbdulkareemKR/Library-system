@@ -133,6 +133,23 @@ app.post("/api/insert", validateToken, (req, res) => {
   });
 });
 
+app.post("/api/checkoutBook", validateToken, (req, res) => {
+  const name = req.body.name;
+  const information = req.body.information;
+  const nationalId = req.user.nationalId;
+
+  console.log("this is nationalid ", nationalId);
+  // const sqlInsert =
+  //   "INSERT INTO card (username, name, information) VALUES (?,?,?)";
+  // db.query(sqlInsert, [username, name, information], (err, result) => {
+  //   if (err) {
+  //     res.send({ error: err });
+  //   } else {
+  //     res.send({ message: result });
+  //   }
+  // });
+});
+
 app.post("/api/addBook", (req, res) => {
   const {
     isbn,
@@ -215,7 +232,7 @@ app.put("/api/editBook", (req, res) => {
     description,
     oldisbn
   );
-  const sqlInsert = `INSERT INTO book (UPDATE book SET ISBN = "${isbn}", title = "${title}", subject = "${subject}", barcodeNumber = "${barcodeNumber}", author = "${author}", image = "${image}, rackNumber = "${rackNumber}", publicationDate = "${publicationDate}", numberOfCopies = "${numberOfCopies}", description = "${description}" WHERE ISBN = "${oldisbn}";`;
+  const sqlInsert = `UPDATE book SET ISBN = ${isbn}, title = "${title}", subject = "${subject}", barcodeNumber = ${barcodeNumber}, author = "${author}", image = "${image}", rackNumber = ${rackNumber}, publicationDate = "${publicationDate}", numberOfCopies = ${numberOfCopies}, description = "${description}" WHERE ISBN = ${oldisbn};`;
   db.query(
     sqlInsert,
     [
@@ -280,12 +297,12 @@ app.post("/register", (req, res) => {
     );
   });
 
-  const token = jwt.sign({ name, email }, "jwtSecret", {
+  const token = jwt.sign({ name, nationalId }, "jwtSecret", {
     expiresIn: 60 * 60,
   });
 
-  req.session.user = { name, email };
-  res.json({ auth: true, token: token, result: { name, email } });
+  req.session.user = { name, nationalId };
+  res.json({ auth: true, token: token, result: { name, nationalId } });
 });
 
 const verifyJWT = (req, res, next) => {
@@ -332,8 +349,8 @@ app.post("/login", (req, res) => {
           console.log(error);
         } else if (response) {
           const name = result[0].name;
-          const email = result[0].email;
-          const token = jwt.sign({ name, email }, "jwtSecret", {
+          const nationalId = result[0].nationalID;
+          const token = jwt.sign({ name, nationalId }, "jwtSecret", {
             expiresIn: 300,
           });
 
