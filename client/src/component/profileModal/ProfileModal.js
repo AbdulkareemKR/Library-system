@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from "react";
+import Axios from "axios";
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Col, Row, Form } from "react-bootstrap";
@@ -8,10 +10,30 @@ import { HiTag } from "react-icons/hi";
 import { MdEmail } from "react-icons/md";
 import { AiFillUnlock } from "react-icons/ai";
 import Container from "react-bootstrap/Container";
+import Card from "react-bootstrap/Card";
+import { Fade } from "react-awesome-reveal";
 
 // import React, { useState } from "react";
 
 function ProfileModal(props) {
+  const [memberInfo, setMemberInfo] = useState([]);
+
+  const handleMemberInfo = () => {
+    props.handleLogIn();
+    Axios.get("http://localhost:3001/api/memberInfo", {
+      headers: {
+        accessToken: localStorage.getItem("accessToken"),
+      },
+    }).then((response) => {
+      if (response.error) {
+        console.log(response.error);
+      } else {
+        console.log("form profile ", response);
+        setMemberInfo(response.data);
+      }
+    });
+  };
+
   return (
     <div>
       <Modal
@@ -47,7 +69,7 @@ function ProfileModal(props) {
                   className={`${styles.createButton} ${
                     props.logIn ? `${styles.createButtonActive}` : ""
                   }`}
-                  onClick={props.handleLogIn}
+                  onClick={handleMemberInfo}
                 >
                   My Books
                 </Button>
@@ -58,54 +80,89 @@ function ProfileModal(props) {
             <Container fluid style={{ margin: "auto" }}>
               <Modal.Body className="show-grid">
                 {props.logIn ? (
-                  ""
+                  <div className={styles.bookCard}>
+                    {memberInfo.length != 0
+                      ? memberInfo.map((value, key) => {
+                          return (
+                            <div key={key}>
+                              <Fade
+                                durtion={1200}
+                                cascade
+                                damping={0.02}
+                                triggerOnce // to present each element on itself while moving down
+                                direction="up"
+                              >
+                                <Card className={`${styles.card}`}>
+                                  <Card.Header style={{ margin: "auto" }}>
+                                    <div className={styles.bookName}>
+                                      {value.ISBN}
+                                    </div>
+                                  </Card.Header>
+                                  <Card.Body style={{ color: "#00901f" }}>
+                                    {value.cheackoutDate}
+                                  </Card.Body>
+                                  {/* <Card.Body>{value.nationalID}</Card.Body> */}
+                                  <Button
+                                    variant="danger"
+                                    className={styles.deleteButton}
+                                    // onClick={() => deleteMember(value.email)}
+                                  >
+                                    Return Book
+                                  </Button>
+                                </Card>
+                              </Fade>
+                            </div>
+                          );
+                        })
+                      : ""}
+                  </div>
                 ) : (
-                  <Form.Group as={Row} className={styles.group}>
-                    <Form.Label className={styles.label} column sm="4">
-                      <FaIdCard className={styles.icons} /> Username
-                    </Form.Label>
-                    <Col>
-                      <Form.Control
-                        required
-                        className={styles.input}
-                        type="text"
-                        placeholder="Username"
-                        disabled
-                      />
-                    </Col>
-                  </Form.Group>
+                  <div>
+                    <Form.Group as={Row} className={styles.group}>
+                      <Form.Label className={styles.label} column sm="4">
+                        <FaIdCard className={styles.icons} /> Username
+                      </Form.Label>
+                      <Col>
+                        <Form.Control
+                          required
+                          className={styles.input}
+                          type="text"
+                          placeholder="Username"
+                          disabled
+                        />
+                      </Col>
+                    </Form.Group>
+                    <Form.Group as={Row} className={styles.group}>
+                      <Form.Label className={styles.label} column sm="4">
+                        <MdEmail className={styles.icons} /> Email
+                      </Form.Label>
+                      <Col>
+                        <Form.Control
+                          required
+                          className={styles.input}
+                          type="email"
+                          placeholder="Email"
+                          disabled
+                        />
+                      </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row} className={styles.group}>
+                      <Form.Label className={styles.label} column sm="4">
+                        <AiFillUnlock className={styles.icons} /> Password
+                      </Form.Label>
+                      <Col>
+                        <Form.Control
+                          required
+                          className={styles.input}
+                          type="password"
+                          placeholder="************"
+                          disabled
+                        />
+                      </Col>
+                    </Form.Group>
+                  </div>
                 )}
-                <Form.Group as={Row} className={styles.group}>
-                  <Form.Label className={styles.label} column sm="4">
-                    <MdEmail className={styles.icons} /> Email
-                  </Form.Label>
-                  <Col>
-                    <Form.Control
-                      required
-                      className={styles.input}
-                      type="email"
-                      placeholder="Email"
-                      disabled
-                    />
-                  </Col>
-                </Form.Group>
-
-                <Form.Group as={Row} className={styles.group}>
-                  <Form.Label className={styles.label} column sm="4">
-                    <AiFillUnlock className={styles.icons} /> Password
-                  </Form.Label>
-                  <Col>
-                    <Form.Control
-                      required
-                      className={styles.input}
-                      type="password"
-                      placeholder="************"
-                      disabled
-                    />
-                  </Col>
-                </Form.Group>
-
-                {props.logIn ? "" : <div></div>}
               </Modal.Body>
               <Modal.Footer className={styles.footer}>
                 {props.logIn ? (

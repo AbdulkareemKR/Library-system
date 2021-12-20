@@ -33,9 +33,9 @@ app.get("/api/get", (req, res) => {
   const sqlSelect = "SELECT * FROM book";
   db.query(sqlSelect, (err, result) => {
     if (err) {
-      res.send(err);
+      res.json({ error: err });
     } else {
-      res.send(result);
+      res.json({ result: result });
     }
   });
 });
@@ -43,7 +43,6 @@ app.get("/api/get", (req, res) => {
 app.delete("/api/deleteMember/:email", (req, res) => {
   const email = req.params.email;
 
-  console.log("i am here", email);
   const sqlSelect = `DELETE FROM person WHERE email = "${email}"`;
   db.query(sqlSelect, (err, result) => {
     if (err) {
@@ -74,6 +73,22 @@ app.get("/api/member", (req, res) => {
       res.send(err);
     } else {
       res.send(result);
+    }
+  });
+});
+
+app.get("/api/memberInfo", validateToken, (req, res) => {
+  const nationalId = req.user.nationalId;
+  console.log("i am in national id", nationalId);
+
+  const sqlSelect = `SELECT * FROM check_out INNER JOIN book ON book.ISBN = check_out.ISBN WHERE nationalID = ?`;
+  db.query(sqlSelect, [nationalId], (err, result) => {
+    if (err) {
+      res.send(err);
+      console.log("error", err);
+    } else {
+      res.send(result);
+      console.log("result", result);
     }
   });
 });
@@ -318,7 +333,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      expires: 60 * 60 * 24 * 60,
+      expires: 60 * 60 * 24 * 60 * 60 * 24 * 60,
     },
   })
 );
@@ -349,7 +364,7 @@ app.post("/register", (req, res) => {
   });
 
   const token = jwt.sign({ name, nationalId }, "jwtSecret", {
-    expiresIn: 60 * 60,
+    expiresIn: 60 * 60 * 24 * 60,
   });
 
   req.session.user = { name, nationalId };

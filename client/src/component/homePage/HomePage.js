@@ -15,26 +15,26 @@ import Spinner from "react-bootstrap/Spinner";
 import styles from "./homePage.module.css";
 import "../../App.css";
 import slide1 from "../images/slide1.jpg";
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 function HomePage() {
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
       items: 3,
-      slidesToSlide: 3 // optional, default to 1.
+      slidesToSlide: 3, // optional, default to 1.
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
       items: 2,
-      slidesToSlide: 2 // optional, default to 1.
+      slidesToSlide: 2, // optional, default to 1.
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
       items: 1,
-      slidesToSlide: 1 // optional, default to 1.
-    }
+      slidesToSlide: 1, // optional, default to 1.
+    },
   };
   return (
     <>
@@ -42,7 +42,15 @@ function HomePage() {
       <div className={styles.container}>
         <div className={styles.flex}>
           <h2>Trending Books</h2>
-          <Button size ="sm" className={styles.btn} href="../BookPage.js" variant="success">View All</Button>{''}
+          <Button
+            size="sm"
+            className={styles.btn}
+            href="../BookPage.js"
+            variant="success"
+          >
+            View All
+          </Button>
+          {""}
         </div>
         <Carousel
           swipeable={false}
@@ -61,53 +69,53 @@ function HomePage() {
           dotListClass="custom-dot-list-style"
           itemClass="carousel-item-padding-40-px"
         >
-          <div class="image-container increase-size">
-            <Card style={{ width: '80%' }}>
+          <div className="image-container increase-size">
+            <Card style={{ width: "80%" }}>
               <Card.Img variant="top" src={slide1} />
               <Card.Body>
                 <Card.Title>Card Title 1</Card.Title>
                 <Card.Text>
-                  Some quick example text to build on the card title and make up the bulk of
-                  the card's content.
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
                 </Card.Text>
                 <Button variant="primary">Go somewhere</Button>
               </Card.Body>
             </Card>
           </div>
-          <div class="image-container increase-size">
-            <Card style={{ width: '80%' }}>
+          <div className="image-container increase-size">
+            <Card style={{ width: "80%" }}>
               <Card.Img variant="top" src={slide1} />
               <Card.Body>
                 <Card.Title>Card Title 2</Card.Title>
                 <Card.Text>
-                  Some quick example text to build on the card title and make up the bulk of
-                  the card's content.
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
                 </Card.Text>
                 <Button variant="primary">Go somewhere</Button>
               </Card.Body>
             </Card>
           </div>
-          <div class="image-container increase-size">
-            <Card style={{ width: '80%' }}>
+          <div className="image-container increase-size">
+            <Card style={{ width: "80%" }}>
               <Card.Img variant="top" src={slide1} />
               <Card.Body>
                 <Card.Title>Card Title 3</Card.Title>
                 <Card.Text>
-                  Some quick example text to build on the card title and make up the bulk of
-                  the card's content.
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
                 </Card.Text>
                 <Button variant="primary">Go somewhere</Button>
               </Card.Body>
             </Card>
           </div>
-          <div class="image-container increase-size">
-            <Card style={{ width: '80%' }}>
+          <div className="image-container increase-size">
+            <Card style={{ width: "80%" }}>
               <Card.Img variant="top" src={slide1} />
               <Card.Body>
                 <Card.Title>Card Title 4</Card.Title>
                 <Card.Text>
-                  Some quick example text to build on the card title and make up the bulk of
-                  the card's content.
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
                 </Card.Text>
                 <Button variant="primary">Go somewhere</Button>
               </Card.Body>
@@ -117,9 +125,17 @@ function HomePage() {
       </div>
 
       <div className={styles.container}>
-      <div className={styles.flex}>
+        <div className={styles.flex}>
           <h2>Popular Books</h2>
-          <Button size ="sm" className={styles.btn} href="../BookPage.js" variant="success">View All</Button>{''}
+          <Button
+            size="sm"
+            className={styles.btn}
+            href="../BookPage.js"
+            variant="success"
+          >
+            View All
+          </Button>
+          {""}
         </div>
         <Carousel
           swipeable={false}
@@ -138,53 +154,53 @@ function HomePage() {
           dotListClass="custom-dot-list-style"
           itemClass="carousel-item-padding-40-px"
         >
-          <div class="image-container increase-size">
-            <Card style={{ width: '80%' }}>
+          <div className="image-container increase-size">
+            <Card style={{ width: "80%" }}>
               <Card.Img variant="top" src={slide1} />
               <Card.Body>
                 <Card.Title>Card Title 1</Card.Title>
                 <Card.Text>
-                  Some quick example text to build on the card title and make up the bulk of
-                  the card's content.
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
                 </Card.Text>
                 <Button variant="primary">Go somewhere</Button>
               </Card.Body>
             </Card>
           </div>
-          <div class="image-container increase-size">
-            <Card style={{ width: '80%' }}>
+          <div className="image-container increase-size">
+            <Card style={{ width: "80%" }}>
               <Card.Img variant="top" src={slide1} />
               <Card.Body>
                 <Card.Title>Card Title 2</Card.Title>
                 <Card.Text>
-                  Some quick example text to build on the card title and make up the bulk of
-                  the card's content.
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
                 </Card.Text>
                 <Button variant="primary">Go somewhere</Button>
               </Card.Body>
             </Card>
           </div>
-          <div class="image-container increase-size">
-            <Card style={{ width: '80%' }}>
+          <div className="image-container increase-size">
+            <Card style={{ width: "80%" }}>
               <Card.Img variant="top" src={slide1} />
               <Card.Body>
                 <Card.Title>Card Title 3</Card.Title>
                 <Card.Text>
-                  Some quick example text to build on the card title and make up the bulk of
-                  the card's content.
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
                 </Card.Text>
                 <Button variant="primary">Go somewhere</Button>
               </Card.Body>
             </Card>
           </div>
-          <div class="image-container increase-size">
-            <Card style={{ width: '80%' }}>
+          <div className="image-container increase-size">
+            <Card style={{ width: "80%" }}>
               <Card.Img variant="top" src={slide1} />
               <Card.Body>
                 <Card.Title>Card Title 4</Card.Title>
                 <Card.Text>
-                  Some quick example text to build on the card title and make up the bulk of
-                  the card's content.
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
                 </Card.Text>
                 <Button variant="primary">Go somewhere</Button>
               </Card.Body>
@@ -194,9 +210,17 @@ function HomePage() {
       </div>
 
       <div className={styles.container}>
-      <div className={styles.flex}>
+        <div className={styles.flex}>
           <h2>New Books</h2>
-          <Button size ="sm" className={styles.btn} href="../BookPage.js" variant="success">View All</Button>{''}
+          <Button
+            size="sm"
+            className={styles.btn}
+            href="../BookPage.js"
+            variant="success"
+          >
+            View All
+          </Button>
+          {""}
         </div>
         <Carousel
           swipeable={false}
@@ -215,53 +239,53 @@ function HomePage() {
           dotListClass="custom-dot-list-style"
           itemClass="carousel-item-padding-40-px"
         >
-          <div class="image-container increase-size">
-            <Card style={{ width: '80%' }}>
+          <div className="image-container increase-size">
+            <Card style={{ width: "80%" }}>
               <Card.Img variant="top" src={slide1} />
               <Card.Body>
                 <Card.Title>Card Title 1</Card.Title>
                 <Card.Text>
-                  Some quick example text to build on the card title and make up the bulk of
-                  the card's content.
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
                 </Card.Text>
                 <Button variant="primary">Go somewhere</Button>
               </Card.Body>
             </Card>
           </div>
-          <div class="image-container increase-size">
-            <Card style={{ width: '80%' }}>
+          <div className="image-container increase-size">
+            <Card style={{ width: "80%" }}>
               <Card.Img variant="top" src={slide1} />
               <Card.Body>
                 <Card.Title>Card Title 2</Card.Title>
                 <Card.Text>
-                  Some quick example text to build on the card title and make up the bulk of
-                  the card's content.
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
                 </Card.Text>
                 <Button variant="primary">Go somewhere</Button>
               </Card.Body>
             </Card>
           </div>
-          <div class="image-container increase-size">
-            <Card style={{ width: '80%' }}>
+          <div className="image-container increase-size">
+            <Card style={{ width: "80%" }}>
               <Card.Img variant="top" src={slide1} />
               <Card.Body>
                 <Card.Title>Card Title 3</Card.Title>
                 <Card.Text>
-                  Some quick example text to build on the card title and make up the bulk of
-                  the card's content.
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
                 </Card.Text>
                 <Button variant="primary">Go somewhere</Button>
               </Card.Body>
             </Card>
           </div>
-          <div class="image-container increase-size">
-            <Card style={{ width: '80%' }}>
+          <div className="image-container increase-size">
+            <Card style={{ width: "80%" }}>
               <Card.Img variant="top" src={slide1} />
               <Card.Body>
                 <Card.Title>Card Title 4</Card.Title>
                 <Card.Text>
-                  Some quick example text to build on the card title and make up the bulk of
-                  the card's content.
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
                 </Card.Text>
                 <Button variant="primary">Go somewhere</Button>
               </Card.Body>
@@ -269,7 +293,6 @@ function HomePage() {
           </div>
         </Carousel>
       </div>
-
     </>
   );
 }
