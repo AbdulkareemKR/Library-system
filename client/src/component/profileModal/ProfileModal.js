@@ -63,6 +63,7 @@ function ProfileModal(props) {
       {
         isbn: value.ISBN,
         checkoutDate: new Date().toISOString().substring(0, 10),
+        penalty: penaltyAmount(borrowTime(value)),
       },
       {
         headers: {
@@ -72,10 +73,6 @@ function ProfileModal(props) {
     ).then((response) => {
       if (response.error) {
       } else {
-        // let updatedClothes = [...memberInfo].map((i) =>
-        //   i.ISBN === value.ISBN ? { ...value } : i
-        // );
-        // setMemberInfo(updatedClothes);
         console.log("return ", response);
       }
     });
@@ -94,7 +91,7 @@ function ProfileModal(props) {
     if (value <= 90) {
       return "No Penalty";
     } else {
-      return (value - 90) * 5 + " $";
+      return (value - 90) * 5 + "$";
     }
   };
 
@@ -177,7 +174,9 @@ function ProfileModal(props) {
                                     <div>
                                       Penalty:{"  "}
                                       <span style={{ color: "red" }}>
-                                        {penaltyAmount(borrowTime(value))}
+                                        {value.penalty == null
+                                          ? penaltyAmount(borrowTime(value))
+                                          : value.penalty + "$"}
                                       </span>
                                     </div>
                                   </div>

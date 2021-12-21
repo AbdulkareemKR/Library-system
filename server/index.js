@@ -79,6 +79,36 @@ app.get("/api/member", (req, res) => {
   });
 });
 
+app.get("/api/reportThree", (req, res) => {
+  console.log("I am in reportThree");
+  const sqlSelect =
+    "SELECT p.* FROM person p, check_out c  WHERE p.nationalID = c.nationalID AND p.nationalID IN (SELECT nationalID FROM check_out GROUP BY nationalID HAVING COUNT(ISBN)>3) AND DATEDIFF(c.returnDate,c.checkoutDate) >120;";
+  db.query(sqlSelect, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.send(err);
+    } else {
+      console.log(result);
+      res.send(result);
+    }
+  });
+});
+
+app.get("/api/reportFour", (req, res) => {
+  console.log("I am in reportThree");
+  const sqlSelect =
+    "SELECT * FROM person WHERE nationalID NOT IN (SELECT nationalID FROM check_out WHERE DATEDIFF(returnDate, checkoutDate) > 90) AND nationalID IN (SELECT nationalID FROM check_out);";
+  db.query(sqlSelect, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.send(err);
+    } else {
+      console.log(result);
+      res.send(result);
+    }
+  });
+});
+
 app.get("/api/memberInfo", validateToken, (req, res) => {
   const nationalId = req.user.nationalId;
   console.log("i am in national id", nationalId);
@@ -87,10 +117,8 @@ app.get("/api/memberInfo", validateToken, (req, res) => {
   db.query(sqlSelect, [nationalId], (err, result) => {
     if (err) {
       res.send(err);
-      console.log("error", err);
     } else {
       res.send(result);
-      console.log("result", result);
     }
   });
 });
@@ -126,13 +154,10 @@ app.post("/api/reportOne", (req, res) => {
 app.get("/api/membersAndPenalty", (req, res) => {
   const sqlSelect = `SELECT name, person.nationalID, SUM(penalty) AS penalty FROM person INNER JOIN check_out ON person.nationalID = check_out.nationalID;`;
 
-  console.log(sqlSelect);
-
   db.query(sqlSelect, (err, result) => {
     if (err) {
       res.send(err);
     } else {
-      console.log("penaltyyy ", result);
       res.send(result);
     }
   });
@@ -153,7 +178,6 @@ app.post("/api/bookSearch", (req, res) => {
       ? ` AND publicationDate BETWEEN "${startDate}" AND "${endDate}"`
       : ""
   }`;
-  console.log(sqlSelect);
   db.query(sqlSelect, (err, result) => {
     if (err) {
       res.send(err);
@@ -224,30 +248,30 @@ app.put("/api/returnBook", validateToken, (req, res) => {
   console.log("finished checkout");
 });
 
-app.put("/api/returnBook", validateToken, (req, res) => {
-  const isbn = req.body.isbn;
-  const nationalId = req.user.nationalId;
-  const penalty = req.body.penalty;
-  const returnDate = req.body.returnDate;
+// app.put("/api/returnBook", validateToken, (req, res) => {
+//   const isbn = req.body.isbn;
+//   const nationalId = req.user.nationalId;
+//   const penalty = req.body.penalty;
+//   const returnDate = req.body.returnDate;
 
-  console.log("this is nationalid ", nationalId);
-  const sqlInsert =
-    "UPDATE check_out SET returnDate = ?, penalty = ? WHERE ISBN = ? AND nationalID = ?;";
-  db.query(
-    sqlInsert,
-    [returnDate, penalty, isbn, nationalId],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-        res.send({ error: err });
-      } else {
-        res.send({ message: result });
-        console.log(result);
-      }
-    }
-  );
-  console.log("finished checkout");
-});
+//   console.log("this is nationalid ", nationalId);
+//   const sqlInsert =
+//     "UPDATE check_out SET returnDate = ?, penalty = ? WHERE ISBN = ? AND nationalID = ?;";
+//   db.query(
+//     sqlInsert,
+//     [returnDate, penalty, isbn, nationalId],
+//     (err, result) => {
+//       if (err) {
+//         console.log(err);
+//         res.send({ error: err });
+//       } else {
+//         res.send({ message: result });
+//         console.log(result);
+//       }
+//     }
+//   );
+//   console.log("finished checkout");
+// });
 
 app.post("/api/checkoutBook", validateToken, (req, res) => {
   const isbn = req.body.isbn;
@@ -262,6 +286,30 @@ app.post("/api/checkoutBook", validateToken, (req, res) => {
   db.query(
     sqlInsert,
     [isbn, nationalId, copyNumber, checkoutDate, returnDate],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        res.send({ error: err });
+      } else {
+        res.send({ message: result });
+        console.log(result);
+      }
+    }
+  );
+  console.log("finished checkout");
+});
+
+app.put("/api/renewBooking", validateToken, (req, res) => {
+  const isbn = req.body.isbn;
+  const penalty = req.body.penalty;
+  const checkoutDate = req.body.checkoutDate;
+  const nationalId = req.user.nationalId;
+
+  const sqlInsert =
+    "UPDATE check_out SET checkoutDate = ?, penalty = ? WHERE ISBN = ? AND nationalID = ?;";
+  db.query(
+    sqlInsert,
+    [checkoutDate, penalty, isbn, nationalId],
     (err, result) => {
       if (err) {
         console.log(err);

@@ -45,6 +45,8 @@ function LibrarianHomePage() {
   const [fetch, setFetch] = useState(false);
   const [reportOneList, setReportOneList] = useState([]);
   const [membersPenalty, setMembersPenalty] = useState([]);
+  const [reportThreeList, setReportThreeList] = useState([]);
+  const [reportFourList, setReportFourList] = useState([]);
   Axios.defaults.withCredentials = true; //must be written
 
   const handleModalAdd = () => {
@@ -61,7 +63,7 @@ function LibrarianHomePage() {
     setBookSubject(bookEdit.subject);
     setBookBarcodeNumber(bookEdit.barcodeNumber);
     setBookAuthor(bookEdit.author);
-    setBookPublishDate("");
+    setBookPublishDate(bookEdit.publicationDate.substring(0, 10));
     setBookRackNumber(bookEdit.rackNumber);
     setBookDescription(bookEdit.description);
     setBookNumberOfCopies(bookEdit.numberOfCopies);
@@ -102,7 +104,6 @@ function LibrarianHomePage() {
     Axios.post("http://localhost:3001/api/reportOne", {
       thisYear: current,
     }).then((response) => {
-      setCardList(response.data.result);
       console.log(response.data);
       console.log(current);
       setReportOneList(response.data);
@@ -110,10 +111,23 @@ function LibrarianHomePage() {
   }, []);
 
   useEffect(() => {
+    Axios.get("http://localhost:3001/api/reportThree").then((response) => {
+      console.log("rhis is three", response.data);
+      setReportThreeList(response.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    Axios.get("http://localhost:3001/api/reportFour").then((response) => {
+      console.log("his is Four", response.data);
+      setReportFourList(response.data);
+    });
+  }, []);
+
+  useEffect(() => {
     Axios.get("http://localhost:3001/api/membersAndPenalty").then(
       (response) => {
         setMembersPenalty(response.data);
-        console.log(response.data);
       }
     );
   }, []);
@@ -566,8 +580,67 @@ function LibrarianHomePage() {
                 );
               })}
             </div>
+          ) : loginButton === "three" ? (
+            <div>
+              {reportThreeList.map((value, key) => {
+                return (
+                  <div key={key}>
+                    <Fade
+                      durtion={1200}
+                      cascade
+                      damping={0.02}
+                      triggerOnce // to present each element on itself while moving down
+                      direction="up"
+                    >
+                      <Card className={`${styles.card}`}>
+                        <Card.Header style={{ margin: "auto" }}>
+                          Name: {value.name}
+                        </Card.Header>
+                        <Card.Body>
+                          <div className={styles.author}>
+                            <span className={styles.authorCustom}>
+                              National ID: {value.nationalID}
+                            </span>
+                          </div>
+                          <div className={styles.author}>
+                            <span className={styles.authorCustom}></span>
+                          </div>
+                        </Card.Body>
+                      </Card>
+                    </Fade>
+                  </div>
+                );
+              })}
+            </div>
           ) : (
-            ""
+            <div>
+              {reportFourList.map((value, key) => {
+                return (
+                  <div key={key}>
+                    <Fade
+                      durtion={1200}
+                      cascade
+                      damping={0.02}
+                      triggerOnce // to present each element on itself while moving down
+                      direction="up"
+                    >
+                      <Card className={`${styles.card}`}>
+                        <Card.Header style={{ margin: "auto" }}>
+                          Name: {value.name}
+                        </Card.Header>
+                        <Card.Body>
+                          <div className={styles.author}>
+                            <span className={styles.authorCustom}>
+                              National ID: {value.nationalID}
+                            </span>
+                          </div>
+                        </Card.Body>
+                      </Card>
+                    </Fade>
+                  </div>
+                );
+              })}
+            </div>
           )}
 
           <div>{loginStatus}</div>
