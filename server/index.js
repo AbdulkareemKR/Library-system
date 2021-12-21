@@ -33,10 +33,10 @@ app.get("/api/get", (req, res) => {
   const sqlSelect = "SELECT * FROM book";
   db.query(sqlSelect, (err, result) => {
     if (err) {
-      console.log(err);
+      // console.log(err);
       res.json({ error: err });
     } else {
-      console.log(result);
+      // console.log(result);
       res.json({ result: result });
     }
   });
@@ -109,6 +109,35 @@ app.post("/api/memberSearch", (req, res) => {
   });
 });
 
+app.post("/api/reportOne", (req, res) => {
+  const thisYear = req.body.thisYear;
+  console.log(thisYear);
+  const sqlSelect = `SELECT * FROM person NATURAL JOIN  member WHERE creationDate LIKE "%${thisYear}%" AND nationalID NOT IN (SELECT nationalID FROM check_out);`;
+
+  db.query(sqlSelect, (err, result) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.get("/api/membersAndPenalty", (req, res) => {
+  const sqlSelect = `SELECT name, person.nationalID, SUM(penalty) AS penalty FROM person INNER JOIN check_out ON person.nationalID = check_out.nationalID;`;
+
+  console.log(sqlSelect);
+
+  db.query(sqlSelect, (err, result) => {
+    if (err) {
+      res.send(err);
+    } else {
+      console.log("penaltyyy ", result);
+      res.send(result);
+    }
+  });
+});
+
 app.post("/api/bookSearch", (req, res) => {
   const search = req.body.search;
   const sort = req.body.sort;
@@ -170,13 +199,62 @@ app.post("/api/reserveBook", validateToken, (req, res) => {
   console.log("finished reservation");
 });
 
+app.put("/api/returnBook", validateToken, (req, res) => {
+  const isbn = req.body.isbn;
+  const nationalId = req.user.nationalId;
+  const penalty = req.body.penalty;
+  const returnDate = req.body.returnDate;
+
+  console.log("this is nationalid ", nationalId);
+  const sqlInsert =
+    "UPDATE check_out SET returnDate = ?, penalty = ? WHERE ISBN = ? AND nationalID = ?;";
+  db.query(
+    sqlInsert,
+    [returnDate, penalty, isbn, nationalId],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        res.send({ error: err });
+      } else {
+        res.send({ message: result });
+        console.log(result);
+      }
+    }
+  );
+  console.log("finished checkout");
+});
+
+app.put("/api/returnBook", validateToken, (req, res) => {
+  const isbn = req.body.isbn;
+  const nationalId = req.user.nationalId;
+  const penalty = req.body.penalty;
+  const returnDate = req.body.returnDate;
+
+  console.log("this is nationalid ", nationalId);
+  const sqlInsert =
+    "UPDATE check_out SET returnDate = ?, penalty = ? WHERE ISBN = ? AND nationalID = ?;";
+  db.query(
+    sqlInsert,
+    [returnDate, penalty, isbn, nationalId],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        res.send({ error: err });
+      } else {
+        res.send({ message: result });
+        console.log(result);
+      }
+    }
+  );
+  console.log("finished checkout");
+});
+
 app.post("/api/checkoutBook", validateToken, (req, res) => {
   const isbn = req.body.isbn;
   const nationalId = req.user.nationalId;
   const copyNumber = req.body.copyNumber;
   const checkoutDate = req.body.checkoutDate;
-  const returnDate = req.body.returnDate;
-  console.log(checkoutDate);
+  const returnDate = null;
 
   console.log("this is nationalid ", nationalId);
   const sqlInsert =
@@ -348,17 +426,19 @@ app.post("/register", (req, res) => {
   const nationalId = req.body.nationalId;
   const studentId = req.body.studentId;
   const email = req.body.email;
+  const type = req.body.type;
   const password = req.body.password;
+  const creationDate = req.body.creationDate;
 
   bcrypt.hash(password, saltRounds, (err, hash) => {
     if (err) {
       console.log(err);
     }
     const sqlInsert =
-      "INSERT INTO person (name, nationalID, type, email, password) VALUES (?, ?, ?, ?, ?)";
+      "INSERT INTO person (name, nationalID, type, email, password, creationDate) VALUES (?, ?, ?, ?, ?,?)";
     db.query(
       sqlInsert,
-      [name, nationalId, type, email, hash],
+      [name, nationalId, type, email, hash, creationDate],
       (err, result) => {
         console.log(result);
       }

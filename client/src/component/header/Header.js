@@ -20,7 +20,7 @@ import { FaUser } from "react-icons/fa";
 
 function Header() {
   const [showModal, setModal] = useState(false);
-  const [logIn, setLogIn] = useState(true);
+  const [logIn, setLogIn] = useState(false);
   const [page, setPage] = useState("home");
   let navigate = useNavigate();
 

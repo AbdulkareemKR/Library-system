@@ -17,9 +17,7 @@ import { Fade } from "react-awesome-reveal";
 
 function ProfileModal(props) {
   const [memberInfo, setMemberInfo] = useState([]);
-  const [checkoutTime, setCheckoutTime] = useState(0);
-  const [penalty, setPenalty] = useState(0);
-  const [returned, setReturned] = useState(true);
+  // const [returned, setReturned] = useState(true);
   const current = new Date();
 
   const handleMemberInfo = () => {
@@ -38,15 +36,67 @@ function ProfileModal(props) {
     });
   };
 
-  // const penaltyAndTime = function (data) {
-  //   if (data.returnDate == null) {
-  //     setReturned(false);
-  //   } else {
-  //     const current = new Date();
-  //     console.log("hellow");
-  //     setCheckoutTime(current - data.checkoutDat);
-  //   }
-  // };
+  const returnBook = (value) => {
+    Axios.put(
+      "http://localhost:3001/api/returnBook",
+      {
+        isbn: value.ISBN,
+        returnDate: new Date().toISOString().substring(0, 10),
+        penalty: penaltyAmount(borrowTime(value)),
+      },
+      {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      }
+    ).then((response) => {
+      if (response.error) {
+      } else {
+        console.log("return ", response);
+      }
+    });
+  };
+
+  const renewBooking = (value) => {
+    Axios.put(
+      "http://localhost:3001/api/renewBooking",
+      {
+        isbn: value.ISBN,
+        checkoutDate: new Date().toISOString().substring(0, 10),
+      },
+      {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      }
+    ).then((response) => {
+      if (response.error) {
+      } else {
+        // let updatedClothes = [...memberInfo].map((i) =>
+        //   i.ISBN === value.ISBN ? { ...value } : i
+        // );
+        // setMemberInfo(updatedClothes);
+        console.log("return ", response);
+      }
+    });
+  };
+
+  const borrowTime = (value) => {
+    console.log("called");
+    const days = parseInt(
+      (current.getTime() - new Date(value.checkoutDate).getTime()) /
+        (1000 * 3600 * 24)
+    );
+    return days;
+  };
+
+  const penaltyAmount = (value) => {
+    if (value <= 90) {
+      return "No Penalty";
+    } else {
+      return (value - 90) * 5 + " $";
+    }
+  };
 
   return (
     <div>
@@ -110,29 +160,51 @@ function ProfileModal(props) {
                                 <div>{value.title}</div>
                               </Card.Header>
                               <Card.Body className={styles.cardBody}>
-                                {value.subject} <br />
-                                Check out Date:{" "}
-                                {value.checkoutDate.substring(0, 10)}
-                                {value.checkoutDate}
-                                {/* {value.returnDate == null
-                                  ? setCheckoutTime(current.getTime())
-                                  : value.checkoutDate}
-                                {checkoutTime} */}
-                                {value.returnDate}
+                                {value.returnDate == (null || "0000-00-00") ? (
+                                  <div>
+                                    <div>
+                                      Check out Date:{" "}
+                                      <span style={{ color: "#00901f" }}>
+                                        {value.checkoutDate.substring(0, 10)}
+                                      </span>
+                                    </div>
+                                    <div>
+                                      Borrowing Days:{"  "}
+                                      <span style={{ color: "#c78900" }}>
+                                        {borrowTime(value)}
+                                      </span>
+                                    </div>
+                                    <div>
+                                      Penalty:{"  "}
+                                      <span style={{ color: "red" }}>
+                                        {penaltyAmount(borrowTime(value))}
+                                      </span>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
                               </Card.Body>
                               {/* <Card.Body>{value.nationalID}</Card.Body> */}
-                              {value.returnDate != null ? (
+                              {value.returnDate != (null || "0000-00-00") ? (
                                 <Button variant="success">
                                   The book has beend returned
                                 </Button>
                               ) : (
-                                <Button
-                                  variant="warning"
-                                  className={styles.deleteButton}
-                                  // onClick={() => deleteMember(value.email)}
-                                >
-                                  Return Book
-                                </Button>
+                                <div>
+                                  <Button
+                                    variant="warning"
+                                    onClick={() => returnBook(value)}
+                                  >
+                                    Return Book
+                                  </Button>
+                                  <Button
+                                    variant="info"
+                                    onClick={() => renewBooking(value)}
+                                  >
+                                    Renew Booking
+                                  </Button>
+                                </div>
                               )}
                             </Card>
                           </Fade>

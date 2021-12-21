@@ -53,6 +53,7 @@ function Registration() {
       studentId: studentId,
       email: email,
       password: password,
+      creationDate: new Date().toISOString().substring(0, 10),
     }).then((response) => {
       console.log(response);
       navigate("/home");

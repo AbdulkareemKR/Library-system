@@ -43,7 +43,8 @@ function LibrarianHomePage() {
   const [bookNumberOfCopies, setBookNumberOfCopies] = useState("");
   const [bookEdit, setBookEdit] = useState(false);
   const [fetch, setFetch] = useState(false);
-
+  const [reportOneList, setReportOneList] = useState([]);
+  const [membersPenalty, setMembersPenalty] = useState([]);
   Axios.defaults.withCredentials = true; //must be written
 
   const handleModalAdd = () => {
@@ -54,6 +55,17 @@ function LibrarianHomePage() {
   const handleModalEdit = (bookInfo) => {
     setBookEdit(bookInfo);
     setModalShow(true);
+    console.log("hellow");
+    setBookISBN(bookEdit.ISBN);
+    setBookTitle(bookEdit.title);
+    setBookSubject(bookEdit.subject);
+    setBookBarcodeNumber(bookEdit.barcodeNumber);
+    setBookAuthor(bookEdit.author);
+    setBookPublishDate("");
+    setBookRackNumber(bookEdit.rackNumber);
+    setBookDescription(bookEdit.description);
+    setBookNumberOfCopies(bookEdit.numberOfCopies);
+    setBookURL(bookEdit.image);
   };
 
   const handleLoginButton = () => {
@@ -67,22 +79,59 @@ function LibrarianHomePage() {
     setLoginButton("bookManagement");
   };
 
+  const handleReports = () => {
+    setLoginButton("reports");
+  };
+
+  const handleOne = () => {
+    setLoginButton("one");
+  };
+
+  const handleTwo = () => {
+    setLoginButton("two");
+  };
+  const handleThree = () => {
+    setLoginButton("three");
+  };
+  const handleFour = () => {
+    setLoginButton("four");
+  };
+
+  useEffect(() => {
+    const current = new Date().getFullYear();
+    Axios.post("http://localhost:3001/api/reportOne", {
+      thisYear: current,
+    }).then((response) => {
+      setCardList(response.data.result);
+      console.log(response.data);
+      console.log(current);
+      setReportOneList(response.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    Axios.get("http://localhost:3001/api/membersAndPenalty").then(
+      (response) => {
+        setMembersPenalty(response.data);
+        console.log(response.data);
+      }
+    );
+  }, []);
+
   useEffect(() => {
     Axios.get("http://localhost:3001/api/get").then((response) => {
-      setCardList(response.data);
+      setCardList(response.data.result);
     });
   }, []);
 
   useEffect(() => {
     Axios.get("http://localhost:3001/api/member").then((response) => {
       setMemberList(response.data);
-      console.log(response.data);
     });
   }, []);
 
   useEffect(() => {
     Axios.get("http://localhost:3001/login").then((response) => {
-      console.log("from get", response);
       // if (response.data.loggedIn === true) {
       //   setLogingStatus(response.data.user[0].email);
       // }
@@ -105,8 +154,8 @@ function LibrarianHomePage() {
       studentId: studentId,
       email: email,
       password: password,
+      creationDate: new Date().toISOString().substring(0, 10),
     }).then((response) => {
-      console.log(response);
       navigate("/home");
     });
   };
@@ -124,6 +173,7 @@ function LibrarianHomePage() {
       numberOfCopies: bookNumberOfCopies,
       description: bookDescription,
     }).then((response) => {
+      // setCardList({ ...cardList, title: bookTitle});
       console.log(response);
     });
   };
@@ -212,6 +262,18 @@ function LibrarianHomePage() {
                 onClick={handleBookManagement}
               >
                 Books Management
+              </Button>
+            </Col>
+            <Col className={styles.col}>
+              <Button
+                className={`${styles.createButton} ${
+                  loginButton === "reports"
+                    ? `${styles.createButtonActive}`
+                    : ""
+                }`}
+                onClick={handleReports}
+              >
+                Reports
               </Button>
             </Col>
           </Row>
@@ -320,7 +382,7 @@ function LibrarianHomePage() {
                 );
               })}
             </div>
-          ) : (
+          ) : loginButton === "bookManagement" ? (
             <div className={styles.bookCard}>
               {cardList.map((value, key) => {
                 return (
@@ -382,6 +444,130 @@ function LibrarianHomePage() {
                 <IoAddCircleOutline /> Add Book
               </Button>
             </div>
+          ) : (
+            <Container fluid style={{ width: "500px", marginTop: "20px" }}>
+              <Row>
+                <Col className={styles.col}>
+                  <Button
+                    className={`${styles.createButton} ${
+                      loginButton === "one"
+                        ? `${styles.createButtonActive}`
+                        : ""
+                    }`}
+                    onClick={handleOne}
+                  >
+                    New Mem With No Checks
+                  </Button>
+                </Col>
+                <Col className={styles.col}>
+                  <Button
+                    className={`${styles.createButton} ${
+                      loginButton === "two"
+                        ? `${styles.createButtonActive}`
+                        : ""
+                    }`}
+                    onClick={handleTwo}
+                  >
+                    Members With Penalty
+                  </Button>
+                </Col>
+                <Col className={styles.col}>
+                  <Button
+                    className={`${styles.createButton} ${
+                      loginButton === "three"
+                        ? `${styles.createButtonActive}`
+                        : ""
+                    }`}
+                    onClick={handleThree}
+                  >
+                    {"books > 3 and borrow > 120"}
+                  </Button>
+                </Col>
+                <Col className={styles.col}>
+                  <Button
+                    className={`${styles.createButton} ${
+                      loginButton === "four"
+                        ? `${styles.createButtonActive}`
+                        : ""
+                    }`}
+                    onClick={handleFour}
+                  >
+                    Returned Before Due Date
+                  </Button>
+                </Col>
+              </Row>
+            </Container>
+          )}
+          {loginButton === "one" ? (
+            <div>
+              {reportOneList.map((value, key) => {
+                return (
+                  <div key={key}>
+                    <Fade
+                      durtion={1200}
+                      cascade
+                      damping={0.02}
+                      triggerOnce // to present each element on itself while moving down
+                      direction="up"
+                    >
+                      <Card className={`${styles.card}`}>
+                        <Card.Header style={{ margin: "auto" }}>
+                          Name: {value.name}
+                        </Card.Header>
+                        <Card.Body>
+                          <div className={styles.author}>
+                            <span className={styles.authorCustom}>
+                              National ID: {value.nationalID}
+                            </span>
+                          </div>
+                          <div className={styles.author}>
+                            <span className={styles.authorCustom}>
+                              email: {value.email}
+                            </span>
+                          </div>
+                        </Card.Body>
+                      </Card>
+                    </Fade>
+                  </div>
+                );
+              })}
+            </div>
+          ) : loginButton === "two" ? (
+            <div>
+              {membersPenalty.map((value, key) => {
+                return (
+                  <div key={key}>
+                    <Fade
+                      durtion={1200}
+                      cascade
+                      damping={0.02}
+                      triggerOnce // to present each element on itself while moving down
+                      direction="up"
+                    >
+                      <Card className={`${styles.card}`}>
+                        <Card.Header style={{ margin: "auto" }}>
+                          Name: {value.name}
+                        </Card.Header>
+                        <Card.Body>
+                          <div className={styles.author}>
+                            <span className={styles.authorCustom}>
+                              National ID: {value.nationalID}
+                            </span>
+                          </div>
+                          <div className={styles.author}>
+                            <span className={styles.authorCustom}>
+                              Total Penalty {value.penalty}
+                            </span>
+                          </div>
+                        </Card.Body>
+                      </Card>
+                    </Fade>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            ""
           )}
 
           <div>{loginStatus}</div>
@@ -411,7 +597,7 @@ function LibrarianHomePage() {
             <Form.Group className="mb-3">
               <Form.Label>ISBN</Form.Label>
               <Form.Control
-                value={bookEdit ? bookEdit.ISBN : ""}
+                defaultValue={bookEdit ? bookEdit.ISBN : ""}
                 required
                 type="number"
                 placeholder="Enter Book ISBN"
@@ -422,7 +608,7 @@ function LibrarianHomePage() {
             <Form.Group className="mb-3">
               <Form.Label>Book Name</Form.Label>
               <Form.Control
-                value={bookEdit ? bookEdit.title : ""}
+                defaultValue={bookEdit ? bookEdit.title : ""}
                 required
                 type="text"
                 placeholder="Enter the book name"
@@ -433,7 +619,7 @@ function LibrarianHomePage() {
             <Form.Group className="mb-3">
               <Form.Label>Book Subject</Form.Label>
               <Form.Control
-                value={bookEdit ? bookEdit.subject : ""}
+                defaultValue={bookEdit ? bookEdit.subject : ""}
                 required
                 type="text"
                 placeholder="Ener your student ID"
@@ -444,7 +630,7 @@ function LibrarianHomePage() {
             <Form.Group className="mb-3">
               <Form.Label>Barcode Number</Form.Label>
               <Form.Control
-                value={bookEdit ? bookEdit.barcodeNumber : ""}
+                defaultValue={bookEdit ? bookEdit.barcodeNumber : ""}
                 required
                 type="number"
                 placeholder="Enter the barcode number of the book"
@@ -455,7 +641,7 @@ function LibrarianHomePage() {
             <Form.Group className="mb-3">
               <Form.Label>Author</Form.Label>
               <Form.Control
-                value={bookEdit ? bookEdit.author : ""}
+                defaultValue={bookEdit ? bookEdit.author : ""}
                 required
                 type="text"
                 placeholder="Enter the book author"
@@ -466,7 +652,7 @@ function LibrarianHomePage() {
             <Form.Group className="mb-3">
               <Form.Label>Rack Number</Form.Label>
               <Form.Control
-                value={bookEdit ? bookEdit.rackNumber : ""}
+                defaultValue={bookEdit ? bookEdit.rackNumber : ""}
                 required
                 type="number"
                 placeholder="Enter the rack number of the book"
@@ -477,7 +663,7 @@ function LibrarianHomePage() {
             <Form.Group className="mb-3">
               <Form.Label>Publication Date</Form.Label>
               <Form.Control
-                value={
+                defaultValue={
                   bookEdit ? bookEdit.publicationDate.substring(0, 10) : ""
                 }
                 required
@@ -490,7 +676,7 @@ function LibrarianHomePage() {
             <Form.Group className="mb-3">
               <Form.Label>Number Of Copies</Form.Label>
               <Form.Control
-                value={bookEdit ? bookEdit.numberOfCopies : ""}
+                defaultValue={bookEdit ? bookEdit.numberOfCopies : ""}
                 required
                 type="number"
                 placeholder="Enter the number of copies "
@@ -501,7 +687,7 @@ function LibrarianHomePage() {
             <Form.Group className="mb-3">
               <Form.Label>Book Description</Form.Label>
               <Form.Control
-                value={bookEdit ? bookEdit.description : ""}
+                defaultValue={bookEdit ? bookEdit.description : ""}
                 required
                 type="text"
                 placeholder="Enter the book author"
@@ -511,7 +697,7 @@ function LibrarianHomePage() {
             <Form.Group className="mb-3">
               <Form.Label>Image</Form.Label>
               <Form.Control
-                value={bookEdit ? bookEdit.image : ""}
+                defaultValue={bookEdit ? bookEdit.image : ""}
                 required
                 type="text"
                 placeholder="Enter the image URL"
