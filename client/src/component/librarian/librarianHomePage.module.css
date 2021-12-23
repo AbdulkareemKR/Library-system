@@ -43,6 +43,7 @@
 
 .card {
   margin: 10px;
+  box-shadow: 1px 1px 5px 0 rgb(216, 213, 213);
 }
 
 .titleIcon {
@@ -261,6 +262,17 @@
 .deleteBookButton {
   display: inline-block;
   width: 40%;
+}
+
+.reportsContainer {
+  margin-top: 20px;
+  width: 170%;
+  transform: translateX(-20%);
+}
+
+.cardHeader {
+  background-color: #00901f;
+  color: white;
 }
 
 @media only screen and (max-width: 420px) {

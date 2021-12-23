@@ -63,7 +63,7 @@ function LibrarianHomePage() {
     setBookSubject(bookEdit.subject);
     setBookBarcodeNumber(bookEdit.barcodeNumber);
     setBookAuthor(bookEdit.author);
-    setBookPublishDate(bookEdit.publicationDate.substring(0, 10));
+    setBookPublishDate("");
     setBookRackNumber(bookEdit.rackNumber);
     setBookDescription(bookEdit.description);
     setBookNumberOfCopies(bookEdit.numberOfCopies);
@@ -376,7 +376,10 @@ function LibrarianHomePage() {
                       direction="up"
                     >
                       <Card className={`${styles.card}`}>
-                        <Card.Header style={{ margin: "auto" }}>
+                        <Card.Header
+                          className={styles.cardHeader}
+                          style={{ margin: "auto" }}
+                        >
                           <div className={styles.bookName}>{value.name}</div>
                         </Card.Header>
                         <Card.Body style={{ color: "#00901f" }}>
@@ -459,7 +462,7 @@ function LibrarianHomePage() {
               </Button>
             </div>
           ) : (
-            <Container fluid style={{ width: "500px", marginTop: "20px" }}>
+            <Container fluid className={styles.reportsContainer}>
               <Row>
                 <Col className={styles.col}>
                   <Button
@@ -525,7 +528,10 @@ function LibrarianHomePage() {
                       direction="up"
                     >
                       <Card className={`${styles.card}`}>
-                        <Card.Header style={{ margin: "auto" }}>
+                        <Card.Header
+                          className={styles.cardHeader}
+                          style={{ margin: "auto" }}
+                        >
                           Name: {value.name}
                         </Card.Header>
                         <Card.Body>
@@ -559,7 +565,10 @@ function LibrarianHomePage() {
                       direction="up"
                     >
                       <Card className={`${styles.card}`}>
-                        <Card.Header style={{ margin: "auto" }}>
+                        <Card.Header
+                          className={styles.cardHeader}
+                          style={{ margin: "auto" }}
+                        >
                           Name: {value.name}
                         </Card.Header>
                         <Card.Body>
@@ -569,8 +578,9 @@ function LibrarianHomePage() {
                             </span>
                           </div>
                           <div className={styles.author}>
-                            <span className={styles.authorCustom}>
-                              Total Penalty {value.penalty}
+                            Total Penalty:{" "}
+                            <span style={{ color: "red" }}>
+                              {value.penalty}
                             </span>
                           </div>
                         </Card.Body>
@@ -593,7 +603,10 @@ function LibrarianHomePage() {
                       direction="up"
                     >
                       <Card className={`${styles.card}`}>
-                        <Card.Header style={{ margin: "auto" }}>
+                        <Card.Header
+                          className={styles.cardHeader}
+                          style={{ margin: "auto" }}
+                        >
                           Name: {value.name}
                         </Card.Header>
                         <Card.Body>
@@ -612,7 +625,7 @@ function LibrarianHomePage() {
                 );
               })}
             </div>
-          ) : (
+          ) : loginButton === "four" ? (
             <div>
               {reportFourList.map((value, key) => {
                 return (
@@ -625,7 +638,10 @@ function LibrarianHomePage() {
                       direction="up"
                     >
                       <Card className={`${styles.card}`}>
-                        <Card.Header style={{ margin: "auto" }}>
+                        <Card.Header
+                          className={styles.cardHeader}
+                          style={{ margin: "auto" }}
+                        >
                           Name: {value.name}
                         </Card.Header>
                         <Card.Body>
@@ -641,6 +657,8 @@ function LibrarianHomePage() {
                 );
               })}
             </div>
+          ) : (
+            ""
           )}
 
           <div>{loginStatus}</div>

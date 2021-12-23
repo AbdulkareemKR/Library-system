@@ -12,6 +12,7 @@ import { AiFillUnlock } from "react-icons/ai";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import { Fade } from "react-awesome-reveal";
+import { useNavigate } from "react-router-dom";
 
 // import React, { useState } from "react";
 
@@ -19,6 +20,7 @@ function ProfileModal(props) {
   const [memberInfo, setMemberInfo] = useState([]);
   // const [returned, setReturned] = useState(true);
   const current = new Date();
+  let navigate = useNavigate();
 
   const handleMemberInfo = () => {
     props.handleLogIn();
@@ -34,6 +36,10 @@ function ProfileModal(props) {
         setMemberInfo(response.data);
       }
     });
+  };
+
+  const bookInformation = (value) => {
+    navigate("/bookInfo", { state: { ...value } });
   };
 
   const returnBook = (value) => {
@@ -181,12 +187,22 @@ function ProfileModal(props) {
                                     </div>
                                   </div>
                                 ) : (
-                                  ""
+                                  <div>
+                                    Penalty:{"  "}
+                                    <span style={{ color: "red" }}>
+                                      {value.penalty == null
+                                        ? penaltyAmount(borrowTime(value))
+                                        : value.penalty + "$"}
+                                    </span>
+                                  </div>
                                 )}
                               </Card.Body>
                               {/* <Card.Body>{value.nationalID}</Card.Body> */}
                               {value.returnDate != (null || "0000-00-00") ? (
-                                <Button variant="success">
+                                <Button
+                                  onClick={() => bookInformation(value)}
+                                  variant="success"
+                                >
                                   The book has beend returned
                                 </Button>
                               ) : (

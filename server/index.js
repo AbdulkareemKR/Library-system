@@ -82,7 +82,7 @@ app.get("/api/member", (req, res) => {
 app.get("/api/reportThree", (req, res) => {
   console.log("I am in reportThree");
   const sqlSelect =
-    "SELECT p.* FROM person p, check_out c  WHERE p.nationalID = c.nationalID AND p.nationalID IN (SELECT nationalID FROM check_out GROUP BY nationalID HAVING COUNT(ISBN)>3) AND DATEDIFF(c.returnDate,c.checkoutDate) >120;";
+    "SELECT p.* FROM person p, check_out c  WHERE p.nationalID = c.nationalID AND p.nationalID IN (SELECT nationalID FROM check_out GROUP BY nationalID HAVING COUNT(ISBN)>3) AND DATEDIFF(c.returnDate,c.checkoutDate) > 120;";
   db.query(sqlSelect, (err, result) => {
     if (err) {
       console.log(err);
@@ -95,7 +95,6 @@ app.get("/api/reportThree", (req, res) => {
 });
 
 app.get("/api/reportFour", (req, res) => {
-  console.log("I am in reportThree");
   const sqlSelect =
     "SELECT * FROM person WHERE nationalID NOT IN (SELECT nationalID FROM check_out WHERE DATEDIFF(returnDate, checkoutDate) > 90) AND nationalID IN (SELECT nationalID FROM check_out);";
   db.query(sqlSelect, (err, result) => {
