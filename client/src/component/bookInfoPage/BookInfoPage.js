@@ -14,7 +14,7 @@ function BookInfoPage(props) {
     }-${current.getDate()}`;
 
     Axios.post(
-      "http://localhost:3001/api/checkoutBook",
+      "https://library-system-back-end.herokuapp.com/api/checkoutBook",
       {
         isbn: location.state.ISBN,
         copyNumber: location.state.numberOfCopies,
@@ -28,10 +28,13 @@ function BookInfoPage(props) {
       }
     ).then((response) => {
       console.log(response);
-      Axios.put("http://localhost:3001/api/decrementBook", {
-        isbn: location.state.ISBN,
-        numberOfCopies: location.state.numberOfCopies,
-      });
+      Axios.put(
+        "https://library-system-back-end.herokuapp.com/api/decrementBook",
+        {
+          isbn: location.state.ISBN,
+          numberOfCopies: location.state.numberOfCopies,
+        }
+      );
     });
   };
 
@@ -42,7 +45,7 @@ function BookInfoPage(props) {
     }-${current.getDate()}`;
 
     Axios.post(
-      "http://localhost:3001/api/reserveBook",
+      "https://library-system-back-end.herokuapp.com/api/reserveBook",
       {
         isbn: location.state.ISBN,
         reservationDate: date,

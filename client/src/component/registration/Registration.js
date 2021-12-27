@@ -37,16 +37,18 @@ function Registration() {
   };
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/login").then((response) => {
-      console.log("from get", response);
-      // if (response.data.loggedIn === true) {
-      //   setLogingStatus(response.data.user[0].email);
-      // }
-    });
+    Axios.get("https://library-system-back-end.herokuapp.com/login").then(
+      (response) => {
+        console.log("from get", response);
+        // if (response.data.loggedIn === true) {
+        //   setLogingStatus(response.data.user[0].email);
+        // }
+      }
+    );
   }, []);
 
   const register = () => {
-    Axios.post("http://localhost:3001/register", {
+    Axios.post("https://library-system-back-end.herokuapp.com/register", {
       name: name,
       type: "member",
       nationalId: nationalId,
@@ -61,7 +63,7 @@ function Registration() {
   };
 
   const login = () => {
-    Axios.post("http://localhost:3001/login", {
+    Axios.post("https://library-system-back-end.herokuapp.com/login", {
       email: email,
       password: password,
     }).then((response) => {
@@ -81,7 +83,7 @@ function Registration() {
   };
 
   const userAuthenticated = () => {
-    Axios.get("http://localhost:3001/isUserAuth", {
+    Axios.get("https://library-system-back-end.herokuapp.com/isUserAuth", {
       headers: { "x-access-token": localStorage.getItem("token") },
     }).then((response) => {
       console.log(response);

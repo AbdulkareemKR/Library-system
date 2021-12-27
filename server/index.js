@@ -20,7 +20,7 @@ const db = mysql.createPool({
 
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["https://kfupm-library.netlify.app"],
     methods: ["GET", "POST", "DELETE", "PUT"],
     credentials: true,
   })

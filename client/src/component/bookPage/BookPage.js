@@ -41,11 +41,13 @@ function BookPage() {
   const [date, setDate] = useState({});
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/api/get").then((response) => {
-      setLoading(false);
-      setCardList(response.data.result);
-      console.log(response.data);
-    });
+    Axios.get("https://library-system-back-end.herokuapp.com/api/get").then(
+      (response) => {
+        setLoading(false);
+        setCardList(response.data.result);
+        console.log(response.data);
+      }
+    );
   }, []);
 
   const bookInformation = (value) => {
@@ -61,7 +63,7 @@ function BookPage() {
   };
 
   const handleSearch = () => {
-    Axios.post("http://localhost:3001/api/bookSearch", {
+    Axios.post("https://library-system-back-end.herokuapp.com/api/bookSearch", {
       search: search,
       sort: sort,
       subject: subject,

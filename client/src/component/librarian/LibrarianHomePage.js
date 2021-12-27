@@ -101,7 +101,7 @@ function LibrarianHomePage() {
 
   useEffect(() => {
     const current = new Date().getFullYear();
-    Axios.post("http://localhost:3001/api/reportOne", {
+    Axios.post("https://library-system-back-end.herokuapp.com/api/reportOne", {
       thisYear: current,
     }).then((response) => {
       console.log(response.data);
@@ -111,57 +111,70 @@ function LibrarianHomePage() {
   }, []);
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/api/reportThree").then((response) => {
+    Axios.get(
+      "https://library-system-back-end.herokuapp.com/api/reportThree"
+    ).then((response) => {
       console.log("rhis is three", response.data);
       setReportThreeList(response.data);
     });
   }, []);
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/api/reportFour").then((response) => {
+    Axios.get(
+      "https://library-system-back-end.herokuapp.com/api/reportFour"
+    ).then((response) => {
       console.log("his is Four", response.data);
       setReportFourList(response.data);
     });
   }, []);
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/api/membersAndPenalty").then(
+    Axios.get(
+      "https://library-system-back-end.herokuapp.com/api/membersAndPenalty"
+    ).then((response) => {
+      setMembersPenalty(response.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    Axios.get("https://library-system-back-end.herokuapp.com/api/get").then(
       (response) => {
-        setMembersPenalty(response.data);
+        setCardList(response.data.result);
       }
     );
   }, []);
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/api/get").then((response) => {
-      setCardList(response.data.result);
-    });
+    Axios.get("https://library-system-back-end.herokuapp.com/api/member").then(
+      (response) => {
+        setMemberList(response.data);
+      }
+    );
   }, []);
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/api/member").then((response) => {
-      setMemberList(response.data);
-    });
-  }, []);
-
-  useEffect(() => {
-    Axios.get("http://localhost:3001/login").then((response) => {
-      // if (response.data.loggedIn === true) {
-      //   setLogingStatus(response.data.user[0].email);
-      // }
-    });
+    Axios.get("https://library-system-back-end.herokuapp.com/login").then(
+      (response) => {
+        // if (response.data.loggedIn === true) {
+        //   setLogingStatus(response.data.user[0].email);
+        // }
+      }
+    );
   }, []);
 
   const handleSearch = () => {
-    Axios.post("http://localhost:3001/api/memberSearch", {
-      name: search,
-    }).then((response) => {
+    Axios.post(
+      "https://library-system-back-end.herokuapp.com/api/memberSearch",
+      {
+        name: search,
+      }
+    ).then((response) => {
       setMemberList(response.data);
     });
   };
 
   const register = () => {
-    Axios.post("http://localhost:3001/register", {
+    Axios.post("https://library-system-back-end.herokuapp.com/register", {
       name: name,
       type: "member",
       nationalId: nationalId,
@@ -175,7 +188,7 @@ function LibrarianHomePage() {
   };
 
   const addBook = () => {
-    Axios.post("http://localhost:3001/api/addBook", {
+    Axios.post("https://library-system-back-end.herokuapp.com/api/addBook", {
       isbn: bookISBN,
       title: bookTitle,
       subject: bookSubject,
@@ -193,7 +206,7 @@ function LibrarianHomePage() {
   };
 
   const editBook = () => {
-    Axios.put("http://localhost:3001/api/editBook", {
+    Axios.put("https://library-system-back-end.herokuapp.com/api/editBook", {
       isbn: bookISBN,
       title: bookTitle,
       subject: bookSubject,
@@ -212,27 +225,27 @@ function LibrarianHomePage() {
   };
 
   const deleteMember = (email) => {
-    Axios.delete(`http://localhost:3001/api/deleteMember/${email}`).then(
-      (response) => {
-        const newList = memberList.filter((item) => item.email !== email);
-        setMemberList(newList);
-        console.log(response);
-      }
-    );
+    Axios.delete(
+      `https://library-system-back-end.herokuapp.com/api/deleteMember/${email}`
+    ).then((response) => {
+      const newList = memberList.filter((item) => item.email !== email);
+      setMemberList(newList);
+      console.log(response);
+    });
   };
 
   const deleteBook = (ISBN) => {
-    Axios.delete(`http://localhost:3001/api/deleteBook/${ISBN}`).then(
-      (response) => {
-        const newList = cardList.filter((item) => item.ISBN !== ISBN);
-        setCardList(newList);
-        console.log(response);
-      }
-    );
+    Axios.delete(
+      `https://library-system-back-end.herokuapp.com/api/deleteBook/${ISBN}`
+    ).then((response) => {
+      const newList = cardList.filter((item) => item.ISBN !== ISBN);
+      setCardList(newList);
+      console.log(response);
+    });
   };
 
   const userAuthenticated = () => {
-    Axios.get("http://localhost:3001/isUserAuth", {
+    Axios.get("https://library-system-back-end.herokuapp.com/isUserAuth", {
       headers: { "x-access-token": localStorage.getItem("token") },
     }).then((response) => {
       console.log(response);

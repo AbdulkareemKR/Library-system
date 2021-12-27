@@ -24,7 +24,7 @@ function ProfileModal(props) {
 
   const handleMemberInfo = () => {
     props.handleLogIn();
-    Axios.get("http://localhost:3001/api/memberInfo", {
+    Axios.get("https://library-system-back-end.herokuapp.com/api/memberInfo", {
       headers: {
         accessToken: localStorage.getItem("accessToken"),
       },
@@ -44,7 +44,7 @@ function ProfileModal(props) {
 
   const returnBook = (value) => {
     Axios.put(
-      "http://localhost:3001/api/returnBook",
+      "https://library-system-back-end.herokuapp.com/api/returnBook",
       {
         isbn: value.ISBN,
         returnDate: new Date().toISOString().substring(0, 10),
@@ -65,7 +65,7 @@ function ProfileModal(props) {
 
   const renewBooking = (value) => {
     Axios.put(
-      "http://localhost:3001/api/renewBooking",
+      "https://library-system-back-end.herokuapp.com/api/renewBooking",
       {
         isbn: value.ISBN,
         checkoutDate: new Date().toISOString().substring(0, 10),

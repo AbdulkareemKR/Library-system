@@ -23,7 +23,7 @@ function InformationCard() {
 
   const submitReview = () => {
     Axios.post(
-      "http://localhost:3001/api/insert",
+      "https://library-system-back-end.herokuapp.com/api/insert",
       {
         name: name,
         information: information,
@@ -46,11 +46,14 @@ function InformationCard() {
   };
 
   const deleteReview = (name) => {
-    Axios.delete(`http://localhost:3001/api/delete/${name}`, {
-      headers: {
-        accessToken: localStorage.getItem("accessToken"),
-      },
-    }).then((response) => {
+    Axios.delete(
+      `https://library-system-back-end.herokuapp.com/api/delete/${name}`,
+      {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      }
+    ).then((response) => {
       if (response.data.error) {
         alert(response.data.error);
       } else {
@@ -60,7 +63,7 @@ function InformationCard() {
   };
 
   const updateReview = (name) => {
-    Axios.put("http://localhost:3001/api/update", {
+    Axios.put("https://library-system-back-end.herokuapp.com/api/update", {
       name: name,
       information: newName,
     });
@@ -68,10 +71,12 @@ function InformationCard() {
   };
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/api/get").then((response) => {
-      setLoading(false);
-      setCardList(response.data);
-    });
+    Axios.get("https://library-system-back-end.herokuapp.com/api/get").then(
+      (response) => {
+        setLoading(false);
+        setCardList(response.data);
+      }
+    );
   }, [fetch]);
 
   return (
