@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Form from "react-bootstrap/Form";
-import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Fade } from "react-awesome-reveal";
@@ -10,8 +7,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
 import styles from "./bookPage.module.css";
-import BookInfoPage from "../bookInfoPage/BookInfoPage";
-import { Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -19,21 +14,11 @@ import { GrSort, GrSearch } from "react-icons/gr";
 import FormControl from "react-bootstrap/FormControl";
 import { MdDateRange } from "react-icons/md";
 import DateRangePicker from "react-bootstrap-daterangepicker";
-// you will need the css that comes with bootstrap@3. if you are using
-// a tool like webpack, you can do the following:
-// import "bootstrap/dist/css/bootstrap.css";
-// you will also need the css that comes with bootstrap-daterangepicker
 import "bootstrap-daterangepicker/daterangepicker.css";
 
 function BookPage() {
-  const [name, setName] = useState("");
-  const [information, setInformation] = useState("");
   const [cardList, setCardList] = useState([]);
-  const [newName, setNewName] = useState("");
-  const [edit, setEdit] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [, setFetch] = useState(false);
-  const [image, setImage] = useState("");
   let navigate = useNavigate();
   const [sort, setSort] = useState("title");
   const [subject, setSubject] = useState("All");
